@@ -16,6 +16,8 @@
 		CED4D2272B387BFA005138A9 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D2262B387BFA005138A9 /* APIManager.swift */; };
 		CED4D22A2B387C1C005138A9 /* FilmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D2292B387C1C005138A9 /* FilmModel.swift */; };
 		CED4D22C2B387C34005138A9 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D22B2B387C34005138A9 /* UILabel + Extension.swift */; };
+		FAF734D92B38A17500AE7750 /* Sections.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF734D82B38A17500AE7750 /* Sections.swift */; };
+		FAF734DB2B38AA8A00AE7750 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF734DA2B38AA8A00AE7750 /* SectionHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		CED4D2262B387BFA005138A9 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		CED4D2292B387C1C005138A9 /* FilmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmModel.swift; sourceTree = "<group>"; };
 		CED4D22B2B387C34005138A9 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
+		FAF734D82B38A17500AE7750 /* Sections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sections.swift; sourceTree = "<group>"; };
+		FAF734DA2B38AA8A00AE7750 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				CED4D20C2B373B9F005138A9 /* ViewController.swift */,
+				FAF734D82B38A17500AE7750 /* Sections.swift */,
+				FAF734DA2B38AA8A00AE7750 /* SectionHeader.swift */,
 			);
 			path = HomeScreen;
 			sourceTree = "<group>";
@@ -219,9 +225,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CED4D2252B387BEA005138A9 /* NetworkManager.swift in Sources */,
+				FAF734D92B38A17500AE7750 /* Sections.swift in Sources */,
 				CED4D22A2B387C1C005138A9 /* FilmModel.swift in Sources */,
 				CED4D20D2B373B9F005138A9 /* ViewController.swift in Sources */,
 				CED4D22C2B387C34005138A9 /* UILabel + Extension.swift in Sources */,
+				FAF734DB2B38AA8A00AE7750 /* SectionHeader.swift in Sources */,
 				CED4D2272B387BFA005138A9 /* APIManager.swift in Sources */,
 				CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */,
 				CED4D20B2B373B9F005138A9 /* SceneDelegate.swift in Sources */,
