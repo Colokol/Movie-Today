@@ -17,16 +17,24 @@ class PrivacyViewController: UIViewController {
     
     
     //MARK: - User interface elements
-    let termsLabel = UILabel(font: .boldSystemFont(ofSize: 15))
-    let secondTermsLabel = UILabel(font: .boldSystemFont(ofSize: 15))
+    let termsLabel = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .white)
+    let secondTermsLabel = UILabel(font: .boldSystemFont(ofSize: 15), textColor: .white)
     let termsTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.backgroundColor = .blue
+        textView.font = .systemFont(ofSize: 18)
+        textView.textColor = .white
         return textView
     }()
     let secondTermsTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.backgroundColor = .blue
+        textView.font = .systemFont(ofSize: 18)
+        textView.textColor = .white
         return textView
     }()
     
@@ -63,7 +71,33 @@ class PrivacyViewController: UIViewController {
 
 extension PrivacyViewController {
     
+    enum Constans {
+        static let labelHeight: CGFloat = 17
+        static let twentyPoints: CGFloat = 20
+        static let leadingLabelInsets: CGFloat = 24
+        static let termsLabelWidth: CGFloat = 45
+        static let topInsets: CGFloat = 120
+    }
+    
     func setupConstraints() {
         
+        NSLayoutConstraint.activate([
+            // Terms label
+            termsLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constans.topInsets),
+            termsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.leadingLabelInsets),
+            termsLabel.heightAnchor.constraint(equalToConstant: Constans.labelHeight),
+            termsLabel.widthAnchor.constraint(equalToConstant: Constans.termsLabelWidth),
+            
+            // Terms text view
+            termsTextView.topAnchor.constraint(equalTo: termsLabel.bottomAnchor, constant: Constans.twentyPoints),
+            termsTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.leadingLabelInsets),
+            termsTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constans.leadingLabelInsets),
+            termsTextView.heightAnchor.constraint(equalToConstant: 320),
+            
+        ])
     }
+}
+
+#Preview() {
+    PrivacyViewController()
 }
