@@ -18,7 +18,7 @@ class PrivacyViewController: UIViewController {
     
     //MARK: - User interface elements
     let termsLabel = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .white)
-    let secondTermsLabel = UILabel(font: .boldSystemFont(ofSize: 15), textColor: .white)
+    let secondTermsLabel = UILabel(font: .boldSystemFont(ofSize: 18), textColor: .white)
     let termsTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
@@ -59,7 +59,7 @@ class PrivacyViewController: UIViewController {
         
         // Setup label's
         termsLabel.text = termsLabelText
-        secondTermsLabel.text = secondTermsText
+        secondTermsLabel.text = secondTermsLabelText
         
         // Setup text view's
         termsTextView.text = termsText
@@ -72,11 +72,13 @@ class PrivacyViewController: UIViewController {
 extension PrivacyViewController {
     
     enum Constans {
-        static let labelHeight: CGFloat = 17
+        static let labelHeight: CGFloat = 19
+        static let tenPoints: CGFloat = 10
         static let twentyPoints: CGFloat = 20
         static let leadingLabelInsets: CGFloat = 24
-        static let termsLabelWidth: CGFloat = 45
-        static let topInsets: CGFloat = 120
+        static let termsLabelWidth: CGFloat = 60
+        static let topInsets: CGFloat = 60
+        static let textViewHeight: CGFloat = 320
     }
     
     func setupConstraints() {
@@ -89,10 +91,21 @@ extension PrivacyViewController {
             termsLabel.widthAnchor.constraint(equalToConstant: Constans.termsLabelWidth),
             
             // Terms text view
-            termsTextView.topAnchor.constraint(equalTo: termsLabel.bottomAnchor, constant: Constans.twentyPoints),
+            termsTextView.topAnchor.constraint(equalTo: termsLabel.bottomAnchor, constant: Constans.tenPoints),
             termsTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.leadingLabelInsets),
             termsTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constans.leadingLabelInsets),
-            termsTextView.heightAnchor.constraint(equalToConstant: 320),
+            termsTextView.heightAnchor.constraint(equalToConstant: Constans.textViewHeight),
+            
+            // Second terms label
+            secondTermsLabel.topAnchor.constraint(equalTo: termsTextView.bottomAnchor, constant: Constans.twentyPoints),
+            secondTermsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.leadingLabelInsets),
+            secondTermsLabel.heightAnchor.constraint(equalToConstant: Constans.labelHeight),
+            secondTermsLabel.widthAnchor.constraint(equalToConstant: Constans.textViewHeight),
+            
+            // Second terms text view
+            secondTermsTextView.topAnchor.constraint(equalTo: secondTermsLabel.bottomAnchor, constant: Constans.tenPoints),
+            secondTermsTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.leadingLabelInsets),
+            secondTermsTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constans.leadingLabelInsets),
             
         ])
     }
