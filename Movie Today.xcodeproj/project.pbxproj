@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1EBDB4942B39E029004F6C95 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDB4932B39E029004F6C95 /* PrivacyViewController.swift */; };
+		1EBDB4962B39E8C7004F6C95 /* UILabel - Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDB4952B39E8C7004F6C95 /* UILabel - Extension.swift */; };
+		1EBDB4982B39EA2E004F6C95 /* UIView - Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDB4972B39EA2E004F6C95 /* UIView - Extension.swift */; };
 		CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D2082B373B9F005138A9 /* AppDelegate.swift */; };
 		CED4D20B2B373B9F005138A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D20A2B373B9F005138A9 /* SceneDelegate.swift */; };
 		CED4D20D2B373B9F005138A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D20C2B373B9F005138A9 /* ViewController.swift */; };
@@ -15,6 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1EBDB4932B39E029004F6C95 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
+		1EBDB4952B39E8C7004F6C95 /* UILabel - Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel - Extension.swift"; sourceTree = "<group>"; };
+		1EBDB4972B39EA2E004F6C95 /* UIView - Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView - Extension.swift"; sourceTree = "<group>"; };
 		CED4D2052B373B9F005138A9 /* Movie Today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie Today.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4D2082B373B9F005138A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CED4D20A2B373B9F005138A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +68,7 @@
 				CED4D2212B373C63005138A9 /* Helpers */,
 				CED4D21C2B373C2C005138A9 /* Supports */,
 				CED4D2222B373C6A005138A9 /* Extension */,
+				1EBDB4932B39E029004F6C95 /* PrivacyViewController.swift */,
 			);
 			path = "Movie Today";
 			sourceTree = "<group>";
@@ -115,8 +122,10 @@
 		CED4D2222B373C6A005138A9 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				1EBDB4952B39E8C7004F6C95 /* UILabel - Extension.swift */,
+				1EBDB4972B39EA2E004F6C95 /* UIView - Extension.swift */,
 			);
-			path = Extension;
+			name = Extension;
 			sourceTree = "<group>";
 		};
 		CED4D2232B373C7F005138A9 /* Application */ = {
@@ -156,7 +165,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					CED4D2042B373B9F005138A9 = {
 						CreatedOnToolsVersion = 14.3;
@@ -199,6 +208,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CED4D20D2B373B9F005138A9 /* ViewController.swift in Sources */,
+				1EBDB4962B39E8C7004F6C95 /* UILabel - Extension.swift in Sources */,
+				1EBDB4982B39EA2E004F6C95 /* UIView - Extension.swift in Sources */,
+				1EBDB4942B39E029004F6C95 /* PrivacyViewController.swift in Sources */,
 				CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */,
 				CED4D20B2B373B9F005138A9 /* SceneDelegate.swift in Sources */,
 			);
@@ -254,6 +266,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -314,6 +327,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
