@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92CA7AF82B39C36300B393EA /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA7AF72B39C36300B393EA /* OnboardingViewController.swift */; };
+		92CA7AFA2B39C48400B393EA /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA7AF92B39C48300B393EA /* OnboardingView.swift */; };
 		CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D2082B373B9F005138A9 /* AppDelegate.swift */; };
 		CED4D20B2B373B9F005138A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D20A2B373B9F005138A9 /* SceneDelegate.swift */; };
 		CED4D20D2B373B9F005138A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D20C2B373B9F005138A9 /* ViewController.swift */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		92CA7AF72B39C36300B393EA /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		92CA7AF92B39C48300B393EA /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		CED4D2052B373B9F005138A9 /* Movie Today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie Today.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4D2082B373B9F005138A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CED4D20A2B373B9F005138A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +49,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		92CA7AF62B39C33500B393EA /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				92CA7AF72B39C36300B393EA /* OnboardingViewController.swift */,
+				92CA7AF92B39C48300B393EA /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		CED4D1FC2B373B9F005138A9 = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +117,7 @@
 		CED4D21F2B373C4B005138A9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				92CA7AF62B39C33500B393EA /* Onboarding */,
 				CED4D22D2B389DEA005138A9 /* TabBar */,
 				CED4D2282B387BFD005138A9 /* HomeScreen */,
 			);
@@ -232,7 +246,9 @@
 				CED4D2252B387BEA005138A9 /* NetworkManager.swift in Sources */,
 				CED4D22A2B387C1C005138A9 /* FilmModel.swift in Sources */,
 				CED4D20D2B373B9F005138A9 /* ViewController.swift in Sources */,
+				92CA7AF82B39C36300B393EA /* OnboardingViewController.swift in Sources */,
 				CED4D22C2B387C34005138A9 /* UILabel + Extension.swift in Sources */,
+				92CA7AFA2B39C48400B393EA /* OnboardingView.swift in Sources */,
 				CED4D2272B387BFA005138A9 /* APIManager.swift in Sources */,
 				CED4D22F2B389DF6005138A9 /* TabBarController.swift in Sources */,
 				CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */,
