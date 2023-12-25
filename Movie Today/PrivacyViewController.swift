@@ -8,8 +8,9 @@
 import UIKit
 
 class PrivacyViewController: UIViewController {
-
+    
     //MARK: - Properties
+    
     let termsLabelText = "Terms"
     let termsText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget ornare quam vel facilisis feugiat amet sagittis arcu, tortor. Sapien, consequat ultrices morbi orci semper sit nulla. Leo auctor ut etiam est, amet aliquet ut vivamus. Odio vulputate est id tincidunt fames. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget ornare quam vel facilisis feugiat amet sagittis arcu, tortor. Sapien, consequat ultrices morbi orci semper sit nulla. Leo auctor ut etiam est, amet aliquet ut vivamus. Odio vulputate est id tincidunt fames."
     let secondTermsLabelText = "Changes to the Service and/or Terms:"
@@ -17,9 +18,22 @@ class PrivacyViewController: UIViewController {
     
     
     //MARK: - User interface elements
-    let termsLabel = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .white)
-    let secondTermsLabel = UILabel(font: .boldSystemFont(ofSize: 18), textColor: .white)
-    let termsTextView: UITextView = {
+    
+    private lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.alwaysBounceVertical = true
+        scroll.showsVerticalScrollIndicator = false
+        scroll.frame = view.bounds
+        return scroll
+    }()
+    
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+        return contentView
+    }()
+    private lazy var termsLabel = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .white)
+    private lazy var secondTermsLabel = UILabel(font: .boldSystemFont(ofSize: 18), textColor: .white)
+    private lazy var termsTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
         textView.isScrollEnabled = false
@@ -28,7 +42,7 @@ class PrivacyViewController: UIViewController {
         textView.textColor = .white
         return textView
     }()
-    let secondTermsTextView: UITextView = {
+    private lazy var secondTermsTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
         textView.isScrollEnabled = false
@@ -55,7 +69,9 @@ class PrivacyViewController: UIViewController {
         
         // Setup view
         view.backgroundColor = .blue
-        view.addSubviews(termsLabel, termsTextView, secondTermsLabel, secondTermsTextView)
+        view.addSubviews(scrollView)
+        scrollView.addSubviews(contentView)
+        contentView.addSubviews(termsLabel, termsTextView, secondTermsLabel, secondTermsTextView)
         
         // Setup label's
         termsLabel.text = termsLabelText
@@ -84,33 +100,43 @@ extension PrivacyViewController {
     func setupConstraints() {
         
         NSLayoutConstraint.activate([
+            
+            // Scroll view
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            // Content view
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
             // Terms label
-            termsLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constans.topInsets),
-            termsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.leadingLabelInsets),
+            termsLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constans.twentyPoints),
+            termsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constans.leadingLabelInsets),
             termsLabel.heightAnchor.constraint(equalToConstant: Constans.labelHeight),
             termsLabel.widthAnchor.constraint(equalToConstant: Constans.termsLabelWidth),
             
             // Terms text view
             termsTextView.topAnchor.constraint(equalTo: termsLabel.bottomAnchor, constant: Constans.tenPoints),
-            termsTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.leadingLabelInsets),
-            termsTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constans.leadingLabelInsets),
+            termsTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constans.leadingLabelInsets),
+            termsTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constans.leadingLabelInsets),
             termsTextView.heightAnchor.constraint(equalToConstant: Constans.textViewHeight),
             
             // Second terms label
             secondTermsLabel.topAnchor.constraint(equalTo: termsTextView.bottomAnchor, constant: Constans.twentyPoints),
-            secondTermsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.leadingLabelInsets),
+            secondTermsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constans.leadingLabelInsets),
             secondTermsLabel.heightAnchor.constraint(equalToConstant: Constans.labelHeight),
             secondTermsLabel.widthAnchor.constraint(equalToConstant: Constans.textViewHeight),
             
             // Second terms text view
             secondTermsTextView.topAnchor.constraint(equalTo: secondTermsLabel.bottomAnchor, constant: Constans.tenPoints),
-            secondTermsTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.leadingLabelInsets),
-            secondTermsTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constans.leadingLabelInsets),
-            
+            secondTermsTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constans.leadingLabelInsets),
+            secondTermsTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constans.leadingLabelInsets),
+            secondTermsTextView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
-}
-
-#Preview() {
-    PrivacyViewController()
 }
