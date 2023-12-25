@@ -9,6 +9,7 @@ import UIKit
 
 final class HomeViewController: UIViewController {
     
+    //MARK: - Property
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Sections, String>?
     private let searchController = UISearchController()
@@ -22,16 +23,17 @@ final class HomeViewController: UIViewController {
         button.setImage(UIImage(named: "heart"), for: .normal)
         return button
     }()
-
+    var presenter: HomePresenterProtocol!
+    
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        
         setupNavBar()
         configureSearchBar()
         configureCollectionView()
         configureDataSource()
-        applySnapshot()
+        presenter.updateController()
     }
     
     //MARK: - NavBarSetup
@@ -83,7 +85,7 @@ final class HomeViewController: UIViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(300), heightDimension: .estimated(200))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(300), heightDimension: .estimated(205))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
@@ -113,7 +115,7 @@ final class HomeViewController: UIViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(230))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(160), heightDimension: .estimated(230))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
@@ -194,7 +196,6 @@ final class HomeViewController: UIViewController {
     }
     
     //MARK: - DataSource
-    
     private func configureDataSource() {
         let compilation = compilationRegister()
         let categories = categoriesRegister()
@@ -205,11 +206,11 @@ final class HomeViewController: UIViewController {
         dataSource = UICollectionViewDiffableDataSource<Sections, String>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             switch Sections(rawValue: indexPath.section)! {
             case .compilation:
-                return collectionView.dequeueConfiguredReusableCell(using: compilation, for: indexPath, item: "Comp")
+                return collectionView.dequeueConfiguredReusableCell(using: compilation, for: indexPath, item: item)
             case .categories:
-                return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: "All")
+                return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item)
             case .mostPopular:
-                return collectionView.dequeueConfiguredReusableCell(using: mostPopular, for: indexPath, item: "Most")
+                return collectionView.dequeueConfiguredReusableCell(using: mostPopular, for: indexPath, item: item)
             }
             
         }
@@ -230,50 +231,25 @@ final class HomeViewController: UIViewController {
         }
         
     }
+}
+
+//MARK: - HomeViewProtocol
+extension HomeViewController: HomeScreenViewProtocol {
+    func update() {
+        applySnapshot()
+    }
     
     //MARK: - Snapshot
     private func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Sections, String>()
         
         snapshot.appendSections([.compilation, .categories, .mostPopular])
-        let compilateionItem = ["Comp"]
-        let categoriesItem = ["Categ"]
-        let popularItem = ["Popular"]
-        snapshot.appendItems(compilateionItem, toSection: .compilation)
-        snapshot.appendItems(categoriesItem, toSection: .categories)
-        snapshot.appendItems(popularItem, toSection: .mostPopular)
+        snapshot.appendItems(presenter.array, toSection: .compilation)
+        snapshot.appendItems(presenter.categories, toSection: .categories)
+        snapshot.appendItems(presenter.array2, toSection: .mostPopular)
         
         dataSource?.apply(snapshot, animatingDifferences: true)
-        
-    }
-
-
-}
-
-
-//MARK: - SwiftUI
-import SwiftUI
-struct Provider_HomeViewController : PreviewProvider {
-    static var previews: some View {
-        ContainterView().edgesIgnoringSafeArea(.all)
     }
     
-    struct ContainterView: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> UIViewController {
-            return HomeViewController()
-        }
-        
-        typealias UIViewControllerType = UIViewController
-        
-        
-        let viewController = HomeViewController()
-        func makeUIViewController(context: UIViewControllerRepresentableContext<Provider_HomeViewController.ContainterView>) -> HomeViewController {
-            return viewController
-        }
-        
-        func updateUIViewController(_ uiViewController: Provider_HomeViewController.ContainterView.UIViewControllerType, context: UIViewControllerRepresentableContext<Provider_HomeViewController.ContainterView>) {
-            
-        }
-    }
     
 }
