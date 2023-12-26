@@ -10,7 +10,7 @@ import Foundation
 struct NetworkManager {
     static let environment: NetworkEnvironment = .production
     // MARK: - Указываем свой токен API
-    static let movieAPIKey: String = "TRFZCT7-KY149CD-GGZ9SBT-Y0R9B3K"
+    static let movieAPIKey: String = ""
     private let router = Router<MovieApi>()
 
     private func performRequest<T: Decodable>(for endpoint: MovieApi, completion: @escaping (Result<T, NetworkError>) -> Void) {
