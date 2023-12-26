@@ -44,6 +44,8 @@ class EditProfileView: UIView {
     private lazy var nameLabelTextField: UILabel = {
         let label = UILabel()
         label.text = "Full name"
+        label.textAlignment = .center
+        label.backgroundColor = .blue
         label.font = .systemFont(ofSize: 15)
         label.textColor = .white
         return label
@@ -68,6 +70,8 @@ class EditProfileView: UIView {
     private lazy var emailLabelTextField: UILabel = {
         let label = UILabel()
         label.text = "Email"
+        label.textAlignment = .center
+        label.backgroundColor = .blue
         label.font = .systemFont(ofSize: 15)
         label.textColor = .white
         return label
@@ -120,8 +124,8 @@ class EditProfileView: UIView {
                     editUserImage,
                     nameLabel,
                     userEmail,
-                    nameLabelTextField,
                     nameTextField,
+                    nameLabelTextField,
                     mistakeLabel,
                     emailTextField,
                     emailLabelTextField,
@@ -154,6 +158,7 @@ private extension EditProfileView {
         static let fiftyPoints: CGFloat = 50
         static let fiftyFivePoints: CGFloat = 55
         static let seventyPoints: CGFloat = 70
+        static let ninetyPoints: CGFloat = 90
         static let oneHundredPoints: CGFloat = 100
         static let twoHundredPoints: CGFloat = 200
     }
@@ -193,9 +198,9 @@ private extension EditProfileView {
     
             // Name text field label
             nameLabelTextField.bottomAnchor.constraint(equalTo: nameTextField.topAnchor, constant: Constans.tenPoints),
-            nameLabelTextField.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor, constant: Constans.tenPoints),
+            nameLabelTextField.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor, constant: Constans.twentyPoints),
             nameLabelTextField.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
-            nameLabelTextField.widthAnchor.constraint(equalToConstant: Constans.seventyPoints),
+            nameLabelTextField.widthAnchor.constraint(equalToConstant: Constans.ninetyPoints),
             
             // Mistake label
             mistakeLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: Constans.fivePoints),
@@ -211,9 +216,9 @@ private extension EditProfileView {
             
             // Email text field
             emailLabelTextField.bottomAnchor.constraint(equalTo: emailTextField.topAnchor, constant: Constans.tenPoints),
-            emailLabelTextField.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor, constant: Constans.tenPoints),
+            emailLabelTextField.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor, constant: Constans.twentyPoints),
             emailLabelTextField.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
-            emailLabelTextField.widthAnchor.constraint(equalToConstant: Constans.seventyPoints),
+            emailLabelTextField.widthAnchor.constraint(equalToConstant: Constans.fiftyPoints),
             
             saveChangesButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constans.fiftyPoints),
             saveChangesButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
