@@ -25,19 +25,22 @@ class OnboardingViewController: UIViewController {
     
     private let pageControl: UIPageControl = {
         var customPageControl = UIPageControl()
-        //CustomPageControl()
         customPageControl.translatesAutoresizingMaskIntoConstraints = false
         customPageControl.numberOfPages = 3
+        customPageControl.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+        customPageControl.currentPageIndicatorTintColor = #colorLiteral(red: 0, green: 0.8186600804, blue: 0.8617991805, alpha: 1)
+        customPageControl.pageIndicatorTintColor = #colorLiteral(red: 0, green: 0.395287931, blue: 0.4508596659, alpha: 1)
         return customPageControl
     }()
     
     private lazy var nextButton: UIButton = {
         let nextButton = UIButton(type: .system)
         nextButton.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.setTitle("NEXT", for: .normal)
-        nextButton.backgroundColor = .cyan
-        nextButton.tintColor = .white
-        nextButton.layer.cornerRadius = 10
+        nextButton.setTitle("\u{203A}", for: .normal)
+        nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 35)
+        nextButton.backgroundColor = #colorLiteral(red: 0, green: 0.8186600804, blue: 0.8617991805, alpha: 1)
+        nextButton.tintColor = .black
+        nextButton.layer.cornerRadius = 15
         nextButton.addTarget(self, action: #selector(nextSlide), for: .touchUpInside)
         return nextButton
     }()
@@ -88,6 +91,13 @@ class OnboardingViewController: UIViewController {
         
         return [firstOnboardingView, secondOnboardingView, thirdOnboardingView]
     }
+    
+    private func goToHomeScreen() {
+        UserDefaults.standard.set(true, forKey: "onboardingCompleted")
+        let viewController = TabBarController()
+        navigationController?.setViewControllers([viewController], animated: true)
+        navigationController?.navigationBar.isHidden = true
+    }
  
     //MARK: - Actions
 
@@ -97,6 +107,7 @@ class OnboardingViewController: UIViewController {
         
         // Проверяем, что существует следующий слайд
         guard nextPageIndex < slides.count else {
+            goToHomeScreen()
             return
         }
         
@@ -121,8 +132,6 @@ class OnboardingViewController: UIViewController {
                                      height: view.frame.height)
             scrollView.addSubview(slides[i])
         }
-        
-        
     }
 }
 
@@ -172,13 +181,13 @@ extension OnboardingViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             //scrollView.heightAnchor.constraint(equalTo: view.heightAnchor),
             
-            nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -15),
-            nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            nextButton.heightAnchor.constraint(equalToConstant: 56),
+            nextButton.heightAnchor.constraint(equalToConstant: 70),
+            nextButton.widthAnchor.constraint(equalToConstant: 70),
             
-            pageControl.bottomAnchor.constraint(equalTo: nextButton.topAnchor, constant: 0),
-            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             pageControl.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
