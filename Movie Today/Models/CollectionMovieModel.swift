@@ -10,20 +10,18 @@ import Foundation
     // MARK: - CollectionFilmModel
 struct CollectionMovieModel: Decodable {
     let docs: [Collection]
-    let slug: String
-    let total: Int
     let limit: Int
     let page: Int
     let pages: Int
 }
 
-    // MARK: - Doc
+    // MARK: - Collection
 struct Collection: Decodable {
     let category: String?
     let name: String
+    let slug: String
     let moviesCount: Int?
-    let cover: Poster
+    let cover: Poster?
     let createdAt: String?
     let updatedAt: String?
-    let id: String
 }

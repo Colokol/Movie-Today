@@ -75,9 +75,11 @@ extension MovieApi: EndpointType {
                     additionalHeaders: headers
                 )
             case .collectionMovieList:
+                
                 return .requestParametersAndHeaders(bodyParameters: nil,
                                                     urlParameters: ["limit": MovieApi.defaultLimit,
-                                                                    "page": MovieApi.defaultPage],
+                                                                    "page": MovieApi.defaultPage,
+                                                                    "notNullFields":"slug" ],
                                                     additionalHeaders: headers)
             case .searchMovie(searchText: let searchMovie):
                 return .requestParametersAndHeaders(bodyParameters: nil,

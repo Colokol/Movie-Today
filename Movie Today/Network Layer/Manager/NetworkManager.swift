@@ -22,7 +22,7 @@ struct NetworkManager {
             guard let data = data else {
                 return completion(.failure(.noData))
             }
-            
+
             do {
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decodedData))
