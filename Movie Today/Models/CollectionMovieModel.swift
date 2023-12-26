@@ -16,7 +16,7 @@ struct CollectionMovieModel: Decodable, Hashable {
 }
 
     // MARK: - Collection
-struct Collection: Decodable {
+struct Collection: Decodable, Hashable {
     let category: String?
     let name: String
     let slug: String

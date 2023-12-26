@@ -52,10 +52,10 @@ final class CollectionMovieCell: UICollectionViewCell {
             count.trailingAnchor.constraint(lessThanOrEqualTo: imageView.trailingAnchor),
             count.heightAnchor.constraint(equalToConstant: 15),
 
-            title.bottomAnchor.constraint(equalTo: count.topAnchor, constant: -24),
+            title.bottomAnchor.constraint(lessThanOrEqualTo: count.topAnchor),
             title.leadingAnchor.constraint(equalTo: count.leadingAnchor),
             title.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
-            title.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor)
+            title.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 25)
         ])
     }
     

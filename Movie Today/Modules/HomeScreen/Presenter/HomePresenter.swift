@@ -15,8 +15,6 @@ protocol HomeScreenViewProtocol: AnyObject {
 protocol HomePresenterProtocol: AnyObject {
     var movies: [MovieModel]? { get }
     var collectionMovies: [CollectionMovieModel]? { get set }
-    var array: [String] { get }
-    var array2: [String] { get }
     var categories: [String] { get set }
     func getCollectionMovie()
     func updateController()
@@ -30,8 +28,6 @@ final class HomePresenter: HomePresenterProtocol {
     
     var movies: [MovieModel]?
     var collectionMovies: [CollectionMovieModel]?
-    var array = ["Spider Man", "Iron Man", "Lord of the rings", "Hobbit", "Halk"]
-    var array2 = ["Spider Man2", "Iron Man2", "Lord of the rings3", "Hobbit4", "Halk1"]
     var categories: [String]
     
     func getGenre(genre: MovieGenres) {
