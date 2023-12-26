@@ -3,7 +3,7 @@
 import Foundation
 
     // MARK: - FilmModel
-struct MovieModel: Codable {
+struct MovieModel: Codable, Hashable {
     let docs: [Doc]
     let total: Int
     let limit: Int
@@ -12,7 +12,7 @@ struct MovieModel: Codable {
 }
 
     // MARK: - Doc
-struct Doc: Codable {
+struct Doc: Codable, Hashable {
     let id: Int
     let name: String
     let alternativeName: String?
@@ -29,21 +29,21 @@ struct Doc: Codable {
 }
 
     // MARK: - Backdrop
-struct Poster: Codable {
+struct Poster: Codable, Hashable {
     let url: String?
     let previewUrl: String?
 }
 
     // MARK: - Country
-struct Genres: Codable {
+struct Genres: Codable, Hashable {
     let name: String
 }
     // MARK: - Rating
-struct Rating: Codable {
+struct Rating: Codable, Hashable {
     let kp: Double?
 }
 
     // MARK: - Votes
-struct Votes: Codable {
+struct Votes: Codable, Hashable {
     let kp: Double?
 }

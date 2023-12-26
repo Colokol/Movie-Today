@@ -11,7 +11,7 @@ final class HomeViewController: UIViewController {
     
     //MARK: - Property
     private var collectionView: UICollectionView!
-    private var dataSource: UICollectionViewDiffableDataSource<Sections, String>?
+    private var dataSource: UICollectionViewDiffableDataSource<Sections, Item>?
     private let searchController = UISearchController()
     private let userButton: UIButton = {
         let button = UIButton()
@@ -34,6 +34,7 @@ final class HomeViewController: UIViewController {
         configureCollectionView()
         configureDataSource()
         presenter.updateController()
+        presenter.getCollectionMovie()
     }
     
     //MARK: - NavBarSetup
@@ -137,17 +138,11 @@ final class HomeViewController: UIViewController {
     
     //MARK: - Register Cells&Headers Methods
     
-    private func compilationRegister() -> UICollectionView.CellRegistration<UICollectionViewCell, String> {
-        return UICollectionView.CellRegistration<UICollectionViewCell, String> { (cell, indexPath, item) in
-            // Удаление старых вью из contentView перед добавлением новых
-            cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+    private func compilationRegister() -> UICollectionView.CellRegistration<CollectionMovieCell, CollectionMovieModel> {
+        return UICollectionView.CellRegistration<CollectionMovieCell, CollectionMovieModel> { (cell, indexPath, item) in
+            cell.config(with: item)
             
-            let label = UILabel(frame: cell.bounds)
-            label.text = item
-            label.textAlignment = .center
-            label.textColor = .red
-            cell.backgroundColor = .white
-            cell.contentView.addSubview(label)
+            
         }
     }
     
@@ -222,14 +217,14 @@ final class HomeViewController: UIViewController {
         let catagoriesHeader = categoriesHeaderRegister()
         let mostPopularHeader = MostPopularHeaderRegister()
         
-        dataSource = UICollectionViewDiffableDataSource<Sections, String>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Sections, Item>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             switch Sections(rawValue: indexPath.section)! {
             case .compilation:
-                return collectionView.dequeueConfiguredReusableCell(using: compilation, for: indexPath, item: item)
+                return collectionView.dequeueConfiguredReusableCell(using: compilation, for: indexPath, item: item.collectionMovie)
             case .categories:
-                return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item)
+                return nil/*collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item)*/
             case .mostPopular:
-                return collectionView.dequeueConfiguredReusableCell(using: mostPopular, for: indexPath, item: item)
+                return nil /*collectionView.dequeueConfiguredReusableCell(using: mostPopular, for: indexPath, item: item)*/
             }
             
         }
@@ -240,9 +235,9 @@ final class HomeViewController: UIViewController {
                     case .compilation:
                         return nil
                     case .categories:
-                        return collectionView.dequeueConfiguredReusableSupplementary(using: catagoriesHeader, for: indexPath)
+                        return nil /*collectionView.dequeueConfiguredReusableSupplementary(using: catagoriesHeader, for: indexPath)*/
                     case .mostPopular:
-                        return collectionView.dequeueConfiguredReusableSupplementary(using: mostPopularHeader, for: indexPath)
+                        return nil /*collectionView.dequeueConfiguredReusableSupplementary(using: mostPopularHeader, for: indexPath)*/
                     }
                 }
             }
@@ -254,18 +249,23 @@ final class HomeViewController: UIViewController {
 
 //MARK: - HomeViewProtocol
 extension HomeViewController: HomeScreenViewProtocol {
+    func reloadData() {
+        collectionView.reloadData()
+    }
+    
     func update() {
         applySnapshot()
     }
     
     //MARK: - Snapshot
     private func applySnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Sections, String>()
+        var snapshot = NSDiffableDataSourceSnapshot<Sections, Item>()
         
-        snapshot.appendSections([.compilation, .categories, .mostPopular])
-        snapshot.appendItems(presenter.array, toSection: .compilation)
-        snapshot.appendItems(presenter.categories, toSection: .categories)
-        snapshot.appendItems(presenter.array2, toSection: .mostPopular)
+        snapshot.appendSections([.compilation/*, .categories, .mostPopular*/])
+        guard let compialtion = presenter.collectionMovies?.compactMap({ Item(collectionMovie: $0)}) else { return }
+        snapshot.appendItems(compialtion, toSection: .compilation)
+//        snapshot.appendItems(presenter.categories, toSection: .categories)
+//        snapshot.appendItems(presenter.array2, toSection: .mostPopular)
         
         dataSource?.apply(snapshot, animatingDifferences: true)
     }

@@ -8,7 +8,7 @@
 import Foundation
 
     // MARK: - CollectionFilmModel
-struct CollectionMovieModel: Decodable {
+struct CollectionMovieModel: Decodable, Hashable {
     let docs: [Collection]
     let slug: String
     let total: Int
@@ -18,7 +18,7 @@ struct CollectionMovieModel: Decodable {
 }
 
     // MARK: - Doc
-struct Collection: Decodable {
+struct Collection: Decodable, Hashable {
     let category: String?
     let name: String
     let moviesCount: Int?
