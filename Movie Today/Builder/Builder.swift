@@ -16,4 +16,11 @@ final class Builder {
         view.presenter = presenter
         return view
     }
+    
+    static func createMovieListVC() -> UIViewController {
+        let view = MovieListController()
+        let presenter = MovieListPresenter(view: view)
+        view.presenter = presenter
+        return view
+    }
 }
