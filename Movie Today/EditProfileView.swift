@@ -62,25 +62,31 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "* Name already exist"
         label.textColor = .red
-        label.font = .boldSystemFont(ofSize: 15)
+        label.font = .boldSystemFont(ofSize: 13)
         return label
     }()
     private lazy var emailLabelTextField: UILabel = {
         let label = UILabel()
-        label.text = "Full name"
+        label.text = "Email"
         label.font = .systemFont(ofSize: 15)
         label.textColor = .white
         return label
     }()
     private lazy var emailTextField: UITextField = {
         let textField = UITextField()
-        textField.text = self.nameLabel.text
+        textField.text = self.userEmail.text
         textField.textColor = .white
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.gray.cgColor
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: nameLabelTextField.frame.size.height))
         textField.leftViewMode = .always
         return textField
+    }()
+    private lazy var saveChangesButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Save Changes", for: .normal)
+        button.backgroundColor = .cyan
+        return button
     }()
     
     //MARK: - Initialize
@@ -97,22 +103,41 @@ class EditProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Methods
+    
+    func signatureTextFieldDelegate() {
+        nameTextField.delegate = self
+        emailTextField.delegate = self
+    }
+    
     //MARK: - Private methods
     
     private func setupView() {
         
         // Setup view
         backgroundColor = .blue
-        addSubviews(userImage, editUserImage, nameLabel, userEmail, nameLabelTextField, nameTextField, mistakeLabel)
+        addSubviews(userImage,
+                    editUserImage,
+                    nameLabel,
+                    userEmail,
+                    nameLabelTextField,
+                    nameTextField,
+                    mistakeLabel,
+                    emailTextField,
+                    emailLabelTextField,
+                    saveChangesButton
+        )
         
         // Setup user image
         userImage.layer.cornerRadius = 50
         
-        // Setup edit user image button
+        // Setup button's
         editUserImage.layer.cornerRadius = 15
+        saveChangesButton.layer.cornerRadius = 25
         
         // Setup text field's
         nameTextField.layer.cornerRadius = 20
+        emailTextField.layer.cornerRadius = 20
     }
 }
 
@@ -125,7 +150,9 @@ private extension EditProfileView {
         static let tenPoints: CGFloat = 10
         static let twentyPoints: CGFloat = 20
         static let sideMargin: CGFloat = 24
+        static let thiryPoints: CGFloat = 30
         static let fiftyPoints: CGFloat = 50
+        static let fiftyFivePoints: CGFloat = 55
         static let seventyPoints: CGFloat = 70
         static let oneHundredPoints: CGFloat = 100
         static let twoHundredPoints: CGFloat = 200
@@ -143,8 +170,8 @@ private extension EditProfileView {
             // Edit user image button
             editUserImage.trailingAnchor.constraint(equalTo: userImage.trailingAnchor),
             editUserImage.bottomAnchor.constraint(equalTo: userImage.bottomAnchor),
-            editUserImage.heightAnchor.constraint(equalToConstant: 30),
-            editUserImage.widthAnchor.constraint(equalToConstant: 30),
+            editUserImage.heightAnchor.constraint(equalToConstant: Constans.thiryPoints),
+            editUserImage.widthAnchor.constraint(equalToConstant: Constans.thiryPoints),
             
             // Name label
             nameLabel.topAnchor.constraint(equalTo: editUserImage.bottomAnchor, constant: Constans.twentyPoints),
@@ -165,23 +192,41 @@ private extension EditProfileView {
             nameTextField.heightAnchor.constraint(equalToConstant: Constans.fiftyPoints),
     
             // Name text field label
-            nameLabelTextField.bottomAnchor.constraint(equalTo: nameTextField.topAnchor, constant: Constans.fivePoints),
+            nameLabelTextField.bottomAnchor.constraint(equalTo: nameTextField.topAnchor, constant: Constans.tenPoints),
             nameLabelTextField.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor, constant: Constans.tenPoints),
-            nameLabelTextField.heightAnchor.constraint(equalToConstant: Constans.tenPoints),
+            nameLabelTextField.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
             nameLabelTextField.widthAnchor.constraint(equalToConstant: Constans.seventyPoints),
             
             // Mistake label
-            mistakeLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: Constans.tenPoints),
+            mistakeLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: Constans.fivePoints),
             mistakeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
             mistakeLabel.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
             mistakeLabel.widthAnchor.constraint(equalToConstant: Constans.twoHundredPoints),
             
             // Email text field
-            emailTextField.topAnchor.constraint(equalTo: mistakeLabel.bottomAnchor, constant: Constans.tenPoints),
+            emailTextField.topAnchor.constraint(equalTo: mistakeLabel.bottomAnchor, constant: Constans.twentyPoints),
+            emailTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
+            emailTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
+            emailTextField.heightAnchor.constraint(equalToConstant: Constans.fiftyPoints),
+            
+            // Email text field
+            emailLabelTextField.bottomAnchor.constraint(equalTo: emailTextField.topAnchor, constant: Constans.tenPoints),
+            emailLabelTextField.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor, constant: Constans.tenPoints),
+            emailLabelTextField.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
+            emailLabelTextField.widthAnchor.constraint(equalToConstant: Constans.seventyPoints),
+            
+            saveChangesButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constans.fiftyPoints),
+            saveChangesButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
+            saveChangesButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
+            saveChangesButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints),
         ])
     }
 }
 
-#Preview() {
-    EditProfileViewController()
+extension EditProfileView: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
+    }
 }

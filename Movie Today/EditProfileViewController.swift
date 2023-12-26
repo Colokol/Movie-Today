@@ -20,6 +20,7 @@ class EditProfileViewController: UIViewController {
 
         // Call function's
         setupView()
+        signatureDelegate()
         setupConstaints()
     }
 
@@ -27,6 +28,10 @@ class EditProfileViewController: UIViewController {
     
     private func setupView() {
         view.addSubviews(editProfileView)
+    }
+
+    private func signatureDelegate() {
+        editProfileView.signatureTextFieldDelegate()
     }
 }
 
