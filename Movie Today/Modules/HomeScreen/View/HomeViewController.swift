@@ -28,7 +28,7 @@ final class HomeViewController: UIViewController {
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .background
         setupNavBar()
         configureSearchBar()
         configureCollectionView()
@@ -153,8 +153,7 @@ final class HomeViewController: UIViewController {
             let label = UILabel(frame: cell.bounds)
             label.text = item
             label.textAlignment = .center
-            label.textColor = .red
-            cell.backgroundColor = .white
+            label.textColor = .white
             cell.contentView.addSubview(label)
         }
     }
@@ -222,7 +221,7 @@ final class HomeViewController: UIViewController {
             case .compilation:
                 return collectionView.dequeueConfiguredReusableCell(using: compilation, for: indexPath, item: item.collectionMovie)
             case .categories:
-                return nil/*collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item)*/
+                return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item.categories)
             case .mostPopular:
                 return nil /*collectionView.dequeueConfiguredReusableCell(using: mostPopular, for: indexPath, item: item)*/
             }
@@ -235,7 +234,7 @@ final class HomeViewController: UIViewController {
                     case .compilation:
                         return nil
                     case .categories:
-                        return nil /*collectionView.dequeueConfiguredReusableSupplementary(using: catagoriesHeader, for: indexPath)*/
+                        return collectionView.dequeueConfiguredReusableSupplementary(using: catagoriesHeader, for: indexPath)
                     case .mostPopular:
                         return nil /*collectionView.dequeueConfiguredReusableSupplementary(using: mostPopularHeader, for: indexPath)*/
                     }
@@ -260,12 +259,15 @@ extension HomeViewController: HomeScreenViewProtocol {
     //MARK: - Snapshot
     private func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Sections, Item>()
-                snapshot.appendSections([.compilation/*, .categories, .mostPopular*/])
-
+        snapshot.appendSections([.compilation, .categories/*.mostPopular*/])
+        
         presenter.collectionMovies?.forEach { collectionMovieModel in
-                let items = collectionMovieModel.docs.map { Item(collectionMovie: $0) }
-                snapshot.appendItems(items, toSection: .compilation)
-            }
+            let compilations = collectionMovieModel.docs.map { Item(collectionMovie: $0) }
+            snapshot.appendItems(compilations, toSection: .compilation)
+        }
+        let categories = presenter.categories.compactMap { Item(categories: $0)}
+        snapshot.appendItems(categories, toSection: .categories)
+        
             
             dataSource?.apply(snapshot, animatingDifferences: true)
         
