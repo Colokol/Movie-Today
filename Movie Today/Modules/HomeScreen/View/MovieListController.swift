@@ -54,6 +54,7 @@ final class MovieListController: UIViewController {
                 
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
+            
 
                 return section
                 

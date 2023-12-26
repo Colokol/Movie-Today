@@ -40,7 +40,7 @@ final class HomeViewController: UIViewController {
     private func setupNavBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: userButton)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: likeButton)
-        title = "Hello smith!"
+        navigationItem.title = "Hello smith!"
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         appearance.configureWithTransparentBackground()
@@ -259,6 +259,7 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             let vc = Builder.createMovieListVC()
+            vc.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(vc, animated: true)
         }
     }
