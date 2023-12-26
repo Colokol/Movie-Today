@@ -13,7 +13,7 @@ enum NetworkEnvironment {
 
 public enum MovieApi {
     case genresMovie(genres:String)
-    case collectionMovie(name:String)
+    case moviesFromCollection(collection:String, genre:String?)
     case collectionMovieList
     case searchMovie(searchText:String)
 }
@@ -39,7 +39,7 @@ extension MovieApi: EndpointType {
         switch self {
             case .genresMovie:
                 return "movie"
-            case .collectionMovie:
+            case .moviesFromCollection:
                 return "movie"
             case .collectionMovieList:
                 return "list"
@@ -62,12 +62,18 @@ extension MovieApi: EndpointType {
                                         "page": MovieApi.defaultPage],
                         additionalHeaders: headers
                     )
-            case .collectionMovie(name: let name):
-                return .requestParametersAndHeaders(bodyParameters: nil,
-                                                    urlParameters: ["lists":name,
-                                                                    "limit": MovieApi.defaultLimit,
-                                                                    "page": MovieApi.defaultPage],
-                                                    additionalHeaders: headers)
+            case .moviesFromCollection(collection: let name, genre: let genre):
+                var urlParameters: [String: Any] = ["lists": name,
+                                                    "limit": MovieApi.defaultLimit,
+                                                    "page": MovieApi.defaultPage]
+                if let genre = genre {
+                    urlParameters["genres.name"] = genre
+                }
+                return .requestParametersAndHeaders(
+                    bodyParameters: nil,
+                    urlParameters: urlParameters,
+                    additionalHeaders: headers
+                )
             case .collectionMovieList:
                 return .requestParametersAndHeaders(bodyParameters: nil,
                                                     urlParameters: ["limit": MovieApi.defaultLimit,
