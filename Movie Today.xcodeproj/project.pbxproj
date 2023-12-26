@@ -16,6 +16,7 @@
 		CED4D2272B387BFA005138A9 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D2262B387BFA005138A9 /* APIManager.swift */; };
 		CED4D22A2B387C1C005138A9 /* FilmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D2292B387C1C005138A9 /* FilmModel.swift */; };
 		CED4D22C2B387C34005138A9 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D22B2B387C34005138A9 /* UILabel + Extension.swift */; };
+		CED4D22F2B389DF6005138A9 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D22E2B389DF6005138A9 /* TabBarController.swift */; };
 		FA9CE7952B39F80600996564 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9CE7942B39F80600996564 /* HomePresenter.swift */; };
 		FA9CE7982B3A037D00996564 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9CE7972B3A037D00996564 /* Builder.swift */; };
 		FAE057B52B3AD85D008BC8DE /* MovieListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE057B42B3AD85D008BC8DE /* MovieListController.swift */; };
@@ -36,6 +37,7 @@
 		CED4D2262B387BFA005138A9 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		CED4D2292B387C1C005138A9 /* FilmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmModel.swift; sourceTree = "<group>"; };
 		CED4D22B2B387C34005138A9 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
+		CED4D22E2B389DF6005138A9 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		FA9CE7942B39F80600996564 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		FA9CE7972B3A037D00996564 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
 		FAE057B42B3AD85D008BC8DE /* MovieListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListController.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		CED4D21F2B373C4B005138A9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				CED4D22D2B389DEA005138A9 /* TabBar */,
 				CED4D2282B387BFD005138A9 /* HomeScreen */,
 			);
 			path = Modules;
@@ -198,6 +201,14 @@
 			path = SectionsConfig;
 			sourceTree = "<group>";
 		};
+		CED4D22D2B389DEA005138A9 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				CED4D22E2B389DF6005138A9 /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -279,6 +290,7 @@
 				FAE057B72B3AE3A4008BC8DE /* MovieListPresenter.swift in Sources */,
 				FAF734DB2B38AA8A00AE7750 /* SectionHeader.swift in Sources */,
 				CED4D2272B387BFA005138A9 /* APIManager.swift in Sources */,
+				CED4D22F2B389DF6005138A9 /* TabBarController.swift in Sources */,
 				CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */,
 				CED4D20B2B373B9F005138A9 /* SceneDelegate.swift in Sources */,
 			);
