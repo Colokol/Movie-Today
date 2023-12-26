@@ -23,4 +23,11 @@ final class Builder {
         view.presenter = presenter
         return view
     }
+    
+    static func createPopularMovieVC() -> UIViewController {
+        let view = PopularMovieController()
+        let presenter = PopularMoviePresenter(view: view)
+        view.presenter = presenter
+        return view
+    }
 }

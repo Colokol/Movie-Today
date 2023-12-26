@@ -184,6 +184,7 @@ final class HomeViewController: UIViewController {
             header.button.setTitleColor(.white, for: .normal)
             header.isUserInteractionEnabled = true
             header.button.tag = indexPath.section
+            header.button.addTarget(self, action: #selector(self.seeMoreAction(_:)), for: .touchUpInside)
         }
     }
     
@@ -194,6 +195,22 @@ final class HomeViewController: UIViewController {
             header.button.setTitleColor(.white, for: .normal)
             header.isUserInteractionEnabled = true
             header.button.tag = indexPath.section
+            header.button.addTarget(self, action: #selector(self.seeMoreAction(_:)), for: .touchUpInside)
+        }
+    }
+    
+    @objc func seeMoreAction(_ sender: UIButton) {
+        switch sender.tag {
+        case 1:
+            let vc = Builder.createMovieListVC()
+            vc.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(vc, animated: true)
+        case 2:
+            let vc = Builder.createPopularMovieVC()
+            vc.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(vc, animated: true)
+        default:
+            break
         }
     }
     
@@ -258,10 +275,6 @@ extension HomeViewController: HomeScreenViewProtocol {
 
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            let vc = Builder.createMovieListVC()
-            vc.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        
     }
 }
