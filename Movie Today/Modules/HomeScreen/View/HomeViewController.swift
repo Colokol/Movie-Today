@@ -49,6 +49,7 @@ final class HomeViewController: UIViewController {
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
+    
     //MARK: - SearchBarSetup
     private func configureSearchBar() {
         navigationItem.searchController = searchController

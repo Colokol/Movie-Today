@@ -23,6 +23,7 @@
 		FAE057B72B3AE3A4008BC8DE /* MovieListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE057B62B3AE3A4008BC8DE /* MovieListPresenter.swift */; };
 		FAF734D92B38A17500AE7750 /* Sections.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF734D82B38A17500AE7750 /* Sections.swift */; };
 		FAF734DB2B38AA8A00AE7750 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF734DA2B38AA8A00AE7750 /* SectionHeader.swift */; };
+		FAF81D1F2B3AF496000E31A4 /* PopularMovieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF81D1E2B3AF496000E31A4 /* PopularMovieController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		FAE057B62B3AE3A4008BC8DE /* MovieListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListPresenter.swift; sourceTree = "<group>"; };
 		FAF734D82B38A17500AE7750 /* Sections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sections.swift; sourceTree = "<group>"; };
 		FAF734DA2B38AA8A00AE7750 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		FAF81D1E2B3AF496000E31A4 /* PopularMovieController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovieController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,14 @@
 			path = HomeScreen;
 			sourceTree = "<group>";
 		};
+		CED4D22D2B389DEA005138A9 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				CED4D22E2B389DF6005138A9 /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		FA9CE7962B3A037400996564 /* Builder */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +189,7 @@
 			children = (
 				CED4D20C2B373B9F005138A9 /* HomeViewController.swift */,
 				FAE057B42B3AD85D008BC8DE /* MovieListController.swift */,
+				FAF81D1E2B3AF496000E31A4 /* PopularMovieController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -199,14 +210,6 @@
 				FAF734DA2B38AA8A00AE7750 /* SectionHeader.swift */,
 			);
 			path = SectionsConfig;
-			sourceTree = "<group>";
-		};
-		CED4D22D2B389DEA005138A9 /* TabBar */ = {
-			isa = PBXGroup;
-			children = (
-				CED4D22E2B389DF6005138A9 /* TabBarController.swift */,
-			);
-			path = TabBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,6 +294,7 @@
 				FAF734DB2B38AA8A00AE7750 /* SectionHeader.swift in Sources */,
 				CED4D2272B387BFA005138A9 /* APIManager.swift in Sources */,
 				CED4D22F2B389DF6005138A9 /* TabBarController.swift in Sources */,
+				FAF81D1F2B3AF496000E31A4 /* PopularMovieController.swift in Sources */,
 				CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */,
 				CED4D20B2B373B9F005138A9 /* SceneDelegate.swift in Sources */,
 			);
