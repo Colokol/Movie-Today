@@ -33,22 +33,25 @@ final class CollectionMovieCell: UICollectionViewCell {
         count.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 15
+        title.textColor = .green
+        title.numberOfLines = 0
+        title.font = .boldSystemFont(ofSize: 16)
+        count.textColor = .white
+        count.font = .systemFont(ofSize: 12)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            imageView.heightAnchor.constraint(equalToConstant: 155),
-            imageView.widthAnchor.constraint(equalToConstant: 195),
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            
+
             count.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -16),
             count.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 16),
             count.trailingAnchor.constraint(lessThanOrEqualTo: imageView.trailingAnchor),
             count.heightAnchor.constraint(equalToConstant: 15),
-            
+
             title.bottomAnchor.constraint(equalTo: count.topAnchor, constant: -24),
             title.leadingAnchor.constraint(equalTo: count.leadingAnchor),
             title.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
@@ -56,13 +59,20 @@ final class CollectionMovieCell: UICollectionViewCell {
         ])
     }
     
-    func config(with model: CollectionMovieModel) {
-        let imageString = model.docs[0].cover.previewUrl
-        if let image = imageString {
-            imageView.sd_setImage(with: URL(string: image))
+    func config(with model: Collection) {
+        if let imageString = model.cover?.url {
+           
+            imageView.sd_setImage(with: URL(string: imageString))
+
+        } else {
+            print("картинки нет")
+            imageView.image = UIImage(named: "film")
         }
-        title.text = model.docs[0].name
-        count.text = "\(String(describing: model.docs[0].moviesCount)) фильмов"
+        title.text = model.name
+        if let count = model.moviesCount {
+            self.count.text = "\(count) фильмов"
+
+        }
         
     }
 }

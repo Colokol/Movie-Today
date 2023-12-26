@@ -9,6 +9,6 @@ import Foundation
 
 struct Item: Hashable {
     var movieModel: MovieModel?
-    var collectionMovie: CollectionMovieModel?
+    var collectionMovie: Collection?
     let identifier = UUID()
 }

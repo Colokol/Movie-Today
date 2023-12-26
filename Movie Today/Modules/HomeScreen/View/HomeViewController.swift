@@ -33,7 +33,7 @@ final class HomeViewController: UIViewController {
         configureSearchBar()
         configureCollectionView()
         configureDataSource()
-        presenter.updateController()
+//        presenter.updateController()
         presenter.getCollectionMovie()
     }
     
@@ -84,7 +84,7 @@ final class HomeViewController: UIViewController {
             switch sectionKind {
                 
             case .compilation:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(295), heightDimension: .absolute(200))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(295), heightDimension: .absolute(155))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
                 
@@ -138,8 +138,8 @@ final class HomeViewController: UIViewController {
     
     //MARK: - Register Cells&Headers Methods
     
-    private func compilationRegister() -> UICollectionView.CellRegistration<CollectionMovieCell, CollectionMovieModel> {
-        return UICollectionView.CellRegistration<CollectionMovieCell, CollectionMovieModel> { (cell, indexPath, item) in
+    private func compilationRegister() -> UICollectionView.CellRegistration<CollectionMovieCell, Collection> {
+        return UICollectionView.CellRegistration<CollectionMovieCell, Collection> { (cell, indexPath, item) in
             cell.config(with: item)
             
             
@@ -260,14 +260,22 @@ extension HomeViewController: HomeScreenViewProtocol {
     //MARK: - Snapshot
     private func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Sections, Item>()
+                snapshot.appendSections([.compilation/*, .categories, .mostPopular*/])
+
+        presenter.collectionMovies?.forEach { collectionMovieModel in
+                let items = collectionMovieModel.docs.map { Item(collectionMovie: $0) }
+                snapshot.appendItems(items, toSection: .compilation)
+            }
+            
+            dataSource?.apply(snapshot, animatingDifferences: true)
         
-        snapshot.appendSections([.compilation/*, .categories, .mostPopular*/])
-        guard let compialtion = presenter.collectionMovies?.compactMap({ Item(collectionMovie: $0)}) else { return }
-        snapshot.appendItems(compialtion, toSection: .compilation)
-//        snapshot.appendItems(presenter.categories, toSection: .categories)
-//        snapshot.appendItems(presenter.array2, toSection: .mostPopular)
-        
-        dataSource?.apply(snapshot, animatingDifferences: true)
+//        snapshot.appendSections([.compilation/*, .categories, .mostPopular*/])
+//        guard let compialtion = presenter.collectionMovies?.compactMap({ Item(collectionMovie: $0.docs)}) else { return }
+//        snapshot.appendItems(compialtion, toSection: .compilation)
+////        snapshot.appendItems(presenter.categories, toSection: .categories)
+////        snapshot.appendItems(presenter.array2, toSection: .mostPopular)
+//        
+//        dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
     

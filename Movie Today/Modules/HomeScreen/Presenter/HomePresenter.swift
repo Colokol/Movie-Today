@@ -14,7 +14,7 @@ protocol HomeScreenViewProtocol: AnyObject {
 
 protocol HomePresenterProtocol: AnyObject {
     var movies: [MovieModel]? { get }
-    var collectionMovies: [CollectionMovieModel]? { get }
+    var collectionMovies: [CollectionMovieModel]? { get set }
     var array: [String] { get }
     var array2: [String] { get }
     var categories: [String] { get set }
@@ -50,14 +50,22 @@ final class HomePresenter: HomePresenterProtocol {
             print("ЗАПРОС ОТПРАВЛЕН")
             switch result {
             case .success(let movie):
+                if self.collectionMovies == nil {
+                    self.collectionMovies = [CollectionMovieModel]()
+                }
                 self.collectionMovies?.append(movie)
+                print(self.collectionMovies)
                 print("МОДЕЛИ ДОБАВЛЕНЫ")
-                self.view?.reloadData()
+                DispatchQueue.main.async {
+                    self.view?.update()
+                    self.view?.reloadData()
+                }
             case .failure(let error):
                 print(error.localizedDescription)
                 print("ЧТО-ТО ПОШЛО НЕ ТАК")
             }
         }
+        
     }
     
     func updateController() {

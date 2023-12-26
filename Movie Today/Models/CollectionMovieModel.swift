@@ -10,7 +10,7 @@ import Foundation
     // MARK: - CollectionFilmModel
 struct CollectionMovieModel: Decodable, Hashable {
     let docs: [Collection]
-    let slug: String
+//    let slug: String
     let total: Int
     let limit: Int
     let page: Int
@@ -22,7 +22,7 @@ struct Collection: Decodable, Hashable {
     let category: String?
     let name: String
     let moviesCount: Int?
-    let cover: Poster
+    let cover: Poster?
     let createdAt: String?
     let updatedAt: String?
     let id: String
