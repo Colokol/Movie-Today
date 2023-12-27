@@ -35,6 +35,7 @@ final class HomeViewController: UIViewController {
         configureDataSource()
 //        presenter.updateController()
         presenter.getCollectionMovie()
+        presenter.getMoviesFromCollection()
     }
     
     //MARK: - NavBarSetup
@@ -114,11 +115,11 @@ final class HomeViewController: UIViewController {
                 return section
                 
             case .mostPopular:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(230))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(260))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(160), heightDimension: .estimated(230))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(160), heightDimension: .estimated(260))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
@@ -158,16 +159,9 @@ final class HomeViewController: UIViewController {
         }
     }
     
-    private func MostPopularRegister() -> UICollectionView.CellRegistration<UICollectionViewCell, String> {
-        return UICollectionView.CellRegistration<UICollectionViewCell, String> { (cell, indexPath, item) in
-            cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-            
-            let label = UILabel(frame: cell.bounds)
-            label.text = item
-            label.textAlignment = .center
-            label.textColor = .red
-            cell.backgroundColor = .white
-            cell.contentView.addSubview(label)
+    private func MostPopularRegister() -> UICollectionView.CellRegistration<PopularCell, Doc> {
+        return UICollectionView.CellRegistration<PopularCell, Doc> { (cell, indexPath, item) in
+            cell.config(with: item)
         }
     }
     
@@ -223,7 +217,7 @@ final class HomeViewController: UIViewController {
             case .categories:
                 return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item.categories)
             case .mostPopular:
-                return nil /*collectionView.dequeueConfiguredReusableCell(using: mostPopular, for: indexPath, item: item)*/
+                return collectionView.dequeueConfiguredReusableCell(using: mostPopular, for: indexPath, item: item.movieModel)
             }
             
         }
@@ -236,7 +230,7 @@ final class HomeViewController: UIViewController {
                     case .categories:
                         return collectionView.dequeueConfiguredReusableSupplementary(using: catagoriesHeader, for: indexPath)
                     case .mostPopular:
-                        return nil /*collectionView.dequeueConfiguredReusableSupplementary(using: mostPopularHeader, for: indexPath)*/
+                        return collectionView.dequeueConfiguredReusableSupplementary(using: mostPopularHeader, for: indexPath)
                     }
                 }
             }
@@ -259,7 +253,7 @@ extension HomeViewController: HomeScreenViewProtocol {
     //MARK: - Snapshot
     private func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Sections, Item>()
-        snapshot.appendSections([.compilation, .categories/*.mostPopular*/])
+        snapshot.appendSections([.compilation, .categories, .mostPopular])
         
         presenter.collectionMovies?.forEach { collectionMovieModel in
             let compilations = collectionMovieModel.docs.map { Item(collectionMovie: $0) }
@@ -267,17 +261,13 @@ extension HomeViewController: HomeScreenViewProtocol {
         }
         let categories = presenter.categories.compactMap { Item(categories: $0)}
         snapshot.appendItems(categories, toSection: .categories)
+        presenter.movies?.forEach { model in
+            let popular = model.docs.map { Item(movieModel: $0) }
+            snapshot.appendItems(popular, toSection: .mostPopular)
+        }
         
-            
-            dataSource?.apply(snapshot, animatingDifferences: true)
+        dataSource?.apply(snapshot, animatingDifferences: true)
         
-//        snapshot.appendSections([.compilation/*, .categories, .mostPopular*/])
-//        guard let compialtion = presenter.collectionMovies?.compactMap({ Item(collectionMovie: $0.docs)}) else { return }
-//        snapshot.appendItems(compialtion, toSection: .compilation)
-////        snapshot.appendItems(presenter.categories, toSection: .categories)
-////        snapshot.appendItems(presenter.array2, toSection: .mostPopular)
-//        
-//        dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
     
@@ -288,3 +278,4 @@ extension HomeViewController: UICollectionViewDelegate {
         
     }
 }
+

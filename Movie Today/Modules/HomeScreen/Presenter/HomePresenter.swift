@@ -13,10 +13,11 @@ protocol HomeScreenViewProtocol: AnyObject {
 }
 
 protocol HomePresenterProtocol: AnyObject {
-    var movies: [MovieModel]? { get }
+    var movies: [MovieModel]? { get set }
     var collectionMovies: [CollectionMovieModel]? { get set }
     var categories: [String] { get set }
     func getCollectionMovie()
+    func getMoviesFromCollection()
     func updateController()
     init(view: HomeScreenViewProtocol)
 }
@@ -64,6 +65,26 @@ final class HomePresenter: HomePresenterProtocol {
         
     }
     
+    func getMoviesFromCollection() {
+        networkManager.getMoviesFromCollection(collectionName: .popular) { result in
+            print("Запрос на популярные фильмы отправлен")
+            switch result {
+            case .success(let movie):
+                if  self.movies == nil {
+                    self.movies = [MovieModel]()
+                }
+                self.movies?.append(movie)
+                print("Добавлены фильмы", self.movies)
+                DispatchQueue.main.async {
+                    self.view?.update()
+                    self.view?.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription, "ERROR")
+            }
+        }
+    }
+    
     func updateController() {
         self.view?.update()
     }
@@ -72,8 +93,6 @@ final class HomePresenter: HomePresenterProtocol {
     init(view: HomeScreenViewProtocol) {
         self.view = view
         categories = MovieGenres.allCases.map { $0.rawValue }
-        print(categories)
-//        getGenre(genre: .carton)
     }
     
 }
