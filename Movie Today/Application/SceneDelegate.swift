@@ -19,15 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         
         if onboardingCompleted() {
-            let tabBarController = TabBarController()
-            let navigationController = UINavigationController(rootViewController: tabBarController)
-            window?.rootViewController = navigationController
-            navigationController.navigationBar.isHidden = true
+            Builder.configureRootViewController(viewController: TabBarController(), window: window ?? UIWindow())
         } else {
-            let tabBarController = OnboardingViewController()
-            let navigationController = UINavigationController(rootViewController: tabBarController)
-            window?.rootViewController = navigationController
-            navigationController.navigationBar.isHidden = true
+            Builder.configureRootViewController(viewController: OnboardingViewController(), window: window ?? UIWindow())
         }
         window?.makeKeyAndVisible()
     }

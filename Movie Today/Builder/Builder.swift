@@ -30,4 +30,10 @@ final class Builder {
         view.presenter = presenter
         return view
     }
+    
+    static func configureRootViewController(viewController: UIViewController, window: UIWindow) {
+        let navigationController = UINavigationController(rootViewController: viewController)
+        window.rootViewController = navigationController
+        navigationController.navigationBar.isHidden = true
+    }
 }
