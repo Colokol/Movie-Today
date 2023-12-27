@@ -31,8 +31,8 @@ class PrivacyViewController: UIViewController {
         let contentView = UIView()
         return contentView
     }()
-    private lazy var termsLabel = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .white)
-    private lazy var secondTermsLabel = UILabel(font: .boldSystemFont(ofSize: 18), textColor: .white)
+    private lazy var termsLabel = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .white, textAlignment: .left)
+    private lazy var secondTermsLabel = UILabel(font: .boldSystemFont(ofSize: 18), textColor: .white, textAlignment: .left)
     private lazy var termsTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
