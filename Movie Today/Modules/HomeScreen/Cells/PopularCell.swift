@@ -103,14 +103,12 @@ final class PopularCell: UICollectionViewCell {
     
     func config(with model: Doc) {
         title.text = model.name
-        genre.text = model.genres?.first?.name
-        if let image = model.poster.url {
-            imageView.sd_setImage(with: URL(string: image))
-        } else {
-            print("Нет картинки в popularCell")
-        }
-        if let rait =  model.rating?.kp {
-            raiting.text = String(format: "%.1f", rait)
-        }        
+        genre.text = model.genres.first?.name
+        
+        let image = model.poster.url
+        let rait =  model.rating.kp
+
+        imageView.sd_setImage(with: URL(string: image))
+        raiting.text = String(format: "%.1f", rait)
     }
 }

@@ -197,22 +197,22 @@ final class FilmCell: UICollectionViewCell {
     func config(with model: Doc) {
         title.text = model.name
         year.text = String(model.year)
-        if let min = model.movieLength {
-            minutes.text = "\(min) minutes"
+
+        let movieLength = model.movieLength
+        minutes.text = "\(movieLength) minutes"
+
+        if let genre = model.genres.first?.name {
+            let type = model.type
+            self.genre.text = "\(genre) | \(type)"
         }
-        if let genre =  model.genres?.first?.name, let gen2 = model.alternativeName {
-            self.genre.text = "\(genre) | \(gen2)"
-        }
-        if let pg = model.ageRating {
-            self.pg.text = "PG - \(pg)"
-        }
+
+        let pg = model.ageRating
+        self.pg.text = "PG - \(pg)"
         
-        if let rait =  model.rating?.kp {
-            raiting.text = String(format: "%.1f", rait)
-        }
-        if let image =  model.poster.url {
-            imageView.sd_setImage(with: URL(string: image))
-        }
-        
+        let rait =  model.rating.kp
+        raiting.text = String(format: "%.1f", rait)
+
+        let image =  model.poster.url
+        imageView.sd_setImage(with: URL(string: image))
     }
 }

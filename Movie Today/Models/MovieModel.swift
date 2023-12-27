@@ -19,18 +19,19 @@ struct Doc: Codable, Hashable {
     let year: Int
     let description: String
     let shortDescription: String?
-    let movieLength: Int?
+    let movieLength: Int
     let poster: Poster
-    let rating: Rating?
+    let rating: Rating
     let votes: Votes?
-    let genres: [Genres]?
+    let genres: [Genres]
     let ratingMpaa: String?
-    let ageRating: Int?
+    let ageRating: Int
+    let type: String
 }
 
     // MARK: - Backdrop
 struct Poster: Codable, Hashable {
-    let url: String?
+    let url: String
     let previewUrl: String?
 }
 
@@ -40,7 +41,7 @@ struct Genres: Codable, Hashable {
 }
     // MARK: - Rating
 struct Rating: Codable, Hashable {
-    let kp: Double?
+    let kp: Double
 }
 
     // MARK: - Votes

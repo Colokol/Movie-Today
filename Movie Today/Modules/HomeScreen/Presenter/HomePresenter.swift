@@ -44,22 +44,18 @@ final class HomePresenter: HomePresenterProtocol {
     
     func getCollectionMovie() {
         networkManager.getCollectionMovie { result in
-            print("ЗАПРОС ОТПРАВЛЕН")
             switch result {
             case .success(let movie):
                 if self.collectionMovies == nil {
                     self.collectionMovies = [CollectionMovieModel]()
                 }
                 self.collectionMovies?.append(movie)
-                print(self.collectionMovies)
-                print("МОДЕЛИ ДОБАВЛЕНЫ")
                 DispatchQueue.main.async {
                     self.view?.update()
                     self.view?.reloadData()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
-                print("ЧТО-ТО ПОШЛО НЕ ТАК")
             }
         }
         
@@ -67,14 +63,12 @@ final class HomePresenter: HomePresenterProtocol {
     
     func getMoviesFromCollection() {
         networkManager.getMoviesFromCollection(collectionName: .popular) { result in
-            print("Запрос на популярные фильмы отправлен")
             switch result {
             case .success(let movie):
                 if  self.movies == nil {
                     self.movies = [MovieModel]()
                 }
                 self.movies?.append(movie)
-                print("Добавлены фильмы", self.movies)
                 DispatchQueue.main.async {
                     self.view?.update()
                     self.view?.reloadData()
