@@ -210,6 +210,9 @@ final class FilmCell: UICollectionViewCell {
         if let rait =  model.rating?.kp {
             raiting.text = String(format: "%.1f", rait)
         }
-        imageView.image = UIImage(named: "films")
+        if let image =  model.poster.url {
+            imageView.sd_setImage(with: URL(string: image))
+        }
+        
     }
 }
