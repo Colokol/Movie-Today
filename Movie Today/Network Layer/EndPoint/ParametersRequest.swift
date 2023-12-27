@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum MovieGenres: String {
+public enum MovieGenres: String, CaseIterable {
     case horror = "ужасы"
     case comedy = "комедия"
     case criminal = "криминал"
