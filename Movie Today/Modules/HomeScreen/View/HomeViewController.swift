@@ -269,8 +269,6 @@ extension HomeViewController: HomeScreenViewProtocol {
         dataSource?.apply(snapshot, animatingDifferences: true)
         
     }
-    
-    
 }
 
 extension HomeViewController: UICollectionViewDelegate {

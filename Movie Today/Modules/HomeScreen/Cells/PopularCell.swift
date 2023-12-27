@@ -111,8 +111,6 @@ final class PopularCell: UICollectionViewCell {
         }
         if let rait =  model.rating?.kp {
             raiting.text = String(format: "%.1f", rait)
-        }
-//        raiting.text = "\(String(describing: model.rating?.kp))"
-        
+        }        
     }
 }

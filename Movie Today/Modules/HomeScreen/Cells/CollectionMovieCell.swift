@@ -33,7 +33,7 @@ final class CollectionMovieCell: UICollectionViewCell {
         count.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 15
-        title.textColor = .green
+        title.textColor = .white
         title.numberOfLines = 0
         title.font = .boldSystemFont(ofSize: 16)
         count.textColor = .white
@@ -54,8 +54,8 @@ final class CollectionMovieCell: UICollectionViewCell {
 
             title.bottomAnchor.constraint(lessThanOrEqualTo: count.topAnchor),
             title.leadingAnchor.constraint(equalTo: count.leadingAnchor),
-            title.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
-            title.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 25)
+            title.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -8),
+            title.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 30)
         ])
     }
     
