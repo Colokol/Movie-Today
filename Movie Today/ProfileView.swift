@@ -12,7 +12,8 @@ class ProfileView: UIView {
     //MARK: - User interface element
     
     let userView = UserView()
-    let generalView = GeneralAndMore(labelText: "General")
+    let generalView = GeneralAndMore(labelText: "General", firstButtonTitle: "Notification", firstImage: "notif", secondButtonTitle: "Language", secondImage: "lang")
+    let moreView = GeneralAndMore(labelText: "More", firstButtonTitle: "Legal and Policies", firstImage: "shield", secondButtonTitle: "About Us", secondImage: "about")
     
     //MARK: - Initialize
     
@@ -33,7 +34,7 @@ class ProfileView: UIView {
     private func setupView() {
         // Setup view
         self.backgroundColor = .blue
-        self.addSubviews(userView, generalView)
+        self.addSubviews(userView, generalView, moreView)
         
         // Setup user view
         userView.layer.borderWidth = 1
@@ -44,6 +45,11 @@ class ProfileView: UIView {
         generalView.layer.borderWidth = 1
         generalView.layer.borderColor = UIColor.gray.cgColor
         generalView.layer.cornerRadius = 15
+        
+        // Setup more view
+        moreView.layer.borderWidth = 1
+        moreView.layer.borderColor = UIColor.gray.cgColor
+        moreView.layer.cornerRadius = 15
     }
 }
 
@@ -73,10 +79,16 @@ private extension ProfileView {
             userView.heightAnchor.constraint(equalToConstant: Constans.ninetyPoints),
             
             // General view
-            generalView.topAnchor.constraint(equalTo: userView.bottomAnchor, constant: Constans.twentyPoints),
+            generalView.topAnchor.constraint(equalTo: userView.bottomAnchor, constant: Constans.thiryPoints),
             generalView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
             generalView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
             generalView.heightAnchor.constraint(equalToConstant: Constans.twoHundredPoints),
+            
+            // More view
+            moreView.topAnchor.constraint(equalTo: generalView.bottomAnchor, constant: Constans.twentyPoints),
+            moreView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
+            moreView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
+            moreView.heightAnchor.constraint(equalToConstant: Constans.twoHundredPoints),
         ])
     }
 }

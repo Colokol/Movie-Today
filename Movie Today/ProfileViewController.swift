@@ -26,9 +26,37 @@ class ProfileViewController: UIViewController {
     //MARK: - Private methods
     
     private func setupView() {
+
+        // Setup view
         view.addSubviews(profileView)
+        
+        // Added target for button
+        profileView.generalView.firstButton.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
+        profileView.generalView.secondButton.addTarget(self, action: #selector(languageButtonTapped), for: .touchUpInside)
+        profileView.moreView.firstButton.addTarget(self, action: #selector(policiesButtonTapped), for: .touchUpInside)
+        profileView.moreView.secondButton.addTarget(self, action: #selector(aboutButtonTapped), for: .touchUpInside)
+    }
+    
+    //MARK: - Objective-C methods
+    
+    @objc func notificationButtonTapped() {
+        print("Notification")
+    }
+    
+    @objc func languageButtonTapped() {
+        print("Language")
+    }
+    
+    @objc func policiesButtonTapped() {
+        print("Policies")
+    }
+    
+    @objc func aboutButtonTapped() {
+        print("About")
     }
 }
+
+//MARK: - Extension
 
 private extension ProfileViewController {
     

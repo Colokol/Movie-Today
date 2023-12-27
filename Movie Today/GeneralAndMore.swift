@@ -18,12 +18,17 @@ class GeneralAndMore: UIView {
         label.font = .boldSystemFont(ofSize: 25)
         return label
     }()
-    private lazy var firstButton: UIButton = {
+    private lazy var firstImage: UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = .white
+        image.clipsToBounds = true
+        return image
+    }()
+    let firstButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .white
         button.setTitleColor(.gray, for: .normal)
-        button.setTitle("Hi", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 18)
+        button.titleLabel?.textAlignment = .left
         return button
     }()
     private lazy var separatorView: UIView = {
@@ -31,22 +36,28 @@ class GeneralAndMore: UIView {
         view.backgroundColor = .gray
         return view
     }()
-    private lazy var secondButton: UIButton = {
+    let secondButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .white
         button.setTitleColor(.gray, for: .normal)
-        button.setTitle("Hi", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 18)
+        button.titleLabel?.textAlignment = .left
         return button
     }()
-    
+    private lazy var secondImage: UIImageView = {
+        let image = UIImageView()
+        image.clipsToBounds = true
+        return image
+    }()
     
     //MARK: - Initialize
     
-    init(labelText: String?, firstButtonTitle: String?, firstButtonImage: String?, secondButtonTitle: String?, secondButtonImage: String?) {
+    init(labelText: String?, firstButtonTitle: String?, firstImage: String, secondButtonTitle: String?, secondImage: String) {
         super.init(frame: .infinite)
         viewLabel.text = labelText
-        
+        firstButton.setTitle(firstButtonTitle, for: .normal)
+        self.firstImage.image = UIImage(named: firstImage)
+        secondButton.setTitle(secondButtonTitle, for: .normal)
+        self.secondImage.image = UIImage(named: secondImage)
         
         // Call function's
         setupView()
@@ -60,7 +71,7 @@ class GeneralAndMore: UIView {
     //MARK: - Private method
     
     private func setupView() {
-        self.addSubviews(viewLabel, firstButton, separatorView, secondButton)
+        self.addSubviews(viewLabel, firstButton, firstImage, separatorView, secondButton, secondImage)
     }
 }
 
@@ -73,6 +84,7 @@ private extension GeneralAndMore {
         static let thiryPoints: CGFloat = 30
         static let fiftyFivePoints: CGFloat = 55
         static let ninetyPoints: CGFloat = 90
+        static let twoHundredPoints: CGFloat = 200
     }
     
     func setupConstraints() {
@@ -85,9 +97,15 @@ private extension GeneralAndMore {
             
             // First button
             firstButton.topAnchor.constraint(equalTo: viewLabel.bottomAnchor, constant: Constans.twentyPoints),
-            firstButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.tenPoints),
+            firstButton.leadingAnchor.constraint(equalTo: firstImage.leadingAnchor, constant: Constans.tenPoints),
             firstButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.tenPoints),
             firstButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints),
+            
+            // First image
+            firstImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.thiryPoints),
+            firstImage.widthAnchor.constraint(equalToConstant: Constans.thiryPoints),
+            firstImage.heightAnchor.constraint(equalToConstant: Constans.thiryPoints),
+            firstImage.centerYAnchor.constraint(equalTo: firstButton.centerYAnchor),
             
             // Separator view
             separatorView.topAnchor.constraint(equalTo: firstButton.bottomAnchor, constant: Constans.tenPoints),
@@ -97,9 +115,15 @@ private extension GeneralAndMore {
             
             // Second button
             secondButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: Constans.tenPoints),
-            secondButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.tenPoints),
+            secondButton.leadingAnchor.constraint(equalTo: secondImage.leadingAnchor, constant: Constans.tenPoints),
             secondButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.tenPoints),
             secondButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints),
+            
+            // Second image
+            secondImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.thiryPoints),
+            secondImage.widthAnchor.constraint(equalToConstant: Constans.thiryPoints),
+            secondImage.heightAnchor.constraint(equalToConstant: Constans.thiryPoints),
+            secondImage.centerYAnchor.constraint(equalTo: secondButton.centerYAnchor),
         ])
     }
 }
