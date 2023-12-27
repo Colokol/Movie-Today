@@ -22,7 +22,7 @@ extension MovieApi: EndpointType {
 
     private static let defaultPage = 1
     private static let defaultLimit = 10
-
+    private static let notNilParameters = ["ageRating", "genres.name", "poster.url", "movieLength", "rating.kp", "type"]
 
     var environmentBaseURL : String {
         switch NetworkManager.environment {
@@ -59,13 +59,15 @@ extension MovieApi: EndpointType {
                         bodyParameters: nil,
                         urlParameters: ["genres.name": genre,
                                         "limit": MovieApi.defaultLimit,
-                                        "page": MovieApi.defaultPage],
+                                        "page": MovieApi.defaultPage,
+                                        "notNullFields":MovieApi.notNilParameters],
                         additionalHeaders: headers
                     )
             case .moviesFromCollection(collection: let name, genre: let genre):
                 var urlParameters: [String: Any] = ["lists": name,
                                                     "limit": MovieApi.defaultLimit,
-                                                    "page": MovieApi.defaultPage]
+                                                    "page": MovieApi.defaultPage,
+                                                    "notNullFields":MovieApi.notNilParameters]
                 if let genre = genre {
                     urlParameters["genres.name"] = genre
                 }
@@ -74,18 +76,21 @@ extension MovieApi: EndpointType {
                     urlParameters: urlParameters,
                     additionalHeaders: headers
                 )
+
             case .collectionMovieList:
-                
                 return .requestParametersAndHeaders(bodyParameters: nil,
                                                     urlParameters: ["limit": MovieApi.defaultLimit,
                                                                     "page": MovieApi.defaultPage,
-                                                                    "notNullFields":"slug" ],
+                                                                    "sortField":"name",
+                                                                    "sortType":"-1",
+                                                                    "notNullFields":["slug","cover.url"]],
                                                     additionalHeaders: headers)
             case .searchMovie(searchText: let searchMovie):
                 return .requestParametersAndHeaders(bodyParameters: nil,
                                                     urlParameters:["query":"\(searchMovie)",
                                                                    "limit": MovieApi.defaultLimit,
-                                                                   "page": MovieApi.defaultPage],
+                                                                   "page": MovieApi.defaultPage,
+                                                                   "notNullFields":MovieApi.notNilParameters],
                                                     additionalHeaders: headers)
         }
     }

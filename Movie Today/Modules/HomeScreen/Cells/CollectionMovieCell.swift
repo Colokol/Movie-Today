@@ -33,6 +33,7 @@ final class CollectionMovieCell: UICollectionViewCell {
         count.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 15
+        imageView.contentMode = .scaleAspectFill
         title.textColor = .white
         title.numberOfLines = 0
         title.font = .boldSystemFont(ofSize: 16)
