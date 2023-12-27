@@ -273,7 +273,10 @@ extension HomeViewController: HomeScreenViewProtocol {
 
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        if indexPath.section == 1 {
+            presenter.didSelectItem(at: indexPath)
+        }
+
     }
 }
 

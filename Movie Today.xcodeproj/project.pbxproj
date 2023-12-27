@@ -209,8 +209,8 @@
 			isa = PBXGroup;
 			children = (
 				FAAB771E2B3B3A7800166219 /* Cells */,
-				FA9D9FA72B3B31B200CD190F /* Model */,
 				FA9CE79B2B3A04FC00996564 /* SectionsConfig */,
+				FA9D9FA72B3B31B200CD190F /* Model */,
 				FA9CE7992B3A04EC00996564 /* View */,
 				FA9CE79A2B3A04F300996564 /* Presenter */,
 			);

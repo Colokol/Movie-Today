@@ -19,6 +19,7 @@ protocol HomePresenterProtocol: AnyObject {
     func getCollectionMovie()
     func getMoviesFromCollection()
     func updateController()
+    func didSelectItem(at indexPath: IndexPath)
     init(view: HomeScreenViewProtocol)
 }
 
@@ -29,12 +30,23 @@ final class HomePresenter: HomePresenterProtocol {
     
     var movies: [MovieModel]?
     var collectionMovies: [CollectionMovieModel]?
-    var categories: [String]
+    var categories = MovieGenres.allCases.map { $0.rawValue }
     
     func getGenre(genre: MovieGenres) {
         networkManager.getMoviesGenre(genre: genre) { result in
             switch result {
             case .success(let movie):
+                if self.movies == nil {
+                    self.movies = [MovieModel]()
+                } else {
+                    self.movies = []
+                    self.movies?.append(movie)
+                    print("--------------------Модели в getGenre добавлены---------------------")
+                    DispatchQueue.main.async {
+                        self.view?.update()
+                        self.view?.reloadData()
+                    }
+                }
                 print(movie)
             case .failure(let error):
                 print(error.localizedDescription)
@@ -89,6 +101,27 @@ final class HomePresenter: HomePresenterProtocol {
         self.view?.update()
     }
     
+    func didSelectItem(at indexPath: IndexPath) {
+        let selectedModel = categories[indexPath.row]
+        switch selectedModel {
+        case "ужасы":
+            getGenre(genre: .horror)
+        case "комедия":
+            getGenre(genre: .comedy)
+        case "криминал":
+            getGenre(genre: .criminal)
+        case "драма":
+            getGenre(genre: .drama)
+        case "фантастика":
+            getGenre(genre: .fantasy)
+        case "мультфильм":
+            getGenre(genre: .carton)
+        case "документальный":
+            getGenre(genre: .documentary)
+        default:
+            break
+        }
+    }
     
     init(view: HomeScreenViewProtocol) {
         self.view = view
