@@ -125,7 +125,6 @@ final class HomePresenter: HomePresenterProtocol {
     
     init(view: HomeScreenViewProtocol) {
         self.view = view
-        categories = MovieGenres.allCases.map { $0.rawValue }
     }
     
 }
