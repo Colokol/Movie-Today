@@ -11,6 +11,14 @@ final class ProfileView: UIView {
     
     //MARK: - User interface element
     
+    private lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.alwaysBounceVertical = true
+        scroll.showsVerticalScrollIndicator = false
+        scroll.frame = self.bounds
+        return scroll
+    }()
+    let contentView = UIView()
     let userView = UserView()
     let generalView = GeneralAndMore(labelText: "General", firstButtonTitle: "Notification", firstImage: "notif", secondButtonTitle: "Language", secondImage: "lang")
     let moreView = GeneralAndMore(labelText: "More", firstButtonTitle: "Legal and Policies", firstImage: "shield", secondButtonTitle: "About Us", secondImage: "about")
@@ -34,7 +42,9 @@ final class ProfileView: UIView {
     private func setupView() {
         // Setup view
         self.backgroundColor = .background
-        self.addSubviews(userView, generalView, moreView)
+        self.addSubviews(scrollView)
+        scrollView.addSubviews(contentView)
+        contentView.addSubviews(userView, generalView, moreView)
         
         // Setup user view
         userView.layer.borderWidth = 1
@@ -71,23 +81,35 @@ private extension ProfileView {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
+            // Scroll view
+            scrollView.topAnchor.constraint(equalTo: self.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            // Content view
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
             // User view
-            userView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Constans.tenPoints),
-            userView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
-            userView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
+            userView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: Constans.tenPoints),
+            userView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constans.sideMargin),
+            userView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constans.sideMargin),
             userView.heightAnchor.constraint(equalToConstant: Constans.ninetyPoints),
             
             // General view
             generalView.topAnchor.constraint(equalTo: userView.bottomAnchor, constant: Constans.twentyPoints),
-            generalView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
-            generalView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
+            generalView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constans.sideMargin),
+            generalView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constans.sideMargin),
             generalView.heightAnchor.constraint(equalToConstant: Constans.twoHundredPoints),
             
             // More view
             moreView.topAnchor.constraint(equalTo: generalView.bottomAnchor, constant: Constans.twentyPoints),
-            moreView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
-            moreView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
+            moreView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constans.sideMargin),
+            moreView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constans.sideMargin),
             moreView.heightAnchor.constraint(equalToConstant: Constans.twoHundredPoints),
         ])
     }
