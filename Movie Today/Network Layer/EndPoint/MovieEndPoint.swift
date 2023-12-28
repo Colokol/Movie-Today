@@ -89,8 +89,7 @@ extension MovieApi: EndpointType {
                 return .requestParametersAndHeaders(bodyParameters: nil,
                                                     urlParameters:["query":"\(searchMovie)",
                                                                    "limit": MovieApi.defaultLimit,
-                                                                   "page": MovieApi.defaultPage,
-                                                                   "notNullFields":MovieApi.notNilParameters],
+                                                                   "page": MovieApi.defaultPage],
                                                     additionalHeaders: headers)
         }
     }
