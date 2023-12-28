@@ -10,7 +10,7 @@ import Foundation
 struct NetworkManager {
     static let environment: NetworkEnvironment = .production
     // MARK: - Указываем свой токен API
-    static let movieAPIKey: String = "TRFZCT7-KY149CD-GGZ9SBT-Y0R9B3K"
+    static let movieAPIKey: String = ""
     private let router = Router<MovieApi>()
     private let jsonDecoder = JSONDecoder()
 
@@ -51,7 +51,7 @@ struct NetworkManager {
     }
 
     // MARK: - Поиск фильмов по названию
-    func searchMovie(searchText: String, completion: @escaping (Result<MovieModel, Error>) -> Void ) {
+    func searchMovie(searchText: String, completion: @escaping (Result<SearchMovieModel, Error>) -> Void ) {
         performRequest(for: .searchMovie(searchText: searchText), completion: completion)
     }
 

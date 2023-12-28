@@ -15,6 +15,8 @@ final class PopularMovieController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionViewConfigure()
+        view.backgroundColor = .background
+        presenter.checkSlug()
         
     }
     
@@ -25,7 +27,7 @@ final class PopularMovieController: UIViewController {
         collectionView?.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(FilmCell.self, forCellWithReuseIdentifier: FilmCell.identifier)
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -47,17 +49,15 @@ extension PopularMovieController: UICollectionViewDelegateFlowLayout {
 
 extension PopularMovieController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.array.count
+        print(presenter.array?.count ?? 0)
+        return presenter.array?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        let label = UILabel(frame: cell.bounds)
-        label.text = presenter.getMovie(with: indexPath)
-        label.textAlignment = .center
-        label.textColor = .red
-        cell.backgroundColor = .white
-        cell.contentView.addSubview(label)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilmCell.identifier, for: indexPath) as? FilmCell else { return UICollectionViewCell() }
+        if let model = presenter.array?[indexPath.row] {
+            cell.config(with: model)
+        }
         
         return cell
     }
