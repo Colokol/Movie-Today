@@ -38,10 +38,10 @@ final class SectionHeader: UICollectionReusableView {
             button.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
-        button.setTitle(button.isSelected ? "Hide" : "See More", for: .normal)
+        button.setTitle(button.isSelected ? "Hide" : "See All", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14)
         button.setTitleColor(.black, for: .normal)
         button.isUserInteractionEnabled = true
-        titleLabel.font = .boldSystemFont(ofSize: 20)
+        titleLabel.font = .montserratSemiBold(ofSize: 20)
     }
 }

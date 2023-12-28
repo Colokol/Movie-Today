@@ -54,6 +54,8 @@
 		FAF734D92B38A17500AE7750 /* Sections.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF734D82B38A17500AE7750 /* Sections.swift */; };
 		FAF734DB2B38AA8A00AE7750 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF734DA2B38AA8A00AE7750 /* SectionHeader.swift */; };
 		FAF81D1F2B3AF496000E31A4 /* PopularMovieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF81D1E2B3AF496000E31A4 /* PopularMovieController.swift */; };
+		FAF822AC2B3DB560007E1177 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF822AB2B3DB560007E1177 /* SearchResult.swift */; };
+		FAF822AE2B3DB5FE007E1177 /* ResultPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF822AD2B3DB5FE007E1177 /* ResultPresenter.swift */; };
 		FAF896382B3C23B300F11A0F /* FilmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF896372B3C23B300F11A0F /* FilmCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -106,6 +108,8 @@
 		FAF734D82B38A17500AE7750 /* Sections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sections.swift; sourceTree = "<group>"; };
 		FAF734DA2B38AA8A00AE7750 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		FAF81D1E2B3AF496000E31A4 /* PopularMovieController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovieController.swift; sourceTree = "<group>"; };
+		FAF822AB2B3DB560007E1177 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		FAF822AD2B3DB5FE007E1177 /* ResultPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPresenter.swift; sourceTree = "<group>"; };
 		FAF896372B3C23B300F11A0F /* FilmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -348,6 +352,7 @@
 				CED4D20C2B373B9F005138A9 /* HomeViewController.swift */,
 				FAE057B42B3AD85D008BC8DE /* MovieListController.swift */,
 				FAF81D1E2B3AF496000E31A4 /* PopularMovieController.swift */,
+				FAF822AB2B3DB560007E1177 /* SearchResult.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				FA9CE7942B39F80600996564 /* HomePresenter.swift */,
 				FAE057B62B3AE3A4008BC8DE /* MovieListPresenter.swift */,
 				FA8492762B3B19700025B8BC /* PopularMoviePresenter.swift */,
+				FAF822AD2B3DB5FE007E1177 /* ResultPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -484,6 +490,7 @@
 				FAA3CF662B3C0BF4008B30A7 /* PopularCell.swift in Sources */,
 				FAF896382B3C23B300F11A0F /* FilmCell.swift in Sources */,
 				CED4D2452B3A0C42005138A9 /* JSONParameterEncoder.swift in Sources */,
+				FAF822AE2B3DB5FE007E1177 /* ResultPresenter.swift in Sources */,
 				CED4D24F2B3AE837005138A9 /* CollectionMovieModel.swift in Sources */,
 				CED4D2512B3B0B59005138A9 /* ParametersRequest.swift in Sources */,
 				792A56822B3CF98200617440 /* WishListVC.swift in Sources */,
@@ -508,6 +515,7 @@
 				CED4D24D2B3AA774005138A9 /* NetworkManager.swift in Sources */,
 				CED4D22F2B389DF6005138A9 /* TabBarController.swift in Sources */,
 				FAF81D1F2B3AF496000E31A4 /* PopularMovieController.swift in Sources */,
+				FAF822AC2B3DB560007E1177 /* SearchResult.swift in Sources */,
 				CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */,
 				CED4D20B2B373B9F005138A9 /* SceneDelegate.swift in Sources */,
 				CED4D23F2B3A0519005138A9 /* HTTPMethod.swift in Sources */,

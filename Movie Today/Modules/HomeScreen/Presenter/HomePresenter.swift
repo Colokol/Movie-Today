@@ -14,12 +14,14 @@ protocol HomeScreenViewProtocol: AnyObject {
 }
 
 protocol HomePresenterProtocol: AnyObject {
-    var movies: [MovieModel]? { get set }
+    var movies: [Doc]? { get set }
     var collectionMovies: [Collection]? { get set }
     var categories: [Categories] { get set }
+    var searchMovies: [Doc]? { get set }
     func getCollectionMovie()
     func getMoviesFromCollection()
     func updateController()
+    func getFilms(with text: String)
     func didSelectItem(at indexPath: IndexPath)
     init(view: HomeScreenViewProtocol)
 }
@@ -29,8 +31,9 @@ final class HomePresenter: HomePresenterProtocol {
     weak var view: HomeScreenViewProtocol?
     let networkManager = NetworkManager()
     
-    var movies: [MovieModel]?
+    var movies: [Doc]?
     var collectionMovies: [Collection]?
+    var searchMovies: [Doc]?
     var categories = [Categories(name: "Ужасы", isSelected: true),
                       Categories(name: "Комедия", isSelected: false),
                       Categories(name: "Криминал", isSelected: false),
@@ -44,10 +47,10 @@ final class HomePresenter: HomePresenterProtocol {
             switch result {
             case .success(let movie):
                 if self.movies == nil {
-                    self.movies = [MovieModel]()
+                    self.movies = [Doc]()
                 } else {
                     self.movies = []
-                    self.movies?.append(movie)
+                    self.movies?.append(contentsOf: movie.docs)
                     DispatchQueue.main.async {
                         self.view?.animate(false)
                         self.view?.update()
@@ -84,9 +87,9 @@ final class HomePresenter: HomePresenterProtocol {
             switch result {
             case .success(let movie):
                 if  self.movies == nil {
-                    self.movies = [MovieModel]()
+                    self.movies = [Doc]()
                 }
-                self.movies?.append(movie)
+                self.movies?.append(contentsOf: movie.docs)
                 DispatchQueue.main.async {
                     self.view?.update()
                     self.view?.reloadData()
@@ -128,6 +131,22 @@ final class HomePresenter: HomePresenterProtocol {
             getGenre(genre: .documentary)
         default:
             break
+        }
+    }
+    
+    func getFilms(with text: String) {
+        print("запрос ушел с текстом \(text)")
+        networkManager.searchMovie(searchText: text) { result in
+            switch result {
+            case .success(let movie):
+                if self.searchMovies == nil {
+                    self.searchMovies = [Doc]()
+                }
+                self.searchMovies?.append(contentsOf: movie.docs)
+                print(self.searchMovies?.count)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
     

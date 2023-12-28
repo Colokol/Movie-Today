@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 protocol PopularMovieView: AnyObject {
     func update()
 }
