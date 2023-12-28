@@ -19,9 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         
         if onboardingCompleted() {
-            Builder.configureRootViewController(viewController: TabBarController(), window: window ?? UIWindow())
+            Builder.configureRootViewController(viewController: TabBarController(), window: window)
         } else {
-            Builder.configureRootViewController(viewController: OnboardingViewController(), window: window ?? UIWindow())
+            Builder.configureRootViewController(viewController: OnboardingViewController(), window: window)
         }
         window?.makeKeyAndVisible()
     }

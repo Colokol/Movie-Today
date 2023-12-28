@@ -62,8 +62,7 @@ class OnboardingViewController: UIViewController {
     //MARK: - Private Methods
     
     private func setupViews() {
-        view.backgroundColor = #colorLiteral(red: 0.09019417316, green: 0.09019757062, blue: 0.1494292915, alpha: 1)
-        
+        view.backgroundColor = UIColor.background
         view.addSubview(scrollView)
         view.addSubview(pageControl)
         view.addSubview(nextButton)
@@ -77,17 +76,17 @@ class OnboardingViewController: UIViewController {
         let firstOnboardingView = OnboardingView()
         firstOnboardingView.setFirstLabelText(text: "Lorem ipsum dolor sit amet consecteur esplicit")
         firstOnboardingView.setSecondLabelText(text: "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient.")
-        firstOnboardingView.setOnboardingImage(image: #imageLiteral(resourceName: "First"))
+        firstOnboardingView.setOnboardingImage(image: #imageLiteral(resourceName: "FirstImage"))
         
         let secondOnboardingView = OnboardingView()
         secondOnboardingView.setFirstLabelText(text: "Lorem ipsum dolor sit amet consecteur esplicit")
         secondOnboardingView.setSecondLabelText(text: "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient.")
-        secondOnboardingView.setOnboardingImage(image: #imageLiteral(resourceName: "Second"))
+        secondOnboardingView.setOnboardingImage(image: #imageLiteral(resourceName: "SecondImage"))
         
         let thirdOnboardingView = OnboardingView()
         thirdOnboardingView.setFirstLabelText(text: "Lorem ipsum dolor sit amet consecteur esplicit")
         thirdOnboardingView.setSecondLabelText(text: "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient.")
-        thirdOnboardingView.setOnboardingImage(image: #imageLiteral(resourceName: "Third"))
+        thirdOnboardingView.setOnboardingImage(image: #imageLiteral(resourceName: "ThirdImage"))
         
         return [firstOnboardingView, secondOnboardingView, thirdOnboardingView]
     }
@@ -179,7 +178,6 @@ extension OnboardingViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            //scrollView.heightAnchor.constraint(equalTo: view.heightAnchor),
             
             nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
