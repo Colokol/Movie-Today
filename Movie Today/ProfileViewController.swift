@@ -31,6 +31,7 @@ class ProfileViewController: UIViewController {
         view.addSubviews(profileView)
         
         // Added target for button
+        profileView.userView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         profileView.generalView.firstButton.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
         profileView.generalView.secondButton.addTarget(self, action: #selector(languageButtonTapped), for: .touchUpInside)
         profileView.moreView.firstButton.addTarget(self, action: #selector(policiesButtonTapped), for: .touchUpInside)
@@ -38,6 +39,12 @@ class ProfileViewController: UIViewController {
     }
     
     //MARK: - Objective-C methods
+    
+    @objc func editButtonTapped() {
+        let editProfileVC = EditProfileViewController()
+        editProfileVC.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(editProfileVC, animated: true)
+    }
     
     @objc func notificationButtonTapped() {
         print("Notification")
@@ -48,7 +55,9 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func policiesButtonTapped() {
-        print("Policies")
+        let policiesVC = PrivacyViewController()
+        policiesVC.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(policiesVC, animated: true)
     }
     
     @objc func aboutButtonTapped() {

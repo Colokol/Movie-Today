@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditProfileView: UIView {
+final class EditProfileView: UIView {
 
     //MARK: - User interface elements
     
@@ -45,7 +45,6 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "Full name"
         label.textAlignment = .center
-        label.backgroundColor = .blue
         label.font = .systemFont(ofSize: 15)
         label.textColor = .white
         return label
@@ -55,7 +54,7 @@ class EditProfileView: UIView {
         textField.text = self.nameLabel.text
         textField.textColor = .white
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.gray.cgColor
+        textField.layer.borderColor = UIColor.whiteGray.cgColor
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: nameLabelTextField.frame.size.height))
         textField.leftViewMode = .always
         return textField
@@ -71,7 +70,6 @@ class EditProfileView: UIView {
         let label = UILabel()
         label.text = "Email"
         label.textAlignment = .center
-        label.backgroundColor = .blue
         label.font = .systemFont(ofSize: 15)
         label.textColor = .white
         return label
@@ -81,7 +79,7 @@ class EditProfileView: UIView {
         textField.text = self.userEmail.text
         textField.textColor = .white
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.gray.cgColor
+        textField.layer.borderColor = UIColor.white.cgColor
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: nameLabelTextField.frame.size.height))
         textField.leftViewMode = .always
         return textField
@@ -119,7 +117,7 @@ class EditProfileView: UIView {
     private func setupView() {
         
         // Setup view
-        backgroundColor = .blue
+        backgroundColor = .background
         addSubviews(userImage,
                     editUserImage,
                     nameLabel,
@@ -191,7 +189,7 @@ private extension EditProfileView {
             userEmail.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
             // Name text field
-            nameTextField.topAnchor.constraint(equalTo: userEmail.bottomAnchor, constant: Constans.oneHundredPoints),
+            nameTextField.topAnchor.constraint(equalTo: userEmail.bottomAnchor, constant: Constans.seventyPoints),
             nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
             nameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
             nameTextField.heightAnchor.constraint(equalToConstant: Constans.fiftyPoints),
@@ -220,7 +218,7 @@ private extension EditProfileView {
             emailLabelTextField.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
             emailLabelTextField.widthAnchor.constraint(equalToConstant: Constans.fiftyPoints),
             
-            saveChangesButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constans.fiftyPoints),
+            saveChangesButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constans.seventyPoints),
             saveChangesButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
             saveChangesButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
             saveChangesButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints),

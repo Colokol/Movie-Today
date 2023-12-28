@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GeneralAndMore: UIView {
+final class GeneralAndMore: UIView {
     
     //MARK: - User interface element
 
@@ -126,7 +126,4 @@ private extension GeneralAndMore {
             secondImage.centerYAnchor.constraint(equalTo: secondButton.centerYAnchor),
         ])
     }
-}
-#Preview() {
-    ProfileViewController()
 }

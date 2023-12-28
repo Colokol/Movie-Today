@@ -37,7 +37,7 @@ class PrivacyViewController: UIViewController {
         let textView = UITextView()
         textView.isEditable = false
         textView.isScrollEnabled = false
-        textView.backgroundColor = .blue
+        textView.backgroundColor = .background
         textView.font = .systemFont(ofSize: 18)
         textView.textColor = .white
         return textView
@@ -46,7 +46,7 @@ class PrivacyViewController: UIViewController {
         let textView = UITextView()
         textView.isEditable = false
         textView.isScrollEnabled = false
-        textView.backgroundColor = .blue
+        textView.backgroundColor = .background
         textView.font = .systemFont(ofSize: 18)
         textView.textColor = .white
         return textView
@@ -68,7 +68,7 @@ class PrivacyViewController: UIViewController {
     private func setupView() {
         
         // Setup view
-        view.backgroundColor = .blue
+        view.backgroundColor = .background
         view.addSubviews(scrollView)
         scrollView.addSubviews(contentView)
         contentView.addSubviews(termsLabel, termsTextView, secondTermsLabel, secondTermsTextView)

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserView: UIView {
+final class UserView: UIView {
     
     //MARK: - User interface element
     
@@ -36,7 +36,7 @@ class UserView: UIView {
         label.font = .systemFont(ofSize: 17)
         return label
     }()
-    private lazy var editButton: UIButton = {
+    let editButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "edit"), for: .normal)
         return button

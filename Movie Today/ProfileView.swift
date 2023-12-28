@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileView: UIView {
+final class ProfileView: UIView {
     
     //MARK: - User interface element
     
@@ -33,22 +33,22 @@ class ProfileView: UIView {
     
     private func setupView() {
         // Setup view
-        self.backgroundColor = .blue
+        self.backgroundColor = .background
         self.addSubviews(userView, generalView, moreView)
         
         // Setup user view
         userView.layer.borderWidth = 1
-        userView.layer.borderColor = UIColor.gray.cgColor
+        userView.layer.borderColor = UIColor.whiteGray.cgColor
         userView.layer.cornerRadius = 15
         
         // Setup general view
         generalView.layer.borderWidth = 1
-        generalView.layer.borderColor = UIColor.gray.cgColor
+        generalView.layer.borderColor = UIColor.whiteGray.cgColor
         generalView.layer.cornerRadius = 15
         
         // Setup more view
         moreView.layer.borderWidth = 1
-        moreView.layer.borderColor = UIColor.gray.cgColor
+        moreView.layer.borderColor = UIColor.whiteGray.cgColor
         moreView.layer.cornerRadius = 15
     }
 }
@@ -73,13 +73,13 @@ private extension ProfileView {
         NSLayoutConstraint.activate([
             
             // User view
-            userView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Constans.fiftyPoints),
+            userView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Constans.tenPoints),
             userView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
             userView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
             userView.heightAnchor.constraint(equalToConstant: Constans.ninetyPoints),
             
             // General view
-            generalView.topAnchor.constraint(equalTo: userView.bottomAnchor, constant: Constans.thiryPoints),
+            generalView.topAnchor.constraint(equalTo: userView.bottomAnchor, constant: Constans.twentyPoints),
             generalView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
             generalView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
             generalView.heightAnchor.constraint(equalToConstant: Constans.twoHundredPoints),
@@ -91,8 +91,4 @@ private extension ProfileView {
             moreView.heightAnchor.constraint(equalToConstant: Constans.twoHundredPoints),
         ])
     }
-}
-
-#Preview() {
-    ProfileViewController()
 }
