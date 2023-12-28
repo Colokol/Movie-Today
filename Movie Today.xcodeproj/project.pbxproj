@@ -7,15 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
-	  7BAA797C2B3DA44C002FA5F5 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA797B2B3DA44C002FA5F5 /* UIImageView + Extension.swift */; };
-		7BAA797E2B3DA46F002FA5F5 /* UIButton + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA797D2B3DA46F002FA5F5 /* UIButton + Extension.swift */; };
-		7BAA79802B3DA5C3002FA5F5 /* ConstraintsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA797F2B3DA5C3002FA5F5 /* ConstraintsEnum.swift */; };
 		792A56802B3CF96000617440 /* WishlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A567F2B3CF96000617440 /* WishlistCell.swift */; };
 		792A56822B3CF98200617440 /* WishListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A56812B3CF98200617440 /* WishListVC.swift */; };
 		792A56872B3CFA4E00617440 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 792A56842B3CFA4E00617440 /* Montserrat-Medium.ttf */; };
 		792A56882B3CFA4E00617440 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 792A56852B3CFA4E00617440 /* Montserrat-Regular.ttf */; };
 		792A56892B3CFA4E00617440 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 792A56862B3CFA4E00617440 /* Montserrat-SemiBold.ttf */; };
+		7BAA797C2B3DA44C002FA5F5 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA797B2B3DA44C002FA5F5 /* UIImageView + Extension.swift */; };
+		7BAA797E2B3DA46F002FA5F5 /* UIButton + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA797D2B3DA46F002FA5F5 /* UIButton + Extension.swift */; };
+		7BAA79802B3DA5C3002FA5F5 /* ConstraintsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA797F2B3DA5C3002FA5F5 /* ConstraintsEnum.swift */; };
 		CE48A8ED2B3C92EA00244CCF /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EB2B3C92EA00244CCF /* OnboardingViewController.swift */; };
 		CE48A8EE2B3C92EA00244CCF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EC2B3C92EA00244CCF /* OnboardingView.swift */; };
 		CE48A8F02B3D564900244CCF /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EF2B3D564900244CCF /* UIFont + Extension.swift */; };
@@ -60,21 +59,18 @@
 		FAF734DB2B38AA8A00AE7750 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF734DA2B38AA8A00AE7750 /* SectionHeader.swift */; };
 		FAF81D1F2B3AF496000E31A4 /* PopularMovieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF81D1E2B3AF496000E31A4 /* PopularMovieController.swift */; };
 		FAF822AC2B3DB560007E1177 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF822AB2B3DB560007E1177 /* SearchResult.swift */; };
-		FAF822AE2B3DB5FE007E1177 /* ResultPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF822AD2B3DB5FE007E1177 /* ResultPresenter.swift */; };
 		FAF896382B3C23B300F11A0F /* FilmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF896372B3C23B300F11A0F /* FilmCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7BAA797B2B3DA44C002FA5F5 /* UIImageView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extension.swift"; sourceTree = "<group>"; };
-		7BAA797D2B3DA46F002FA5F5 /* UIButton + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extension.swift"; sourceTree = "<group>"; };
-		7BAA797F2B3DA5C3002FA5F5 /* ConstraintsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintsEnum.swift; sourceTree = "<group>"; };
-
 		792A567F2B3CF96000617440 /* WishlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistCell.swift; sourceTree = "<group>"; };
 		792A56812B3CF98200617440 /* WishListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListVC.swift; sourceTree = "<group>"; };
 		792A56842B3CFA4E00617440 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		792A56852B3CFA4E00617440 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		792A56862B3CFA4E00617440 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
-
+		7BAA797B2B3DA44C002FA5F5 /* UIImageView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extension.swift"; sourceTree = "<group>"; };
+		7BAA797D2B3DA46F002FA5F5 /* UIButton + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extension.swift"; sourceTree = "<group>"; };
+		7BAA797F2B3DA5C3002FA5F5 /* ConstraintsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintsEnum.swift; sourceTree = "<group>"; };
 		CE48A8EB2B3C92EA00244CCF /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		CE48A8EC2B3C92EA00244CCF /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		CE48A8EF2B3D564900244CCF /* UIFont + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
@@ -120,7 +116,6 @@
 		FAF734DA2B38AA8A00AE7750 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		FAF81D1E2B3AF496000E31A4 /* PopularMovieController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovieController.swift; sourceTree = "<group>"; };
 		FAF822AB2B3DB560007E1177 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
-		FAF822AD2B3DB5FE007E1177 /* ResultPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPresenter.swift; sourceTree = "<group>"; };
 		FAF896372B3C23B300F11A0F /* FilmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -260,7 +255,6 @@
 			children = (
 				7BAA797D2B3DA46F002FA5F5 /* UIButton + Extension.swift */,
 				CE48A8EF2B3D564900244CCF /* UIFont + Extension.swift */,
-				CED4D22B2B387C34005138A9 /* UILabel + Extension.swift */,
 				CED4D2342B38AD25005138A9 /* UIColor + Extension.swift */,
 				7BAA797B2B3DA44C002FA5F5 /* UIImageView + Extension.swift */,
 				CED4D22B2B387C34005138A9 /* UILabel + Extension.swift */,
@@ -379,7 +373,6 @@
 				FA9CE7942B39F80600996564 /* HomePresenter.swift */,
 				FAE057B62B3AE3A4008BC8DE /* MovieListPresenter.swift */,
 				FA8492762B3B19700025B8BC /* PopularMoviePresenter.swift */,
-				FAF822AD2B3DB5FE007E1177 /* ResultPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -500,7 +493,7 @@
 				FAA13DCC2B3C103000DFF081 /* UIView + Extension.swift in Sources */,
 				CED4D22A2B387C1C005138A9 /* MovieModel.swift in Sources */,
 				FA290FC92B3C5B52007970F2 /* MovieListCell.swift in Sources */,
-				FAA13DCC2B3C103000DFF081 /* UIView + extension.swift in Sources */,
+				FAA13DCC2B3C103000DFF081 /* UIView + Extension.swift in Sources */,
 				FA9CE7982B3A037D00996564 /* Builder.swift in Sources */,
 				CED4D20D2B373B9F005138A9 /* HomeViewController.swift in Sources */,
 				FA9CE7952B39F80600996564 /* HomePresenter.swift in Sources */,
@@ -508,7 +501,6 @@
 				7BAA797C2B3DA44C002FA5F5 /* UIImageView + Extension.swift in Sources */,
 				FAF896382B3C23B300F11A0F /* FilmCell.swift in Sources */,
 				CED4D2452B3A0C42005138A9 /* JSONParameterEncoder.swift in Sources */,
-				FAF822AE2B3DB5FE007E1177 /* ResultPresenter.swift in Sources */,
 				CED4D24F2B3AE837005138A9 /* CollectionMovieModel.swift in Sources */,
 				CED4D2512B3B0B59005138A9 /* ParametersRequest.swift in Sources */,
 				792A56822B3CF98200617440 /* WishListVC.swift in Sources */,

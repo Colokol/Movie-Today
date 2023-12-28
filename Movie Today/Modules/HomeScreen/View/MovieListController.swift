@@ -152,7 +152,7 @@ final class MovieListController: UIViewController {
         
     }
 }
-
+//MARK: - MovieViewProtocol
 extension MovieListController: MovieViewProtocol {
     func animate(_ start: Bool) {
         DispatchQueue.main.async { [weak self] in
@@ -184,12 +184,14 @@ extension MovieListController: MovieViewProtocol {
     
     
 }
-
+//MARK: - CollectionViewDelegate
 extension MovieListController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             presenter.didSelectItem(at: indexPath)
 
+        } else if indexPath.section == 1 {
+            //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
         }
     }
 }

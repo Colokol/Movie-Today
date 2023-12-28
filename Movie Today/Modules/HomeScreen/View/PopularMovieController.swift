@@ -22,7 +22,7 @@ final class PopularMovieController: UIViewController {
         button.layer.cornerRadius = button.bounds.size.width / 2
         return button
     }()
-    
+    //MARK: - Lyfe cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureActivityIndicator()
@@ -58,7 +58,7 @@ final class PopularMovieController: UIViewController {
         
         button.addTarget(self, action: #selector(backButton), for: .touchUpInside)
     }
-    
+    //MARK: - Configure CollectionView
     private func collectionViewConfigure() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -83,7 +83,7 @@ final class PopularMovieController: UIViewController {
     }
     
 }
-
+//MARK: - DelegateFlowLayout
 extension PopularMovieController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 330, height: 150)
@@ -92,7 +92,7 @@ extension PopularMovieController: UICollectionViewDelegateFlowLayout {
         return 20
     }
 }
-
+//MARK: - DataSource
 extension PopularMovieController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(presenter.array?.count ?? 0)
@@ -110,7 +110,7 @@ extension PopularMovieController: UICollectionViewDataSource {
     
     
 }
-
+//MARK: - PopularMovieView
 extension PopularMovieController: PopularMovieView {
     func animate(_ start: Bool) {
         DispatchQueue.main.async { [weak self] in
@@ -124,4 +124,10 @@ extension PopularMovieController: PopularMovieView {
     }
     
     
+}
+//MARK: - CollectionViewDelegate
+extension PopularMovieController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
+    }
 }

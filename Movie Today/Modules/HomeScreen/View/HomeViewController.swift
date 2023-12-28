@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  Movie Today
 //
-//  Created by Uladzislau Yatskevich on 23.12.23.
+//  Created by macbook on 23.12.23.
 //
 
 import UIKit
@@ -301,6 +301,8 @@ extension HomeViewController: UICollectionViewDelegate {
             guard let collectionName = presenter.collectionMovies?[indexPath.row].slug else { return }
             let vc = Builder.createPopularMovieVC(slug: collectionName)
             navigationController?.pushViewController(vc, animated: true)
+        } else if indexPath.section == 2 {
+            //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
         }
         
     }

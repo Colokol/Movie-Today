@@ -93,9 +93,6 @@ final class MovieListPresenter: MovieListPresenterProtocol {
         break
     }
 }
-
-    
-    
     init(view: MovieViewProtocol) {
         self.view = view
         self.view?.animate(true)

@@ -11,8 +11,7 @@ final class SearchResult: UIViewController {
     
     var collectionView: UICollectionView!
     var results = [DocSearch]()
-//    var presenter: ResultPresenterProtocol!
-    
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionViewConfigure()
@@ -20,7 +19,7 @@ final class SearchResult: UIViewController {
         
         
     }
-    
+    //MARK: - CollectionView configure
     private func collectionViewConfigure() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -41,13 +40,13 @@ final class SearchResult: UIViewController {
     }
     
 }
-
+//MARK: - DelegateFlowLayout
 extension SearchResult: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 330, height: 150)
     }
 }
-
+//MARK: - DataSource
 extension SearchResult: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return results.count
@@ -55,7 +54,7 @@ extension SearchResult: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilmCell.identifier, for: indexPath) as? FilmCell else { return UICollectionViewCell() }
-            cell.configSearch(with: results[indexPath.row])
+        cell.configSearch(with: results[indexPath.row])
         
         return cell
     }
@@ -63,13 +62,12 @@ extension SearchResult: UICollectionViewDataSource {
     
 }
 
-//extension SearchResult: SearchResultView {
-//    func update() {
-//        collectionView.reloadData()
-//    }
-//    
-//    
-//}
+extension SearchResult: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
+
+    }
+}
 
 extension SearchResult: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
