@@ -9,6 +9,7 @@ import Foundation
 protocol MovieViewProtocol: AnyObject {
     func update()
     func reloadData()
+    func animate(_ start: Bool)
 
 }
 
@@ -53,6 +54,7 @@ final class MovieListPresenter: MovieListPresenterProtocol {
                     self.movies = []
                 self.movies?.append(contentsOf: movie.docs)
                     DispatchQueue.main.async {
+                        self.view?.animate(false)
                         self.view?.update()
                         self.view?.reloadData()
                     }
@@ -67,30 +69,35 @@ final class MovieListPresenter: MovieListPresenterProtocol {
             categories[i].isSelected = false
         }
         categories[indexPath.row].isSelected = !categories[indexPath.row].isSelected
-        
-        let selected = categories[indexPath.row]
-        switch selected.name {
-        case "Ужасы":
-            getGenre(genre: .horror)
-        case "Комедия":
-            getGenre(genre: .comedy)
-        case "Криминал":
-            getGenre(genre: .criminal)
-        case "Драма":
-            getGenre(genre: .drama)
-        case "Фантастика":
-            getGenre(genre: .fantasy)
-        case "Мультфильм":
-            getGenre(genre: .carton)
-        case "Документальный":
-            getGenre(genre: .documentary)
-        default:
-            break
-        }
+    self.movies = []
+    self.view?.update()
+    self.view?.animate(true)
+    
+    let selectedModel = categories[indexPath.row]
+    switch selectedModel.name {
+    case "Ужасы":
+        getGenre(genre: .horror)
+    case "Комедия":
+        getGenre(genre: .comedy)
+    case "Криминал":
+        getGenre(genre: .criminal)
+    case "Драма":
+        getGenre(genre: .drama)
+    case "Фантастика":
+        getGenre(genre: .fantasy)
+    case "Мультфильм":
+        getGenre(genre: .carton)
+    case "Документальный":
+        getGenre(genre: .documentary)
+    default:
+        break
     }
+}
+
     
     
     init(view: MovieViewProtocol) {
         self.view = view
+        self.view?.animate(true)
     }
 }

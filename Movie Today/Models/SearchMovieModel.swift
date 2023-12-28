@@ -28,7 +28,7 @@ struct DocSearch: Decodable, Hashable {
     let poster: PosterSearch?
     let rating: RatingSearch?
     let votes: VotesSearch?
-    let genres: [Genres?]
+    let genres: [Genres?]?
     let ratingMpaa: String?
     let ageRating: Int?
     let type: String?

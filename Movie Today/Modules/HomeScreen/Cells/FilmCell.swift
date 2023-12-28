@@ -13,6 +13,7 @@ final class FilmCell: UICollectionViewCell {
     static let identifier = "cell"
     private let imageView: UIImageView = {
         let image = UIImageView()
+        image.layer.cornerRadius = 15
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill
         return image
@@ -226,7 +227,7 @@ final class FilmCell: UICollectionViewCell {
         if let movieLength = model.movieLength {
             minutes.text = "\(movieLength) minutes"
         }
-        if let genre = model.genres.first, let type = model.type {
+        if let genre = model.genres?.first, let type = model.type {
             self.genre.text = "\(String(describing: genre?.name)) | \(String(describing: type))"
         }
         if let pg = model.ageRating {

@@ -11,13 +11,52 @@ final class PopularMovieController: UIViewController {
     
     private var collectionView: UICollectionView!
     var presenter: PopularMoviePresenterProtocol!
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    
+    private let button: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = .soft
+        button.frame = .init(x: 0, y: 0, width: 24, height: 24)
+        button.layer.cornerRadius = button.bounds.size.width / 2
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureActivityIndicator()
+        setupNavBar()
         collectionViewConfigure()
         view.backgroundColor = .background
         presenter.checkSlug()
         
+    }
+    
+    //MARK: - Configure ActivityIndicator
+    private func configureActivityIndicator() {
+        view.addSubviews(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        view.layoutIfNeeded()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .label
+    }
+    //MARK: - NavBarSetup
+    private func setupNavBar() {
+        title = "Popular Movie"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+        
+        button.addTarget(self, action: #selector(backButton), for: .touchUpInside)
     }
     
     private func collectionViewConfigure() {
@@ -39,11 +78,18 @@ final class PopularMovieController: UIViewController {
         ])
     }
     
+    @objc func backButton() {
+        navigationController?.popViewController(animated: true)
+    }
+    
 }
 
 extension PopularMovieController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 330, height: 150)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
     }
 }
 
@@ -66,6 +112,13 @@ extension PopularMovieController: UICollectionViewDataSource {
 }
 
 extension PopularMovieController: PopularMovieView {
+    func animate(_ start: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            start ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+        }
+    }
+    
     func update() {
         collectionView.reloadData()
     }

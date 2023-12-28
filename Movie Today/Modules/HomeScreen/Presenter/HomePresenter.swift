@@ -92,6 +92,7 @@ final class HomePresenter: HomePresenterProtocol {
                 }
                 self.movies?.append(contentsOf: movie.docs)
                 DispatchQueue.main.async {
+                    self.view?.animate(false)
                     self.view?.update()
                     self.view?.reloadData()
                 }
@@ -143,8 +144,19 @@ final class HomePresenter: HomePresenterProtocol {
                 if self?.searchMovies == nil {
                     self?.searchMovies = [DocSearch]()
                 }
-                self?.searchMovies = movie.docs
-                self?.view?.updateSearchResults(movie.docs)
+                let filteredMovies = movie.docs.filter { 
+                    $0.id != nil
+                    && $0.ageRating != nil
+                    && $0.genres != nil
+                    && $0.movieLength != nil
+                    && $0.name != nil
+                    && $0.poster != nil
+                    && $0.rating != nil
+                    && $0.type != nil
+                    && $0.year != nil
+                }
+                self?.searchMovies = filteredMovies
+                self?.view?.updateSearchResults(filteredMovies)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -153,6 +165,7 @@ final class HomePresenter: HomePresenterProtocol {
     
     init(view: HomeScreenViewProtocol) {
         self.view = view
+        self.view?.animate(true)
     }
     
 }

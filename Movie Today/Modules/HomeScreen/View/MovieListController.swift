@@ -11,18 +11,65 @@ final class MovieListController: UIViewController {
     
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<MovieListSections, Item>?
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    
+    private let button: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = .soft
+        button.frame = .init(x: 0, y: 0, width: 24, height: 24)
+        button.layer.cornerRadius = button.bounds.size.width / 2
+        return button
+    }()
     
     var presenter: MovieListPresenterProtocol!
     
+    //MARK: - LyfeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Movie List"
+        setupNavBar()
+        configureActivityIndicator()
         configureCollectionView()
         configureDataSource()
         presenter.updateController()
         view.backgroundColor = .background
     }
+    
+    //MARK: - NavBarSetup
+    private func setupNavBar() {
+        title = "Movie List"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white] // Настройте внешний вид заголовка
 
+        // Смещение заголовка
+        appearance.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
+
+        // Применение настроек внешнего вида
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+        
+        button.addTarget(self, action: #selector(backButton), for: .touchUpInside)
+    }
+    
+    @objc func backButton() {
+        navigationController?.popViewController(animated: true)
+    }
+
+    //MARK: - Configure ActivityIndicator
+    private func configureActivityIndicator() {
+        view.addSubviews(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        view.layoutIfNeeded()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .label
+    }
     //MARK: - CollectionViewSetup
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -107,6 +154,13 @@ final class MovieListController: UIViewController {
 }
 
 extension MovieListController: MovieViewProtocol {
+    func animate(_ start: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            start ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+        }
+    }
+    
     func reloadData() {
         collectionView.reloadData()
     }

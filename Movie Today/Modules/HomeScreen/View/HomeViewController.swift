@@ -77,7 +77,7 @@ final class HomeViewController: UIViewController {
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
-
+    
     //MARK: - CollectionViewSetup
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -287,7 +287,7 @@ extension HomeViewController: HomeScreenViewProtocol {
         if let popular = presenter.movies?.compactMap({ Item(movieModel: $0)}) {
             snapshot.appendItems(popular, toSection: .mostPopular)
         }
-
+        
         dataSource?.apply(snapshot, animatingDifferences: true)
         
     }
@@ -317,8 +317,8 @@ extension HomeViewController: UISearchBarDelegate {
 extension HomeViewController: UISearchControllerDelegate {
     func willDismissSearchController(_ searchController: UISearchController) {
         if let searchResultsController = searchController.searchResultsController as? SearchResult {
-                    searchResultsController.results.removeAll()
-                    searchResultsController.collectionView.reloadData()
-                }
+            searchResultsController.results.removeAll()
+            searchResultsController.collectionView.reloadData()
+        }
     }
 }
