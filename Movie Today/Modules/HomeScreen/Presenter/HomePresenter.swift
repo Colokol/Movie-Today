@@ -17,7 +17,7 @@ protocol HomePresenterProtocol: AnyObject {
     var movies: [Doc]? { get set }
     var collectionMovies: [Collection]? { get set }
     var categories: [Categories] { get set }
-    var searchMovies: [Doc]? { get set }
+    var searchMovies: [DocSearch]? { get set }
     func getCollectionMovie()
     func getMoviesFromCollection()
     func updateController()
@@ -33,7 +33,7 @@ final class HomePresenter: HomePresenterProtocol {
     
     var movies: [Doc]?
     var collectionMovies: [Collection]?
-    var searchMovies: [Doc]?
+    var searchMovies: [DocSearch]?
     var categories = [Categories(name: "Ужасы", isSelected: true),
                       Categories(name: "Комедия", isSelected: false),
                       Categories(name: "Криминал", isSelected: false),
@@ -136,14 +136,13 @@ final class HomePresenter: HomePresenterProtocol {
     
     func getFilms(with text: String) {
         print("запрос ушел с текстом \(text)")
-        networkManager.searchMovie(searchText: text) { result in
+        networkManager.searchMovie(searchText: text) { [weak self] result in
             switch result {
             case .success(let movie):
-                if self.searchMovies == nil {
-                    self.searchMovies = [Doc]()
+                if self?.searchMovies == nil {
+                    self?.searchMovies = [DocSearch]()
                 }
-                self.searchMovies?.append(contentsOf: movie.docs)
-                print(self.searchMovies?.count)
+                self?.searchMovies?.append(contentsOf: movie.docs)
             case .failure(let error):
                 print(error.localizedDescription)
             }

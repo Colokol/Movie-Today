@@ -10,7 +10,7 @@ import UIKit
 final class SearchResult: UIViewController {
     
     var collectionView: UICollectionView!
-    var results = [Doc]()
+    var results = [DocSearch]()
 //    var presenter: ResultPresenterProtocol!
     
     override func viewDidLoad() {
@@ -55,7 +55,7 @@ extension SearchResult: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilmCell.identifier, for: indexPath) as? FilmCell else { return UICollectionViewCell() }
-            cell.config(with: results[indexPath.row])
+            cell.configSearch(with: results[indexPath.row])
         
         return cell
     }

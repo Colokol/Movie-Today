@@ -33,7 +33,6 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .background
         setupNavBar()
         setupSearchResult()
-        configureSearchBar()
         configureCollectionView()
         configureDataSource()
         configureActivityIndicator()
@@ -53,12 +52,12 @@ final class HomeViewController: UIViewController {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = .label
     }
-    
+    //MARK: - SearchBarSetup
     private func setupSearchResult() {
         searchResultController = SearchResult()
         searchController = UISearchController(searchResultsController: searchResultController)
         searchController.searchResultsUpdater = searchResultController
-        
+        searchController.delegate = self
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search a title"
         navigationItem.searchController = searchController
@@ -78,16 +77,7 @@ final class HomeViewController: UIViewController {
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
-    
-    //MARK: - SearchBarSetup
-    private func configureSearchBar() {
-//        navigationItem.searchController = searchController
-//        navigationItem.hidesSearchBarWhenScrolling = false
-//        definesPresentationContext = true
-//        searchController.obscuresBackgroundDuringPresentation = false
-//        searchController.searchBar.placeholder = "Search a title"
-//        
-    }
+
     //MARK: - CollectionViewSetup
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -321,5 +311,14 @@ extension HomeViewController: UISearchBarDelegate {
             searchResultController.results = movies
             searchResultController.collectionView.reloadData()
         }
+    }
+}
+
+extension HomeViewController: UISearchControllerDelegate {
+    func willDismissSearchController(_ searchController: UISearchController) {
+        if let searchResultsController = searchController.searchResultsController as? SearchResult {
+                    searchResultsController.results.removeAll()
+                    searchResultsController.collectionView.reloadData()
+                }
     }
 }
