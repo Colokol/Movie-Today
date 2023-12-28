@@ -11,6 +11,7 @@ protocol HomeScreenViewProtocol: AnyObject {
     func update()
     func reloadData()
     func animate(_ start: Bool)
+    func updateSearchResults(_ movies: [DocSearch])
 }
 
 protocol HomePresenterProtocol: AnyObject {
@@ -142,7 +143,8 @@ final class HomePresenter: HomePresenterProtocol {
                 if self?.searchMovies == nil {
                     self?.searchMovies = [DocSearch]()
                 }
-                self?.searchMovies?.append(contentsOf: movie.docs)
+                self?.searchMovies = movie.docs
+                self?.view?.updateSearchResults(movie.docs)
             case .failure(let error):
                 print(error.localizedDescription)
             }

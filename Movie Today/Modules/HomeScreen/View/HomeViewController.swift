@@ -254,6 +254,11 @@ final class HomeViewController: UIViewController {
 
 //MARK: - HomeViewProtocol
 extension HomeViewController: HomeScreenViewProtocol {
+    func updateSearchResults(_ movies: [DocSearch]) {
+        searchResultController.results = movies
+        searchResultController.collectionView.reloadData()
+    }
+    
     func animate(_ start: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -305,12 +310,7 @@ extension HomeViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
-        print(searchText)
         presenter.getFilms(with: searchText)
-        if let movies = presenter.searchMovies {
-            searchResultController.results = movies
-            searchResultController.collectionView.reloadData()
-        }
     }
 }
 
