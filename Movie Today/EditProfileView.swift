@@ -14,19 +14,19 @@ final class EditProfileView: UIView {
     private lazy var userImage: UIImageView = {
         let image = UIImageView()
         image.clipsToBounds = true
-        image.backgroundColor = .white
+        image.contentMode = .scaleAspectFill
         return image
     }()
     private lazy var editUserImage: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .green
-        button.tintColor = .black
+        button.backgroundColor = .background
+        button.tintColor = .cyan
         button.setImage(UIImage(systemName: "pencil"), for: .normal)
         return button
     }()
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .montserratSemiBold(ofSize: 20)
         label.text = "Tiffany"
         label.textColor = .white
         label.textAlignment = .center
@@ -34,7 +34,7 @@ final class EditProfileView: UIView {
     }()
     private lazy var userEmail: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 16)
+        label.font = .montserratMedium(ofSize: 14)
         label.text = "Tiffanyjearsey@gmail.com"
         label.textColor = .lightGray
         label.textAlignment = .center
@@ -44,14 +44,16 @@ final class EditProfileView: UIView {
     private lazy var nameLabelTextField: UILabel = {
         let label = UILabel()
         label.text = "Full name"
+        label.backgroundColor = .background
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 15)
+        label.font = .montserratMedium(ofSize: 15)
         label.textColor = .white
         return label
     }()
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
         textField.text = self.nameLabel.text
+        textField.font = .montserratMedium(ofSize: 18)
         textField.textColor = .white
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.whiteGray.cgColor
@@ -63,20 +65,22 @@ final class EditProfileView: UIView {
         let label = UILabel()
         label.text = "* Name already exist"
         label.textColor = .red
-        label.font = .boldSystemFont(ofSize: 13)
+        label.font = .montserratMedium(ofSize: 13)
         return label
     }()
     private lazy var emailLabelTextField: UILabel = {
         let label = UILabel()
         label.text = "Email"
+        label.backgroundColor = .background
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 15)
+        label.font = .montserratMedium(ofSize: 15)
         label.textColor = .white
         return label
     }()
     private lazy var emailTextField: UITextField = {
         let textField = UITextField()
         textField.text = self.userEmail.text
+        textField.font = .montserratMedium(ofSize: 18)
         textField.textColor = .white
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.white.cgColor
@@ -131,6 +135,7 @@ final class EditProfileView: UIView {
         )
         
         // Setup user image
+        userImage.image = UIImage(named: "tiff")
         userImage.layer.cornerRadius = 50
         
         // Setup button's

@@ -31,14 +31,14 @@ class PrivacyViewController: UIViewController {
         let contentView = UIView()
         return contentView
     }()
-    private lazy var termsLabel = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .white, textAlignment: .left)
-    private lazy var secondTermsLabel = UILabel(font: .boldSystemFont(ofSize: 18), textColor: .white, textAlignment: .left)
+    private lazy var termsLabel = UILabel(font: .montserratSemiBold(ofSize: 20), textColor: .white, textAlignment: .left)
+    private lazy var secondTermsLabel = UILabel(font: .montserratSemiBold(ofSize: 15), textColor: .white, textAlignment: .left)
     private lazy var termsTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.backgroundColor = .background
-        textView.font = .systemFont(ofSize: 18)
+        textView.font = .montserratMedium(ofSize: 18)
         textView.textColor = .white
         return textView
     }()
@@ -47,7 +47,7 @@ class PrivacyViewController: UIViewController {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.backgroundColor = .background
-        textView.font = .systemFont(ofSize: 18)
+        textView.font = .montserratMedium(ofSize: 18)
         textView.textColor = .white
         return textView
     }()
@@ -92,7 +92,7 @@ extension PrivacyViewController {
         static let tenPoints: CGFloat = 10
         static let twentyPoints: CGFloat = 20
         static let leadingLabelInsets: CGFloat = 24
-        static let termsLabelWidth: CGFloat = 60
+        static let termsLabelWidth: CGFloat = 80
         static let topInsets: CGFloat = 60
         static let textViewHeight: CGFloat = 320
     }

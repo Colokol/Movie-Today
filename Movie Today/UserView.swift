@@ -15,6 +15,7 @@ final class UserView: UIView {
         let image = UIImageView()
         image.backgroundColor = .white
         image.contentMode = .scaleToFill
+        image.image = UIImage(named: "tiff")
         image.layer.cornerRadius = 35
         image.clipsToBounds = true
         return image
@@ -25,7 +26,7 @@ final class UserView: UIView {
         label.textAlignment = .left
         label.textColor = .white
         label.text = "Tiffany"
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .montserratSemiBold(ofSize: 20)
         return label
     }()
     private lazy var emailLabel: UILabel = {
@@ -33,7 +34,7 @@ final class UserView: UIView {
         label.textAlignment = .left
         label.textColor = .lightGray
         label.text = "Tiffanyjearsey@gmail.com"
-        label.font = .systemFont(ofSize: 17)
+        label.font = .montserratMedium(ofSize: 15)
         return label
     }()
     let editButton: UIButton = {

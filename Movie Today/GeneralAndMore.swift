@@ -14,21 +14,19 @@ final class GeneralAndMore: UIView {
     private lazy var viewLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 25)
+        label.textColor = .whiteGray
+        label.font = UIFont.montserratMedium(ofSize: 14)
         return label
     }()
     private lazy var firstImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .white
         image.clipsToBounds = true
         return image
     }()
     let firstButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.gray, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 18)
-        button.titleLabel?.textAlignment = .left
+        button.titleLabel?.font = .montserratMedium(ofSize: 14)
         return button
     }()
     private lazy var separatorView: UIView = {
@@ -39,8 +37,7 @@ final class GeneralAndMore: UIView {
     let secondButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.gray, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 18)
-        button.titleLabel?.textAlignment = .left
+        button.titleLabel?.font = .montserratMedium(ofSize: 14)
         return button
     }()
     private lazy var secondImage: UIImageView = {
@@ -83,6 +80,7 @@ private extension GeneralAndMore {
         static let twentyPoints: CGFloat = 20
         static let thiryPoints: CGFloat = 30
         static let fiftyFivePoints: CGFloat = 55
+        static let sixtyPoints: CGFloat = 60
         static let ninetyPoints: CGFloat = 90
         static let twoHundredPoints: CGFloat = 200
     }
@@ -97,8 +95,8 @@ private extension GeneralAndMore {
             
             // First button
             firstButton.topAnchor.constraint(equalTo: viewLabel.bottomAnchor, constant: Constans.twentyPoints),
-            firstButton.leadingAnchor.constraint(equalTo: firstImage.leadingAnchor, constant: Constans.tenPoints),
-            firstButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.tenPoints),
+            firstButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sixtyPoints),
+            firstButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.fiftyFivePoints),
             firstButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints),
             
             // First image
@@ -110,13 +108,13 @@ private extension GeneralAndMore {
             // Separator view
             separatorView.topAnchor.constraint(equalTo: firstButton.bottomAnchor, constant: Constans.tenPoints),
             separatorView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.thiryPoints),
-            separatorView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.thiryPoints),
+            separatorView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.fiftyFivePoints),
             separatorView.heightAnchor.constraint(equalToConstant: Constans.twoPoints),
             
             // Second button
             secondButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: Constans.tenPoints),
-            secondButton.leadingAnchor.constraint(equalTo: secondImage.leadingAnchor, constant: Constans.tenPoints),
-            secondButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.tenPoints),
+            secondButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sixtyPoints),
+            secondButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.fiftyFivePoints),
             secondButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints),
             
             // Second image
