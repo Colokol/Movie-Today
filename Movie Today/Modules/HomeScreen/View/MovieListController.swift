@@ -10,7 +10,7 @@ import UIKit
 final class MovieListController: UIViewController {
     
     private var collectionView: UICollectionView!
-    private var dataSource: UICollectionViewDiffableDataSource<MovieListSections, String>?
+    private var dataSource: UICollectionViewDiffableDataSource<MovieListSections, Item>?
     
     var presenter: MovieListPresenterProtocol!
     
@@ -20,6 +20,7 @@ final class MovieListController: UIViewController {
         configureCollectionView()
         configureDataSource()
         presenter.updateController()
+        view.backgroundColor = .background
     }
 
     //MARK: - CollectionViewSetup
@@ -27,6 +28,7 @@ final class MovieListController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView?.backgroundColor = .clear
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
         view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
@@ -74,29 +76,15 @@ final class MovieListController: UIViewController {
     }
     
     //MARK: - Register Cells&Headers Methods
-    private func categoriesRegister() -> UICollectionView.CellRegistration<UICollectionViewCell, String> {
-        return UICollectionView.CellRegistration<UICollectionViewCell, String> { (cell, indexPath, item) in
-            cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-            let label = UILabel(frame: cell.bounds)
-            label.text = item
-            label.textAlignment = .center
-            label.textColor = .red
-            cell.backgroundColor = .white
-            cell.layer.cornerRadius = 8
-            cell.contentView.addSubview(label)
+    private func categoriesRegister() -> UICollectionView.CellRegistration<CategoriesCell, Categories> {
+        return UICollectionView.CellRegistration<CategoriesCell, Categories> { (cell, indexPath, item) in
+            cell.config(with: item)
         }
     }
     
-    private func MostPopularRegister() -> UICollectionView.CellRegistration<UICollectionViewCell, String> {
-        return UICollectionView.CellRegistration<UICollectionViewCell, String> { (cell, indexPath, item) in
-            cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-            let label = UILabel(frame: cell.bounds)
-            label.text = item
-            label.textAlignment = .center
-            label.textColor = .red
-            cell.backgroundColor = .white
-            cell.layer.cornerRadius = 15
-            cell.contentView.addSubview(label)
+    private func MostPopularRegister() -> UICollectionView.CellRegistration<MovieListCell, Doc> {
+        return UICollectionView.CellRegistration<MovieListCell, Doc> { (cell, indexPath, item) in
+            cell.config(with: item)
         }
     }
     
@@ -104,13 +92,13 @@ final class MovieListController: UIViewController {
     private func configureDataSource() {
         let categories = categoriesRegister()
         let mostPopular = MostPopularRegister()
-        dataSource = UICollectionViewDiffableDataSource<MovieListSections, String>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<MovieListSections, Item>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             switch MovieListSections(rawValue: indexPath.section)! {
 
             case .categories:
-                return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item)
+                return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item.categories)
             case .popular:
-                return collectionView.dequeueConfiguredReusableCell(using: mostPopular, for: indexPath, item: item)
+                return collectionView.dequeueConfiguredReusableCell(using: mostPopular, for: indexPath, item: item.movieModel)
             }
             
         }
@@ -119,18 +107,35 @@ final class MovieListController: UIViewController {
 }
 
 extension MovieListController: MovieViewProtocol {
+    func reloadData() {
+        collectionView.reloadData()
+    }
+    
     func update() {
         applySnapshot()
     }
     
     //MARK: - Snapshot
     private func applySnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<MovieListSections, String>()
+        var snapshot = NSDiffableDataSourceSnapshot<MovieListSections, Item>()
         snapshot.appendSections([.categories, .popular])
-        snapshot.appendItems(presenter.categories, toSection: .categories)
-        snapshot.appendItems(presenter.array2, toSection: .popular)
+        let categories = presenter.categories.compactMap { Item(categories: $0)}
+        snapshot.appendItems(categories, toSection: .categories)
+        if let popular = presenter.movies?.compactMap({ Item(movieModel: $0)}) {
+            snapshot.appendItems(popular, toSection: .popular)
+        }
+        
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
     
+}
+
+extension MovieListController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            presenter.didSelectItem(at: indexPath)
+
+        }
+    }
 }

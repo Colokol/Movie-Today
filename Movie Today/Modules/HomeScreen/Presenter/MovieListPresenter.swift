@@ -8,11 +8,15 @@
 import Foundation
 protocol MovieViewProtocol: AnyObject {
     func update()
+    func reloadData()
+
 }
 
 protocol MovieListPresenterProtocol: AnyObject {
-    var array2: [String] { get }
-    var categories: [String] { get }
+    var movies: [Doc]? { get set }
+    var categories: [Categories] { get set }
+    func didSelectItem(at indexPath: IndexPath)
+    func getGenre(genre: MovieGenres)
     func updateController()
     init(view: MovieViewProtocol)
 }
@@ -21,12 +25,70 @@ protocol MovieListPresenterProtocol: AnyObject {
 final class MovieListPresenter: MovieListPresenterProtocol {
     weak var view: MovieViewProtocol?
 
-    var array2 = ["Spider Man2", "Iron Man2", "Lord of the rings3", "Hobbit4", "Halk1"]
-    var categories = ["All", "Fantasy", "Comedy", "Horror"]
+    var movies: [Doc]?
+    var categories = [Categories(name: "Ужасы", isSelected: true),
+                      Categories(name: "Комедия", isSelected: false),
+                      Categories(name: "Криминал", isSelected: false),
+                      Categories(name: "Драма", isSelected: false),
+                      Categories(name: "Фантастика", isSelected: false),
+                      Categories(name: "Мультфильм", isSelected: false),
+                      Categories(name: "Документальный", isSelected: false)]   
     
+    let networkManager = NetworkManager()
+
     func updateController() {
-        self.view?.update()
+        getGenre(genre: .horror)
+        DispatchQueue.main.async {
+            self.view?.update()
+        }
     }
+    
+    func getGenre(genre: MovieGenres) {
+        networkManager.getMoviesGenre(genre: genre) { result in
+            switch result {
+            case .success(let movie):
+                if self.movies == nil {
+                    self.movies = [Doc]()
+                }
+                    self.movies = []
+                self.movies?.append(contentsOf: movie.docs)
+                    DispatchQueue.main.async {
+                        self.view?.update()
+                        self.view?.reloadData()
+                    }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func didSelectItem(at indexPath: IndexPath) {
+        for i in 0..<categories.count {
+            categories[i].isSelected = false
+        }
+        categories[indexPath.row].isSelected = !categories[indexPath.row].isSelected
+        
+        let selected = categories[indexPath.row]
+        switch selected.name {
+        case "Ужасы":
+            getGenre(genre: .horror)
+        case "Комедия":
+            getGenre(genre: .comedy)
+        case "Криминал":
+            getGenre(genre: .criminal)
+        case "Драма":
+            getGenre(genre: .drama)
+        case "Фантастика":
+            getGenre(genre: .fantasy)
+        case "Мультфильм":
+            getGenre(genre: .carton)
+        case "Документальный":
+            getGenre(genre: .documentary)
+        default:
+            break
+        }
+    }
+    
     
     init(view: MovieViewProtocol) {
         self.view = view
