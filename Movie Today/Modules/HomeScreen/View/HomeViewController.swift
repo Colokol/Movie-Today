@@ -13,6 +13,7 @@ final class HomeViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Sections, Item>?
     private let searchController = UISearchController()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     private let userButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "Image"), for: .normal)
@@ -33,9 +34,22 @@ final class HomeViewController: UIViewController {
         configureSearchBar()
         configureCollectionView()
         configureDataSource()
-//        presenter.updateController()
+        configureActivityIndicator()
         presenter.getCollectionMovie()
         presenter.getMoviesFromCollection()
+    }
+    
+    //MARK: - Configure ActivityIndicator
+    private func configureActivityIndicator() {
+        view.addSubviews(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -120),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+        view.layoutIfNeeded()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .label
     }
     
     //MARK: - NavBarSetup
@@ -147,15 +161,9 @@ final class HomeViewController: UIViewController {
         }
     }
     
-    private func categoriesRegister() -> UICollectionView.CellRegistration<UICollectionViewCell, String> {
-        return UICollectionView.CellRegistration<UICollectionViewCell, String> { (cell, indexPath, item) in
-            cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-            
-            let label = UILabel(frame: cell.bounds)
-            label.text = item
-            label.textAlignment = .center
-            label.textColor = .white
-            cell.contentView.addSubview(label)
+    private func categoriesRegister() -> UICollectionView.CellRegistration<CategoriesCell, Categories> {
+        return UICollectionView.CellRegistration<CategoriesCell, Categories> { (cell, indexPath, item) in
+            cell.config(with: item)
         }
     }
     
@@ -194,7 +202,7 @@ final class HomeViewController: UIViewController {
             vc.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(vc, animated: true)
         case 2:
-            let vc = Builder.createPopularMovieVC()
+            let vc = Builder.createPopularMovieVC(slug: nil)
             vc.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(vc, animated: true)
         default:
@@ -242,6 +250,13 @@ final class HomeViewController: UIViewController {
 
 //MARK: - HomeViewProtocol
 extension HomeViewController: HomeScreenViewProtocol {
+    func animate(_ start: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            start ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+        }
+    }
+    
     func reloadData() {
         collectionView.reloadData()
     }
@@ -255,8 +270,7 @@ extension HomeViewController: HomeScreenViewProtocol {
         var snapshot = NSDiffableDataSourceSnapshot<Sections, Item>()
         snapshot.appendSections([.compilation, .categories, .mostPopular])
         
-        presenter.collectionMovies?.forEach { collectionMovieModel in
-            let compilations = collectionMovieModel.docs.map { Item(collectionMovie: $0) }
+        if let compilations = presenter.collectionMovies?.compactMap({ Item(collectionMovie: $0)}) {
             snapshot.appendItems(compilations, toSection: .compilation)
         }
         let categories = presenter.categories.compactMap { Item(categories: $0)}
@@ -275,8 +289,12 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             presenter.didSelectItem(at: indexPath)
+        } else if indexPath.section == 0 {
+            guard let collectionName = presenter.collectionMovies?[indexPath.row].slug else { return }
+            let vc = Builder.createPopularMovieVC(slug: collectionName)
+            navigationController?.pushViewController(vc, animated: true)
         }
-
+        
     }
 }
 

@@ -76,15 +76,9 @@ final class MovieListController: UIViewController {
     }
     
     //MARK: - Register Cells&Headers Methods
-    private func categoriesRegister() -> UICollectionView.CellRegistration<UICollectionViewCell, String> {
-        return UICollectionView.CellRegistration<UICollectionViewCell, String> { (cell, indexPath, item) in
-            cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-            let label = UILabel(frame: cell.bounds)
-            label.text = item
-            label.textAlignment = .center
-            label.textColor = .white
-            cell.layer.cornerRadius = 8
-            cell.contentView.addSubview(label)
+    private func categoriesRegister() -> UICollectionView.CellRegistration<CategoriesCell, Categories> {
+        return UICollectionView.CellRegistration<CategoriesCell, Categories> { (cell, indexPath, item) in
+            cell.config(with: item)
         }
     }
     
@@ -127,8 +121,7 @@ extension MovieListController: MovieViewProtocol {
         snapshot.appendSections([.categories, .popular])
         let categories = presenter.categories.compactMap { Item(categories: $0)}
         snapshot.appendItems(categories, toSection: .categories)
-        presenter.movies?.forEach { model in
-            let popular = model.docs.map { Item(movieModel: $0) }
+        if let popular = presenter.movies?.compactMap({ Item(movieModel: $0)}) {
             snapshot.appendItems(popular, toSection: .popular)
         }
         

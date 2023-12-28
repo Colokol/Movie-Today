@@ -10,12 +10,13 @@ import Foundation
 protocol HomeScreenViewProtocol: AnyObject {
     func update()
     func reloadData()
+    func animate(_ start: Bool)
 }
 
 protocol HomePresenterProtocol: AnyObject {
     var movies: [MovieModel]? { get set }
-    var collectionMovies: [CollectionMovieModel]? { get set }
-    var categories: [String] { get set }
+    var collectionMovies: [Collection]? { get set }
+    var categories: [Categories] { get set }
     func getCollectionMovie()
     func getMoviesFromCollection()
     func updateController()
@@ -29,8 +30,14 @@ final class HomePresenter: HomePresenterProtocol {
     let networkManager = NetworkManager()
     
     var movies: [MovieModel]?
-    var collectionMovies: [CollectionMovieModel]?
-    var categories = MovieGenres.allCases.map { $0.rawValue }
+    var collectionMovies: [Collection]?
+    var categories = [Categories(name: "Ужасы", isSelected: true),
+                      Categories(name: "Комедия", isSelected: false),
+                      Categories(name: "Криминал", isSelected: false),
+                      Categories(name: "Драма", isSelected: false),
+                      Categories(name: "Фантастика", isSelected: false),
+                      Categories(name: "Мультфильм", isSelected: false),
+                      Categories(name: "Документальный", isSelected: false)]
     
     func getGenre(genre: MovieGenres) {
         networkManager.getMoviesGenre(genre: genre) { result in
@@ -41,13 +48,12 @@ final class HomePresenter: HomePresenterProtocol {
                 } else {
                     self.movies = []
                     self.movies?.append(movie)
-                    print("--------------------Модели в getGenre добавлены---------------------")
                     DispatchQueue.main.async {
+                        self.view?.animate(false)
                         self.view?.update()
                         self.view?.reloadData()
                     }
                 }
-                print(movie)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -59,9 +65,9 @@ final class HomePresenter: HomePresenterProtocol {
             switch result {
             case .success(let movie):
                 if self.collectionMovies == nil {
-                    self.collectionMovies = [CollectionMovieModel]()
+                    self.collectionMovies = [Collection]()
                 }
-                self.collectionMovies?.append(movie)
+                self.collectionMovies?.append(contentsOf: movie.docs)
                 DispatchQueue.main.async {
                     self.view?.update()
                     self.view?.reloadData()
@@ -96,21 +102,29 @@ final class HomePresenter: HomePresenterProtocol {
     }
     
     func didSelectItem(at indexPath: IndexPath) {
+            for i in 0..<categories.count {
+                categories[i].isSelected = false
+            }
+            categories[indexPath.row].isSelected = !categories[indexPath.row].isSelected
+        self.movies = []
+        self.view?.update()
+        self.view?.animate(true)
+        
         let selectedModel = categories[indexPath.row]
-        switch selectedModel {
-        case "ужасы":
+        switch selectedModel.name {
+        case "Ужасы":
             getGenre(genre: .horror)
-        case "комедия":
+        case "Комедия":
             getGenre(genre: .comedy)
-        case "криминал":
+        case "Криминал":
             getGenre(genre: .criminal)
-        case "драма":
+        case "Драма":
             getGenre(genre: .drama)
-        case "фантастика":
+        case "Фантастика":
             getGenre(genre: .fantasy)
-        case "мультфильм":
+        case "Мультфильм":
             getGenre(genre: .carton)
-        case "документальный":
+        case "Документальный":
             getGenre(genre: .documentary)
         default:
             break
