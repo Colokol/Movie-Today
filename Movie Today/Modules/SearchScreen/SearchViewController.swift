@@ -9,10 +9,9 @@ import UIKit
 
 class SearchViewController: UIViewController, UICollectionViewDelegate {
 
-    
-    
+    private var searchController = UISearchController()
     private var collectionView: UICollectionView!
-    private var dataSource: UICollectionViewDiffableDataSource<Sections, Item>?
+    private var dataSource: UICollectionViewDiffableDataSource<SectionsSearch, Item>?
     var presenter: SearchPresentorProtocol!
     
     override func viewDidLoad() {
@@ -20,7 +19,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
         
         // Call function's
         configureCollectionView()
-        configureDataSource()
+        configureSearchController()
         presenter.getUpcomingMovie()
     }
     
@@ -28,6 +27,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.backgroundColor = .background
         collectionView.delegate = self
+        configureDataSource()
+        view.backgroundColor = .background
         view.addSubviews(collectionView)
         
         
@@ -39,9 +40,17 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
         ])
     }
     
+    private func configureSearchController() {
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Type title, categories, years, etc"
+    }
+    
     private func createLayout() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in
-            guard let sectionKind = Sections(rawValue: sectionIndex) else { return nil }
+            guard let sectionKind = SectionsSearch(rawValue: sectionIndex) else { return nil }
             let section: NSCollectionLayoutSection
             
             switch sectionKind {
@@ -82,7 +91,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(430), heightDimension: .absolute(270))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(150), heightDimension: .absolute(231))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
@@ -145,27 +154,28 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
         let recentMovies = registerCellRecentMoview()
         let headerUpcoming = upcomingMovieHeaderRegister()
         let headerRecent = recentMoviewHeaderRegister()
-        dataSource = UICollectionViewDiffableDataSource<Sections, Item>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<SectionsSearch, Item>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             
-            switch Sections(rawValue: indexPath.section)! {
+            switch SectionsSearch(rawValue: indexPath.section)! {
+
             case .compilation:
                 return collectionView.dequeueConfiguredReusableCell(using: upcomingMovie, for: indexPath, item: item.movieModel)
-            case .categories:
-                return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item.categories)
             case .mostPopular:
                 return collectionView.dequeueConfiguredReusableCell(using: recentMovies, for: indexPath, item: item.movieModel) // Забрать из кордаты модель просмотренных фильмов
+            case .categories:
+                return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item.categories)
             }
         }
         
         dataSource?.supplementaryViewProvider = { (collectionView, kind, indexPath) in
             if kind == UICollectionView.elementKindSectionHeader {
-                if let sectionKind = Sections(rawValue: indexPath.section) {
+                if let sectionKind = SectionsSearch(rawValue: indexPath.section) {
                     switch sectionKind {
                         
                     case .compilation:
                         return collectionView.dequeueConfiguredReusableSupplementary(using: headerUpcoming, for: indexPath)
                     case .categories:
-                        return nil
+                        print("Hi")
                     case .mostPopular:
                         return collectionView.dequeueConfiguredReusableSupplementary(using: headerRecent, for: indexPath)
                     }
@@ -176,16 +186,19 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
     }
     
     private func applySnapshot() {
-        var snapShot = NSDiffableDataSourceSnapshot<Sections, Item>()
+        var snapShot = NSDiffableDataSourceSnapshot<SectionsSearch, Item>()
         snapShot.appendSections([.categories, .compilation, .mostPopular])
-        let categories = presenter.categories.compactMap { Item(categories: $0) }
+        
+        let categories = presenter.categories.compactMap({ Item(categories: $0) })
+            snapShot.appendItems(categories, toSection: .categories)
+        
         if let upcomingMovie = presenter.movies?.compactMap({ Item(movieModel: $0) }) {
             snapShot.appendItems(upcomingMovie, toSection: .compilation)
-            snapShot.appendItems(categories, toSection: .categories)
         }
         if let upcomingMovie = presenter.moviesTwo?.compactMap({ Item(movieModel: $0) }) {
             snapShot.appendItems(upcomingMovie, toSection: .mostPopular)
         }
+        
         dataSource?.apply(snapShot, animatingDifferences: true)
     }
 }

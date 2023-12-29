@@ -8,7 +8,7 @@
 import Foundation
 
 enum Sections: Int, CustomStringConvertible, CaseIterable {
-    case compilation, categories, mostPopular
+    case compilation, categories, mostPopular 
     var description: String {
         switch self {
         case .compilation:
@@ -29,6 +29,20 @@ enum MovieListSections: Int, CustomStringConvertible, CaseIterable {
         case .categories:
             return "Categories"
         case .popular:
+            return "Most Popular"
+        }
+    }
+}
+
+enum SectionsSearch: Int, CustomStringConvertible, CaseIterable {
+    case categories, compilation, mostPopular 
+    var description: String {
+        switch self {
+        case .categories:
+            return "Categories"
+        case .compilation:
+            return "Compilation"
+        case .mostPopular:
             return "Most Popular"
         }
     }

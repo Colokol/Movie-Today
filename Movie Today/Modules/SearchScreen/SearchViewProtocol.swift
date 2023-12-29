@@ -21,7 +21,7 @@ protocol SearchPresentorProtocol: AnyObject {
 }
 
 final class SearchPresentor: SearchPresentorProtocol {
-
+    
     weak var view: SearchViewProtocol?
     let networkManager = NetworkManager()
     var movies: [Doc]?
@@ -34,7 +34,8 @@ final class SearchPresentor: SearchPresentorProtocol {
                           Categories(name: "Мультфильм", isSelected: false),
                           Categories(name: "Документальный", isSelected: false)]
     
-    required init(view: SearchViewProtocol) {
+    
+    init(view: SearchViewProtocol) {
         self.view = view
     }
     
@@ -48,6 +49,7 @@ final class SearchPresentor: SearchPresentorProtocol {
                     self.moviesTwo = [Doc]()
                 }
                 self.movies = movie.docs
+                self.moviesTwo = movie.docs
                 print("Запрос пришел")
                 DispatchQueue.main.async {
                     self.view?.updateData()

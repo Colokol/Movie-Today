@@ -28,7 +28,7 @@ final class TabBarController: UITabBarController {
     private func setupViewControllers() {
 
         let vc1 = UINavigationController(rootViewController: Builder.createHomeVC())
-        let vc2 = UINavigationController(rootViewController: UIViewController())
+        let vc2 = UINavigationController(rootViewController: Builder.createSearchViewController())
         let vc3 = UINavigationController(rootViewController: UIViewController())
         let vc4 = UINavigationController(rootViewController: ProfileViewController())
 
