@@ -16,18 +16,35 @@ final class Builder {
         view.presenter = presenter
         return view
     }
-    
+
     static func createMovieListVC() -> UIViewController {
         let view = MovieListController()
         let presenter = MovieListPresenter(view: view)
         view.presenter = presenter
         return view
     }
-    
+
     static func createPopularMovieVC(slug: String?) -> UIViewController {
         let view = PopularMovieController()
         let presenter = PopularMoviePresenter(view: view, slug: slug)
         view.presenter = presenter
         return view
     }
+
+    static func createSearchViewController() -> UIViewController {
+        let view = SearchViewController()
+        let presenter = SearchPresentor(view: view)
+        view.presenter = presenter
+        return view
+    }
+
+    static func createDetailVC(model:Doc) -> UIViewController {
+        let view = DetailViewController()
+        let presenter = DetailPresenter(view: view, model: model)
+        view.hidesBottomBarWhenPushed = true
+        view.presenter = presenter
+        return view
+    }
+
+
 }

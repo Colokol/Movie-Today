@@ -303,6 +303,9 @@ extension HomeViewController: UICollectionViewDelegate {
             navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 2 {
             //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
+            guard let movies = presenter.movies else {return}
+            let vc = Builder.createDetailVC(model: movies[indexPath.row])
+            navigationController?.pushViewController(vc, animated: true)
         }
         
     }

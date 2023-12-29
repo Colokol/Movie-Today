@@ -28,6 +28,7 @@
 		CE621C0E2B3F611D00F75743 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE621C072B3F611D00F75743 /* ProfileViewController.swift */; };
 		CE621C122B3F612400F75743 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE621C102B3F612400F75743 /* SearchViewController.swift */; };
 		CE621C132B3F612400F75743 /* SearchViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE621C112B3F612400F75743 /* SearchViewProtocol.swift */; };
+		CE621C152B3F622D00F75743 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE621C142B3F622D00F75743 /* DetailPresenter.swift */; };
 		CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D2082B373B9F005138A9 /* AppDelegate.swift */; };
 		CED4D20B2B373B9F005138A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D20A2B373B9F005138A9 /* SceneDelegate.swift */; };
 		CED4D20D2B373B9F005138A9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D20C2B373B9F005138A9 /* HomeViewController.swift */; };
@@ -93,6 +94,7 @@
 		CE621C072B3F611D00F75743 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CE621C102B3F612400F75743 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		CE621C112B3F612400F75743 /* SearchViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewProtocol.swift; sourceTree = "<group>"; };
+		CE621C142B3F622D00F75743 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
 		CED4D2052B373B9F005138A9 /* Movie Today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie Today.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4D2082B373B9F005138A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CED4D20A2B373B9F005138A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				CED4D2312B38A80E005138A9 /* View */,
+				CE621C142B3F622D00F75743 /* DetailPresenter.swift */,
 			);
 			path = DetailScreen;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				7BAA797E2B3DA46F002FA5F5 /* UIButton + Extension.swift in Sources */,
 				CED4D23D2B3A043F005138A9 /* HTTPTask.swift in Sources */,
 				CE621C0C2B3F611D00F75743 /* GeneralAndMore.swift in Sources */,
+				CE621C152B3F622D00F75743 /* DetailPresenter.swift in Sources */,
 				CED4D2332B38A87F005138A9 /* DetailViewController.swift in Sources */,
 				FA6913B02B3D7193000DE262 /* Categories.swift in Sources */,
 				FA6913B22B3D755E000DE262 /* CategoriesCell.swift in Sources */,

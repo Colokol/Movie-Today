@@ -7,8 +7,12 @@
 
 import UIKit
 import SwiftUI
+import SDWebImage
 
 class DetailViewController: UIViewController {
+
+    var presenter: DetailPresenterProtocol? = nil
+
     // MARK: - UI Components
     let backButton = UIButton(type: .system)
     let favouriteButton = UIButton(type: .system)
@@ -34,13 +38,15 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
+        navigationController?.navigationBar.isHidden = true
+        presenter?.configureScreen()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateGradientLayerFrame()
     }
-
+    
     // MARK: - Setup UI
     private func setupUI() {
         view.backgroundColor = UIColor.background
@@ -224,4 +230,15 @@ class DetailViewController: UIViewController {
     @objc func shareButtonTapped() {
         // Tapped button logic
     }
+}
+
+extension DetailViewController: DetailScreenViewProtocol {
+    func update(model: Doc) {
+        movieTitleLabel.text = model.name
+        movieImageView.sd_setImage(with: URL(string: model.poster.url))
+        descriptionTextView.text = model.description
+        ratingLabel.text = String(model.rating.kp)
+    }
+    
+
 }
