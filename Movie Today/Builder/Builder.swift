@@ -30,4 +30,11 @@ final class Builder {
         view.presenter = presenter
         return view
     }
+    
+    static func createSearchViewController() -> UIViewController {
+        let view = SearchViewController()
+        let presenter = SearchPresentor(view: view)
+        view.presenter = presenter
+        return view
+    }
 }

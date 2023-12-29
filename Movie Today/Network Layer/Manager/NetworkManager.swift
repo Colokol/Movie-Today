@@ -10,7 +10,7 @@ import Foundation
 struct NetworkManager {
     static let environment: NetworkEnvironment = .production
     // MARK: - Указываем свой токен API
-    static let movieAPIKey: String = ""
+    static let movieAPIKey: String = "SQPY7WX-9J2MH9K-GXSK0KA-6PM6AVD"
     private let router = Router<MovieApi>()
     private let jsonDecoder = JSONDecoder()
 
