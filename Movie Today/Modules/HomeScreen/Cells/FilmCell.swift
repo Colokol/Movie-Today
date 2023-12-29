@@ -13,42 +13,43 @@ final class FilmCell: UICollectionViewCell {
     static let identifier = "cell"
     private let imageView: UIImageView = {
         let image = UIImageView()
+        image.layer.cornerRadius = 15
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill
         return image
     }()
     private let title: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 16)
+        label.font = .montserratSemiBold(ofSize: 16)
         label.textColor = .white
         return label
     }()
     private let year: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = .systemGray5
+        label.font = .montserratMedium(ofSize: 12)
+        label.textColor = .customGray
         return label
     }()
     private let minutes: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = .systemGray5
+        label.font = .montserratMedium(ofSize: 12)
+        label.textColor = .customGray
         return label
     }()
     
     private let genre: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = .systemGray5
+        label.font = .montserratMedium(ofSize: 12)
+        label.textColor = .customGray
         return label
     }()
     
     private let pg: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
-        label.textColor = .blue
+        label.textColor = .blueAccent
         label.layer.borderWidth = 0.2
-        label.layer.borderColor = UIColor.blue.cgColor
+        label.layer.borderColor = UIColor.blueAccent.cgColor
         label.layer.cornerRadius = 2
         return label
     }()
@@ -56,35 +57,35 @@ final class FilmCell: UICollectionViewCell {
     private let calendar: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "calendar")
-        image.tintColor = .gray
+        image.tintColor = .customGray
         return image
     }()
     
     private let clock: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "clock.fill")
-        image.tintColor = .gray
+        image.tintColor = .customGray
         return image
     }()
     
     private let film: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "film.fill")
-        image.tintColor = .gray
+        image.tintColor = .customGray
         return image
     }()
     
     private let raiting: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
-        label.textColor = .orange
+        label.textColor = .customOrange
         label.text = ""
         return label
     }()
     private let star: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "star.fill")
-        image.tintColor = .orange
+        image.tintColor = .customOrange
         return image
     }()
     
@@ -209,10 +210,34 @@ final class FilmCell: UICollectionViewCell {
         let pg = model.ageRating
         self.pg.text = "PG - \(pg)"
         
-        let rait =  model.rating.kp
+        let rait = model.rating.kp
         raiting.text = String(format: "%.1f", rait)
 
-        let image =  model.poster.url
+        let image = model.poster.url
         imageView.sd_setImage(with: URL(string: image))
+    }
+    
+    func configSearch(with model: DocSearch) {
+        if let name = model.name {
+            title.text = name
+        }
+        if let year = model.year {
+            self.year.text = String(year)
+        }
+        if let movieLength = model.movieLength {
+            minutes.text = "\(movieLength) minutes"
+        }
+        if let genre = model.genres?.first, let type = model.type {
+            self.genre.text = "\(String(describing: genre?.name)) | \(String(describing: type))"
+        }
+        if let pg = model.ageRating {
+            self.pg.text = "PG - \(pg)"
+        }
+        if let rait = model.rating {
+            raiting.text = String(format: "%.1f", rait.kp ?? 0)
+        }
+        if let image = model.poster?.url {
+            imageView.sd_setImage(with: URL(string: image))
+        }
     }
 }

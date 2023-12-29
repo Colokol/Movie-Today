@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//MARK: - Model for categories Section
 struct Categories: Hashable {
     var name: String
     var isSelected: Bool

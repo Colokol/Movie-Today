@@ -12,15 +12,15 @@ final class PopularCell: UICollectionViewCell {
     static let identifier = "Popular"
     private let title: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 14)
+        label.font = .montserratSemiBold(ofSize: 16)
         label.textColor = .white
         return label
     }()
     
     private let genre: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 10)
-        label.textColor = .systemGray4
+        label.font = .montserratMedium(ofSize: 12)
+        label.textColor = .customGray
         return label
     }()
     
@@ -35,14 +35,14 @@ final class PopularCell: UICollectionViewCell {
     private let raiting: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
-        label.textColor = .orange
+        label.textColor = .customOrange
         label.text = ""
         return label
     }()
     private let star: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "star.fill")
-        image.tintColor = .orange
+        image.tintColor = .customOrange
         return image
     }()
     

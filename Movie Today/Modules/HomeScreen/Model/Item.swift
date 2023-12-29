@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//MARK: - Model for CompositionalLayout
 struct Item: Hashable {
     var movieModel: Doc?
     var collectionMovie: Collection?
