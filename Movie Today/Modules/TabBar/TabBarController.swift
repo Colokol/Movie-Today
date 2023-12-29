@@ -30,7 +30,7 @@ final class TabBarController: UITabBarController {
         let vc1 = UINavigationController(rootViewController: Builder.createHomeVC())
         let vc2 = UINavigationController(rootViewController: UIViewController())
         let vc3 = UINavigationController(rootViewController: UIViewController())
-        let vc4 = UINavigationController(rootViewController: ProfileViewController())
+        let vc4 = UINavigationController(rootViewController: UIViewController())
 
         vc1.tabBarItem.image = UIImage(named: "Home")
         vc2.tabBarItem.image = UIImage(named: "Search")
