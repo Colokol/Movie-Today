@@ -11,15 +11,18 @@ protocol HomeScreenViewProtocol: AnyObject {
     func update()
     func reloadData()
     func animate(_ start: Bool)
+    func updateSearchResults(_ movies: [DocSearch])
 }
 
 protocol HomePresenterProtocol: AnyObject {
-    var movies: [MovieModel]? { get set }
+    var movies: [Doc]? { get set }
     var collectionMovies: [Collection]? { get set }
     var categories: [Categories] { get set }
+    var searchMovies: [DocSearch]? { get set }
     func getCollectionMovie()
     func getMoviesFromCollection()
     func updateController()
+    func getFilms(with text: String)
     func didSelectItem(at indexPath: IndexPath)
     init(view: HomeScreenViewProtocol)
 }
@@ -29,8 +32,9 @@ final class HomePresenter: HomePresenterProtocol {
     weak var view: HomeScreenViewProtocol?
     let networkManager = NetworkManager()
     
-    var movies: [MovieModel]?
+    var movies: [Doc]?
     var collectionMovies: [Collection]?
+    var searchMovies: [DocSearch]?
     var categories = [Categories(name: "Ужасы", isSelected: true),
                       Categories(name: "Комедия", isSelected: false),
                       Categories(name: "Криминал", isSelected: false),
@@ -44,10 +48,10 @@ final class HomePresenter: HomePresenterProtocol {
             switch result {
             case .success(let movie):
                 if self.movies == nil {
-                    self.movies = [MovieModel]()
+                    self.movies = [Doc]()
                 } else {
                     self.movies = []
-                    self.movies?.append(movie)
+                    self.movies?.append(contentsOf: movie.docs)
                     DispatchQueue.main.async {
                         self.view?.animate(false)
                         self.view?.update()
@@ -84,10 +88,11 @@ final class HomePresenter: HomePresenterProtocol {
             switch result {
             case .success(let movie):
                 if  self.movies == nil {
-                    self.movies = [MovieModel]()
+                    self.movies = [Doc]()
                 }
-                self.movies?.append(movie)
+                self.movies?.append(contentsOf: movie.docs)
                 DispatchQueue.main.async {
+                    self.view?.animate(false)
                     self.view?.update()
                     self.view?.reloadData()
                 }
@@ -131,8 +136,36 @@ final class HomePresenter: HomePresenterProtocol {
         }
     }
     
+    func getFilms(with text: String) {
+        print("запрос ушел с текстом \(text)")
+        networkManager.searchMovie(searchText: text) { [weak self] result in
+            switch result {
+            case .success(let movie):
+                if self?.searchMovies == nil {
+                    self?.searchMovies = [DocSearch]()
+                }
+                let filteredMovies = movie.docs.filter { 
+                    $0.id != nil
+                    && $0.ageRating != nil
+                    && $0.genres != nil
+                    && $0.movieLength != nil
+                    && $0.name != nil
+                    && $0.poster != nil
+                    && $0.rating != nil
+                    && $0.type != nil
+                    && $0.year != nil
+                }
+                self?.searchMovies = filteredMovies
+                self?.view?.updateSearchResults(filteredMovies)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     init(view: HomeScreenViewProtocol) {
         self.view = view
+        self.view?.animate(true)
     }
     
 }

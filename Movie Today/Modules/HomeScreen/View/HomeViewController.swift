@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  Movie Today
 //
-//  Created by Uladzislau Yatskevich on 23.12.23.
+//  Created by macbook on 23.12.23.
 //
 
 import UIKit
@@ -12,7 +12,8 @@ final class HomeViewController: UIViewController {
     //MARK: - Property
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Sections, Item>?
-    private let searchController = UISearchController()
+    private var searchController = UISearchController()
+    private var searchResultController: SearchResult!
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private let userButton: UIButton = {
         let button = UIButton()
@@ -31,7 +32,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .background
         setupNavBar()
-        configureSearchBar()
+        setupSearchResult()
         configureCollectionView()
         configureDataSource()
         configureActivityIndicator()
@@ -51,6 +52,17 @@ final class HomeViewController: UIViewController {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = .label
     }
+    //MARK: - SearchBarSetup
+    private func setupSearchResult() {
+        searchResultController = SearchResult()
+        searchController = UISearchController(searchResultsController: searchResultController)
+        searchController.searchResultsUpdater = searchResultController
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search a title"
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
     
     //MARK: - NavBarSetup
     private func setupNavBar() {
@@ -66,15 +78,6 @@ final class HomeViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
-    //MARK: - SearchBarSetup
-    private func configureSearchBar() {
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        definesPresentationContext = true
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search a title"
-        
-    }
     //MARK: - CollectionViewSetup
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -107,8 +110,7 @@ final class HomeViewController: UIViewController {
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuous
-                
+                section.orthogonalScrollingBehavior = .groupPagingCentered
                 return section
             case .categories:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.1))
@@ -177,7 +179,8 @@ final class HomeViewController: UIViewController {
         return UICollectionView.SupplementaryRegistration<SectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) { header, _, indexPath in
             header.titleLabel.text = "Categories"
             header.titleLabel.textColor = .white
-            header.button.setTitleColor(.white, for: .normal)
+            header.titleLabel.font = .montserratSemiBold(ofSize: 16)
+            header.button.setTitleColor(.blueAccent, for: .normal)
             header.isUserInteractionEnabled = true
             header.button.tag = indexPath.section
             header.button.addTarget(self, action: #selector(self.seeMoreAction(_:)), for: .touchUpInside)
@@ -188,7 +191,8 @@ final class HomeViewController: UIViewController {
         return UICollectionView.SupplementaryRegistration<SectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) { header, _, indexPath in
             header.titleLabel.text = "Most Popular"
             header.titleLabel.textColor = .white
-            header.button.setTitleColor(.white, for: .normal)
+            header.titleLabel.font = .montserratSemiBold(ofSize: 16)
+            header.button.setTitleColor(.blueAccent, for: .normal)
             header.isUserInteractionEnabled = true
             header.button.tag = indexPath.section
             header.button.addTarget(self, action: #selector(self.seeMoreAction(_:)), for: .touchUpInside)
@@ -250,6 +254,11 @@ final class HomeViewController: UIViewController {
 
 //MARK: - HomeViewProtocol
 extension HomeViewController: HomeScreenViewProtocol {
+    func updateSearchResults(_ movies: [DocSearch]) {
+        searchResultController.results = movies
+        searchResultController.collectionView.reloadData()
+    }
+    
     func animate(_ start: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -275,8 +284,7 @@ extension HomeViewController: HomeScreenViewProtocol {
         }
         let categories = presenter.categories.compactMap { Item(categories: $0)}
         snapshot.appendItems(categories, toSection: .categories)
-        presenter.movies?.forEach { model in
-            let popular = model.docs.map { Item(movieModel: $0) }
+        if let popular = presenter.movies?.compactMap({ Item(movieModel: $0)}) {
             snapshot.appendItems(popular, toSection: .mostPopular)
         }
         
@@ -284,7 +292,7 @@ extension HomeViewController: HomeScreenViewProtocol {
         
     }
 }
-
+//MARK: - CollectionView Delegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
@@ -293,8 +301,26 @@ extension HomeViewController: UICollectionViewDelegate {
             guard let collectionName = presenter.collectionMovies?[indexPath.row].slug else { return }
             let vc = Builder.createPopularMovieVC(slug: collectionName)
             navigationController?.pushViewController(vc, animated: true)
+        } else if indexPath.section == 2 {
+            //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
         }
         
     }
 }
 
+extension HomeViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+        presenter.getFilms(with: searchText)
+    }
+}
+
+extension HomeViewController: UISearchControllerDelegate {
+    func willDismissSearchController(_ searchController: UISearchController) {
+        if let searchResultsController = searchController.searchResultsController as? SearchResult {
+            searchResultsController.results.removeAll()
+            searchResultsController.collectionView.reloadData()
+        }
+    }
+}

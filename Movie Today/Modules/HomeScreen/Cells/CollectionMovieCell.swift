@@ -36,9 +36,9 @@ final class CollectionMovieCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         title.textColor = .white
         title.numberOfLines = 0
-        title.font = .boldSystemFont(ofSize: 16)
+        title.font = .montserratSemiBold(ofSize: 16)
         count.textColor = .white
-        count.font = .systemFont(ofSize: 12)
+        count.font = .montserratMedium(ofSize: 12)
     }
     
     private func setupConstraints() {
