@@ -63,6 +63,10 @@
 		FAA3CF662B3C0BF4008B30A7 /* PopularCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA3CF652B3C0BF4008B30A7 /* PopularCell.swift */; };
 		FAAB77202B3B3A8700166219 /* CollectionMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB771F2B3B3A8700166219 /* CollectionMovieCell.swift */; };
 		FAAB77232B3B3E7900166219 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = FAAB77222B3B3E7900166219 /* SDWebImage */; };
+		FAC33A972B40478B0002A24B /* YouTubeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC33A962B40478B0002A24B /* YouTubeModel.swift */; };
+		FAC33A992B4047CF0002A24B /* YoutubeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC33A982B4047CF0002A24B /* YoutubeManager.swift */; };
+		FAC33A9D2B4048050002A24B /* YouTubeApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC33A9C2B4048050002A24B /* YouTubeApiRequest.swift */; };
+		FAC33A9F2B4048210002A24B /* YouTubeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC33A9E2B4048210002A24B /* YouTubeError.swift */; };
 		FAE057B52B3AD85D008BC8DE /* MovieListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE057B42B3AD85D008BC8DE /* MovieListController.swift */; };
 		FAE057B72B3AE3A4008BC8DE /* MovieListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE057B62B3AE3A4008BC8DE /* MovieListPresenter.swift */; };
 		FAF734D92B38A17500AE7750 /* Sections.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF734D82B38A17500AE7750 /* Sections.swift */; };
@@ -130,6 +134,10 @@
 		FAA13DCB2B3C103000DFF081 /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		FAA3CF652B3C0BF4008B30A7 /* PopularCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCell.swift; sourceTree = "<group>"; };
 		FAAB771F2B3B3A8700166219 /* CollectionMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionMovieCell.swift; sourceTree = "<group>"; };
+		FAC33A962B40478B0002A24B /* YouTubeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeModel.swift; sourceTree = "<group>"; };
+		FAC33A982B4047CF0002A24B /* YoutubeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeManager.swift; sourceTree = "<group>"; };
+		FAC33A9C2B4048050002A24B /* YouTubeApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeApiRequest.swift; sourceTree = "<group>"; };
+		FAC33A9E2B4048210002A24B /* YouTubeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeError.swift; sourceTree = "<group>"; };
 		FAE057B42B3AD85D008BC8DE /* MovieListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListController.swift; sourceTree = "<group>"; };
 		FAE057B62B3AE3A4008BC8DE /* MovieListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListPresenter.swift; sourceTree = "<group>"; };
 		FAF734D82B38A17500AE7750 /* Sections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sections.swift; sourceTree = "<group>"; };
@@ -221,6 +229,7 @@
 		CED4D2072B373B9F005138A9 /* Movie Today */ = {
 			isa = PBXGroup;
 			children = (
+				FAC33A952B40477A0002A24B /* YouTube */,
 				FA9CE7962B3A037400996564 /* Builder */,
 				CED4D2232B373C7F005138A9 /* Application */,
 				CED4D21D2B373C34005138A9 /* Network Layer */,
@@ -453,6 +462,41 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		FAC33A952B40477A0002A24B /* YouTube */ = {
+			isa = PBXGroup;
+			children = (
+				FAC33AA22B4048580002A24B /* Support */,
+				FAC33AA12B40484E0002A24B /* Model */,
+				FAC33AA02B4048430002A24B /* Manager */,
+			);
+			path = YouTube;
+			sourceTree = "<group>";
+		};
+		FAC33AA02B4048430002A24B /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				FAC33A982B4047CF0002A24B /* YoutubeManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		FAC33AA12B40484E0002A24B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FAC33A962B40478B0002A24B /* YouTubeModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FAC33AA22B4048580002A24B /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				FAC33A9C2B4048050002A24B /* YouTubeApiRequest.swift */,
+				FAC33A9E2B4048210002A24B /* YouTubeError.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -536,8 +580,10 @@
 				FAE057B52B3AD85D008BC8DE /* MovieListController.swift in Sources */,
 				FA8492772B3B19700025B8BC /* PopularMoviePresenter.swift in Sources */,
 				CE621C0D2B3F611D00F75743 /* PrivacyViewController.swift in Sources */,
+				FAC33A9F2B4048210002A24B /* YouTubeError.swift in Sources */,
 				FAF734D92B38A17500AE7750 /* Sections.swift in Sources */,
 				FAA13DCC2B3C103000DFF081 /* UIView + Extension.swift in Sources */,
+				FAC33A972B40478B0002A24B /* YouTubeModel.swift in Sources */,
 				CED4D22A2B387C1C005138A9 /* MovieModel.swift in Sources */,
 				FA290FC92B3C5B52007970F2 /* MovieListCell.swift in Sources */,
 				FAA13DCC2B3C103000DFF081 /* UIView + Extension.swift in Sources */,
@@ -546,8 +592,10 @@
 				CED4D20D2B373B9F005138A9 /* HomeViewController.swift in Sources */,
 				FA9CE7952B39F80600996564 /* HomePresenter.swift in Sources */,
 				FAA3CF662B3C0BF4008B30A7 /* PopularCell.swift in Sources */,
+				FAC33A9D2B4048050002A24B /* YouTubeApiRequest.swift in Sources */,
 				7BAA797C2B3DA44C002FA5F5 /* UIImageView + Extension.swift in Sources */,
 				FAF896382B3C23B300F11A0F /* FilmCell.swift in Sources */,
+				FAC33A992B4047CF0002A24B /* YoutubeManager.swift in Sources */,
 				CED4D2452B3A0C42005138A9 /* JSONParameterEncoder.swift in Sources */,
 				CED4D24F2B3AE837005138A9 /* CollectionMovieModel.swift in Sources */,
 				CED4D2512B3B0B59005138A9 /* ParametersRequest.swift in Sources */,
