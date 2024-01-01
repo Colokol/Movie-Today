@@ -53,6 +53,8 @@
 		CED4D24F2B3AE837005138A9 /* CollectionMovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D24E2B3AE837005138A9 /* CollectionMovieModel.swift */; };
 		CED4D2512B3B0B59005138A9 /* ParametersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D2502B3B0B59005138A9 /* ParametersRequest.swift */; };
 		FA290FC92B3C5B52007970F2 /* MovieListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA290FC82B3C5B52007970F2 /* MovieListCell.swift */; };
+		FA41B3F42B42B38400DE620F /* TrailerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA41B3F32B42B38400DE620F /* TrailerController.swift */; };
+		FA41B3F62B42B5BA00DE620F /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA41B3F52B42B5BA00DE620F /* TitleView.swift */; };
 		FA6913B02B3D7193000DE262 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6913AF2B3D7193000DE262 /* Categories.swift */; };
 		FA6913B22B3D755E000DE262 /* CategoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6913B12B3D755E000DE262 /* CategoriesCell.swift */; };
 		FA8492772B3B19700025B8BC /* PopularMoviePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8492762B3B19700025B8BC /* PopularMoviePresenter.swift */; };
@@ -125,6 +127,8 @@
 		CED4D24E2B3AE837005138A9 /* CollectionMovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionMovieModel.swift; sourceTree = "<group>"; };
 		CED4D2502B3B0B59005138A9 /* ParametersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersRequest.swift; sourceTree = "<group>"; };
 		FA290FC82B3C5B52007970F2 /* MovieListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCell.swift; sourceTree = "<group>"; };
+		FA41B3F32B42B38400DE620F /* TrailerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerController.swift; sourceTree = "<group>"; };
+		FA41B3F52B42B5BA00DE620F /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		FA6913AF2B3D7193000DE262 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		FA6913B12B3D755E000DE262 /* CategoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCell.swift; sourceTree = "<group>"; };
 		FA8492762B3B19700025B8BC /* PopularMoviePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviePresenter.swift; sourceTree = "<group>"; };
@@ -275,6 +279,7 @@
 		CED4D21F2B373C4B005138A9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FA41B3F22B42B36A00DE620F /* TrailerScreen */,
 				CE621C0F2B3F612400F75743 /* SearchScreen */,
 				CE621C002B3F611D00F75743 /* ProfileScreen */,
 				CE48A8EA2B3C92EA00244CCF /* Onboarding */,
@@ -401,6 +406,15 @@
 				CED4D2442B3A0C42005138A9 /* JSONParameterEncoder.swift */,
 			);
 			path = Encoding;
+			sourceTree = "<group>";
+		};
+		FA41B3F22B42B36A00DE620F /* TrailerScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FA41B3F32B42B38400DE620F /* TrailerController.swift */,
+				FA41B3F52B42B5BA00DE620F /* TitleView.swift */,
+			);
+			path = TrailerScreen;
 			sourceTree = "<group>";
 		};
 		FA9CE7962B3A037400996564 /* Builder */ = {
@@ -617,6 +631,7 @@
 				FAAB77202B3B3A8700166219 /* CollectionMovieCell.swift in Sources */,
 				CED4D20D2B373B9F005138A9 /* HomeViewController.swift in Sources */,
 				CED4D22C2B387C34005138A9 /* UILabel + Extension.swift in Sources */,
+				FA41B3F62B42B5BA00DE620F /* TitleView.swift in Sources */,
 				CE621BD42B3DC84400F75743 /* SearchMovieModel.swift in Sources */,
 				FAE057B72B3AE3A4008BC8DE /* MovieListPresenter.swift in Sources */,
 				CE48A8EE2B3C92EA00244CCF /* OnboardingView.swift in Sources */,
@@ -629,6 +644,7 @@
 				CED4D2432B3A064C005138A9 /* URLParameterEncoder.swift in Sources */,
 				CE621C132B3F612400F75743 /* SearchViewProtocol.swift in Sources */,
 				CE621C092B3F611D00F75743 /* ProfileView.swift in Sources */,
+				FA41B3F42B42B38400DE620F /* TrailerController.swift in Sources */,
 				CED4D24D2B3AA774005138A9 /* NetworkManager.swift in Sources */,
 				CED4D22F2B389DF6005138A9 /* TabBarController.swift in Sources */,
 				FAF81D1F2B3AF496000E31A4 /* PopularMovieController.swift in Sources */,
