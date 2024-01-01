@@ -11,6 +11,7 @@ final class TitleView: UIView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .montserratSemiBold(ofSize: 16)
+        label.text = "Film"
         label.textColor = .white
         return label
     }()
@@ -26,6 +27,7 @@ final class TitleView: UIView {
     private let yearLabel: UILabel = {
         let label = UILabel()
         label.font = .montserratMedium(ofSize: 12)
+        label.text = "01.01.2024"
         label.textColor = .white
         return label
     }()
@@ -33,6 +35,7 @@ final class TitleView: UIView {
     private let genreLabel: UILabel = {
         let label = UILabel()
          label.font = .montserratMedium(ofSize: 12)
+        label.text = "Action"
          label.textColor = .customGray
          return label
      }()
@@ -48,19 +51,21 @@ final class TitleView: UIView {
     private let calendar: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "calendar")
+        image.tintColor = .customGray
         return image
     }()
     
     private let genre: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "film")
+        image.tintColor = .customGray
         return image
     }()
     
     private let stack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.distribution = .equalSpacing
+        stack.distribution = .fill
         stack.alignment = .fill
         stack.spacing = 5
         return stack
