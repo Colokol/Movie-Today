@@ -12,6 +12,7 @@ final class TrailerController: UIViewController {
     
     private let webView = WKWebView()
     private let titleView = TitleView()
+    var presenter: TrailerPresenterProtocol!
     private let descriptionTitle: UILabel = {
         let label = UILabel()
         label.font = .montserratSemiBold(ofSize: 16)
@@ -45,10 +46,7 @@ final class TrailerController: UIViewController {
         setupView()
         setupConst()
         collectionViewConfigure()
-        
-        if let youtubeURL = URL(string: "https://www.youtube.com/embed/\(videoID)?playsinline=1") {
-                   webView.load(URLRequest(url: youtubeURL))
-               }
+        presenter.config()
     }
     
     private func setupView() {
@@ -60,6 +58,11 @@ final class TrailerController: UIViewController {
         webView.layer.cornerRadius = 15
         webView.clipsToBounds = true
         
+    }
+    
+    private func configView(with model: Doc) {
+        titleView.config(with: model)
+        descriptionTextView.text = model.description
     }
     
     private func setupConst() {
@@ -98,6 +101,18 @@ final class TrailerController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
         ])
     }
+}
+
+extension TrailerController: TrailerViewProtocol {
+    func update(with model: Doc, text: String) {
+        titleView.config(with: model)
+        descriptionTextView.text = model.description
+        if let youtubeURL = URL(string: "https://www.youtube.com/embed/\(text)?playsinline=1") {
+                   webView.load(URLRequest(url: youtubeURL))
+               }
+    }
+    
+    
 }
 
 

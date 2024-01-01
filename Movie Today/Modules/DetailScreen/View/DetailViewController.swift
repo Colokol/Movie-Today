@@ -224,7 +224,11 @@ class DetailViewController: UIViewController {
     }
     
     @objc func trailerButtonTapped() {
-        // Tapped button logic
+        if let model = presenter?.movies,
+           let id = presenter?.id {
+            let vc = Builder.createTrailerVC(model: model, id: id)
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @objc func shareButtonTapped() {
