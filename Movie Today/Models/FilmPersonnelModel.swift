@@ -19,14 +19,11 @@ struct FilmPersonnelModel: Codable {
     // MARK: - Person
 struct Person: Codable {
     let id: Int
-    let name: String
-    let enName: String
+    let name: String?
+    let enName: String?
     let photo: String
-    let sex: String
-    let growth: Int
-    let birthday: String
-    let death: String
-    let age: Int
+    let sex: String?
+    let age: Int?
 
 }
 

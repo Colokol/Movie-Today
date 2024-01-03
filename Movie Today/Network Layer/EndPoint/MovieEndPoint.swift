@@ -12,12 +12,13 @@ enum NetworkEnvironment {
 }
 
 public enum MovieApi {
-    case genresMovie(genres:String)
-    case moviesFromCollection(collection:String, genre:String?)
+    case genresMovie(genres: String)
+    case moviesFromCollection(collection: String, genre: String?)
     case collectionMovieList
-    case searchMovie(searchText:String)
-    case searchPerson(searchText:String)
-    case searchMovieForPerson(id:Int)
+    case searchMovie(searchText: String)
+    case searchPerson(searchText: String)
+    case searchMovieForPerson(id: Int)
+    case searchPersonForMovie(id: Int)
 }
 
 extension MovieApi: EndpointType {
@@ -51,6 +52,8 @@ extension MovieApi: EndpointType {
                return "person/search"
             case .searchMovieForPerson(id: let id):
                 return "person/\(id)"
+            case .searchPersonForMovie:
+                return "person"
         }
     }
 
@@ -105,6 +108,14 @@ extension MovieApi: EndpointType {
                                                     additionalHeaders: headers)
             case .searchMovieForPerson:
                 return .requestParametersAndHeaders(bodyParameters: nil, urlParameters: nil, additionalHeaders: headers)
+
+            case .searchPersonForMovie(id: let id):
+                return .requestParametersAndHeaders(bodyParameters: nil,
+                                                    urlParameters:["movies.id":"\(id)",
+                                                                   "limit": MovieApi.defaultLimit,
+                                                                   "page": MovieApi.defaultPage,
+                                                                   "notNullFields":"photo"],
+                                                    additionalHeaders: headers)
         }
     }
 
