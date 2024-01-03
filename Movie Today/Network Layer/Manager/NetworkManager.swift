@@ -14,6 +14,7 @@ struct NetworkManager {
     private let router = Router<MovieApi>()
     private let jsonDecoder = JSONDecoder()
 
+
     private func performRequest<T: Decodable>(for endpoint: MovieApi, completion: @escaping (Result<T, Error>) -> Void) {
         router.request(endpoint) { [jsonDecoder] data, response, error in
             let result: Result<T, Error>
@@ -70,6 +71,15 @@ struct NetworkManager {
         performRequest(for: .collectionMovieList, completion: completion)
     }
 
+    // MARK: - Поиск персон по имени
+    func searchPerson(searchText: String, completion: @escaping (Result<FilmPersonnelModel, Error>) -> Void ) {
+        performRequest(for: .searchPerson(searchText: searchText), completion: completion)
+    }
+
+    // MARK: - Получение данных о персоне по id
+    func searchPersonInfo(id: Int, completion: @escaping (Result<PersonModel, Error>) -> Void ) {
+        performRequest(for: .searchMovieForPerson(id: id), completion: completion)
+    }
 }
 
 
