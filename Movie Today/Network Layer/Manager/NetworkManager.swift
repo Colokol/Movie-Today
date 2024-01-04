@@ -71,6 +71,12 @@ struct NetworkManager {
         performRequest(for: .collectionMovieList, completion: completion)
     }
 
+    // MARK: - Получение актеров по ID фильма
+
+    func getPersonForMovie(id:Int, completion: @escaping (Result<FilmPersonnelModel, Error>) -> Void ) {
+        performRequest(for: .searchPersonForMovie(id: id), completion: completion)
+    }
+
     // MARK: - Поиск персон по имени
     func searchPerson(searchText: String, completion: @escaping (Result<FilmPersonnelModel, Error>) -> Void ) {
         performRequest(for: .searchPerson(searchText: searchText), completion: completion)

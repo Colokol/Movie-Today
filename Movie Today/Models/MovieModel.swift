@@ -25,6 +25,7 @@ struct Doc: Codable, Hashable {
     let votes: Votes?
     let genres: [Genres]
     let ratingMpaa: String?
+    let names: [Name]?
     let ageRating: Int
     let type: String
 }
@@ -47,4 +48,9 @@ struct Rating: Codable, Hashable {
     // MARK: - Votes
 struct Votes: Codable, Hashable {
     let kp: Double?
+}
+
+struct Name: Codable, Hashable {
+    let name: String
+    let language: String?
 }
