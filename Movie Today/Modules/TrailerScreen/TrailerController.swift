@@ -23,6 +23,7 @@ final class TrailerController: UIViewController {
     private let descriptionTextView: UITextView = {
         let text = UITextView()
         text.text = "THE BATMAN is an edgy, action-packed thriller that depicts Batman in his early years, struggling to balance rage with righteousness as he investigates a disturbing mystery that has terrorized Gotham. Robert Pattinson delivers a raw, intense portrayal of Batman as a disillusioned, desperate vigilante awakened by the realization.."
+        text.isEditable = false
         text.font = .montserratRegular(ofSize: 14)
         text.textColor = .white
         text.backgroundColor = .clear
