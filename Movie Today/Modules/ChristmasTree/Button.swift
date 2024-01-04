@@ -17,8 +17,13 @@ final class Button: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupButton() {
-        self.backgroundColor = .red
+    init(image: UIImage) {
+        super.init(frame: .zero)
+        self.setImage(image, for: .normal)
     }
+    
+    private func setupButton() {
+    }
+    
     
 }
