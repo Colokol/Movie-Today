@@ -23,6 +23,7 @@ final class Button: UIButton {
     }
     
     private func setupButton() {
+        self.alpha = 0.8
     }
     
     
