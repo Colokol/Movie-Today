@@ -40,8 +40,6 @@ class WishListVC: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: offset),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -offset),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            
         ])
     }
     
