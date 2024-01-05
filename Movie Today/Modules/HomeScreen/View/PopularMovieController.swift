@@ -95,7 +95,6 @@ extension PopularMovieController: UICollectionViewDelegateFlowLayout {
 //MARK: - DataSource
 extension PopularMovieController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(presenter.array?.count ?? 0)
         return presenter.array?.count ?? 0
     }
     

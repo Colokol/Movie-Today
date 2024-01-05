@@ -42,12 +42,10 @@ final class MovieListController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white] // Настройте внешний вид заголовка
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
 
-        // Смещение заголовка
         appearance.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
 
-        // Применение настроек внешнего вида
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
         
@@ -192,6 +190,9 @@ extension MovieListController: UICollectionViewDelegate {
 
         } else if indexPath.section == 1 {
             //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
+            guard let model = presenter.movies?[indexPath.row] else { return }
+            let vc = Builder.createDetailVC(model: model)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

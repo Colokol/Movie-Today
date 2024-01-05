@@ -305,6 +305,7 @@ extension HomeViewController: UICollectionViewDelegate {
             //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
             guard let movies = presenter.movies else {return}
             let vc = Builder.createDetailVC(model: movies[indexPath.row])
+            navigationController?.hidesBottomBarWhenPushed = false
             navigationController?.pushViewController(vc, animated: true)
         }
         
