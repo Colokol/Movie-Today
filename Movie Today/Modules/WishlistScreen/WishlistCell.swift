@@ -26,6 +26,8 @@ class WishlistCell: UICollectionViewCell {
     
     private lazy var  movieImage: UIImageView = {
         let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         image.layer.cornerRadius = 8
         image.backgroundColor = .red
         return image

@@ -10,7 +10,8 @@ import UIKit
 class WishListVC: UIViewController {
     
     private var favoriteMovies: [FavoriteMovies] = []
-    
+    let storageManager = CoreDataManager.shared
+
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -44,16 +45,18 @@ class WishListVC: UIViewController {
     }
     
     private func loadMovies() {
-        do {
-            favoriteMovies = try CoreDataManager.shared.loadFavoriteMovies()
-            collectionView.reloadData()
-        } catch {
-            print("Failed to fetch favorite movies: \(error)")
+        storageManager.loadFavoriteMovies { result in
+            switch result{
+                case .success(let movies):
+                    favoriteMovies = movies
+                case .failure(let error):
+                    print(error.localizedDescription)
+            }
         }
     }
     
     private func likePressed(_ favoriteMovie: FavoriteMovies) {
-        _ = CoreDataManager.shared.deleteFromFavorites(favoriteMovie)
+        CoreDataManager.shared.deleteFromFavorites(favoriteMovie)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.loadMovies()
@@ -75,7 +78,7 @@ extension WishListVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WishlistCell.identifier, for: indexPath) as! WishlistCell
         
-        let favoriteMovie = favoriteMovies[indexPath.item]
+        let favoriteMovie = favoriteMovies[indexPath.section]
         cell.configure(with: favoriteMovie)
         
         cell.likeButtonPressedHandler = { [weak self] in

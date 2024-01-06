@@ -46,5 +46,11 @@ final class Builder {
         return view
     }
 
+    static func createWishListVC() -> UIViewController {
+        let view = WishListVC()
+
+        return view
+    }
+
 
 }

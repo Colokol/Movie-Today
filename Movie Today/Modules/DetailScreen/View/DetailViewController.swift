@@ -11,7 +11,7 @@ import SDWebImage
 
 class DetailViewController: UIViewController {
 
-    var presenter: DetailPresenterProtocol? = nil
+    var presenter: DetailPresenterProtocol!
 
     // MARK: - UI Components
     let backButton = UIButton(type: .system)
@@ -40,6 +40,8 @@ class DetailViewController: UIViewController {
         setupConstraints()
         navigationController?.navigationBar.isHidden = true
         presenter?.configureScreen()
+
+        favoriteButtonTap()
     }
     
     override func viewDidLayoutSubviews() {
@@ -220,9 +222,9 @@ class DetailViewController: UIViewController {
     }
     
     @objc func favouriteButtonTapped() {
-        // Tapped button logic
+        presenter.saveToFavorit()
     }
-    
+
     @objc func trailerButtonTapped() {
         // Tapped button logic
     }
@@ -233,6 +235,17 @@ class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: DetailScreenViewProtocol {
+
+    func favoriteButtonTap() {
+        if presenter.favoriteButtonState {
+            favouriteButton.tintColor = .red
+        }else {
+            favouriteButton.tintColor = .white
+        }
+    }
+    
+
+    
     func update(model: Doc) {
         movieTitleLabel.text = model.name
         movieImageView.sd_setImage(with: URL(string: model.poster.url))
