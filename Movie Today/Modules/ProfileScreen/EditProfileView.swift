@@ -11,6 +11,8 @@ final class EditProfileView: UIView {
 
     //MARK: - User interface elements
     
+    private let tabBar = TabBarController()
+    
     private lazy var userImage: UIImageView = {
         let image = UIImageView()
         image.clipsToBounds = true
@@ -99,6 +101,7 @@ final class EditProfileView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         
         // Call function's
         setupView()
@@ -223,7 +226,7 @@ private extension EditProfileView {
             emailLabelTextField.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
             emailLabelTextField.widthAnchor.constraint(equalToConstant: Constans.fiftyPoints),
             
-            saveChangesButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constans.seventyPoints),
+            saveChangesButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -Constans.seventyPoints),
             saveChangesButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
             saveChangesButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
             saveChangesButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints),
