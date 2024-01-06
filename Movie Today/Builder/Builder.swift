@@ -52,5 +52,14 @@ final class Builder {
         view.presenter = presenter
         return view
     }
+    static func createTabBarViewController() -> UIViewController {
+        return TabBarController()
+    }
+
+    static func createOnboardingViewController() -> UIViewController {
+        let vc = OnboardingViewController()
+        let navigationController = UINavigationController(rootViewController: vc)
+        return navigationController
+    }
 
 }
