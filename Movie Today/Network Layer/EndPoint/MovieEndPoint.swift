@@ -17,15 +17,17 @@ public enum MovieApi {
     case collectionMovieList
     case searchMovie(searchText: String)
     case searchPerson(searchText: String)
-    case searchMovieForPerson(id: Int)
-    case searchPersonForMovie(id: Int)
+    case searchMovieFor(id:Int)
+    case searchMovieFor(personID: Int)
 }
 
 extension MovieApi: EndpointType {
 
     private static let defaultPage = 1
     private static let defaultLimit = 10
-    private static let notNilParameters = ["ageRating", "genres.name", "poster.url", "movieLength", "rating.kp", "type"]
+    private static let selectFields = ["persons","id","name","description","genres","videos","movieLength","poster","year", "type", "rating","ageRating"]
+
+    private static let notNilParameters = ["ageRating", "genres.name", "poster.url", "movieLength", "rating.kp", "type", "persons.name"]
 
     var environmentBaseURL : String {
         switch NetworkManager.environment {
@@ -50,10 +52,8 @@ extension MovieApi: EndpointType {
                 return "movie/search"
             case .searchPerson:
                return "person/search"
-            case .searchMovieForPerson(id: let id):
-                return "person/\(id)"
-            case .searchPersonForMovie:
-                return "person"
+            case .searchMovieFor:
+                return "movie"
         }
     }
 
@@ -69,14 +69,15 @@ extension MovieApi: EndpointType {
                         urlParameters: ["genres.name": genre,
                                         "limit": MovieApi.defaultLimit,
                                         "page": MovieApi.defaultPage,
-                                        "notNullFields":MovieApi.notNilParameters],
+                                        "notNullFields":MovieApi.notNilParameters,
+                                        "selectFields":MovieApi.selectFields ],
                         additionalHeaders: headers
                     )
             case .moviesFromCollection(collection: let name, genre: let genre):
                 var urlParameters: [String: Any] = ["lists": name,
                                                     "limit": MovieApi.defaultLimit,
                                                     "page": MovieApi.defaultPage,
-                                                    "notNullFields":MovieApi.notNilParameters]
+                                                    "selectFields":MovieApi.selectFields]
                 if let genre = genre {
                     urlParameters["genres.name"] = genre
                 }
@@ -106,16 +107,14 @@ extension MovieApi: EndpointType {
                                                                    "limit": 250,
                                                                    "page": MovieApi.defaultPage],
                                                     additionalHeaders: headers)
-            case .searchMovieForPerson:
-                return .requestParametersAndHeaders(bodyParameters: nil, urlParameters: nil, additionalHeaders: headers)
-
-            case .searchPersonForMovie(id: let id):
-                return .requestParametersAndHeaders(bodyParameters: nil,
-                                                    urlParameters:["movies.id":"\(id)",
-                                                                   "limit": MovieApi.defaultLimit,
-                                                                   "page": MovieApi.defaultPage,
-                                                                   "notNullFields":"photo"],
-                                                    additionalHeaders: headers)
+            case .searchMovieFor(personID: let id):
+                return .requestParametersAndHeaders(
+                    bodyParameters: nil,
+                    urlParameters: ["persons.id":"\(id)",
+                                    "limit": MovieApi.defaultLimit,
+                                    "page": MovieApi.defaultPage],
+                    additionalHeaders: headers
+                )
         }
     }
 

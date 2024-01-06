@@ -37,20 +37,20 @@ final class TrailerPresenter: TrailerPresenterProtocol {
     
     func getActors() {
         guard let model else { return }
-        networkManager.getPersonForMovie(id: model.id) { result in
-            switch result {
-            case .success(let actor):
-                if self.filmPersons == nil {
-                    self.filmPersons = [Person]()
-                }
-                self.filmPersons?.append(contentsOf: actor.docs)
-                DispatchQueue.main.async {
-                    self.view?.updateActors()
-                }
-            case .failure(let error):
-                print(error.localizedDescription, "TrailerPresenterError")
-            }
-        }
+//        networkManager.getPersonForMovie(id: model.id) { result in
+//            switch result {
+//            case .success(let actor):
+//                if self.filmPersons == nil {
+//                    self.filmPersons = [Person]()
+//                }
+//                self.filmPersons?.append(contentsOf: actor.docs)
+//                DispatchQueue.main.async {
+//                    self.view?.updateActors()
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription, "TrailerPresenterError")
+//            }
+//        }
     }
     
     init(view: TrailerViewProtocol, model: Doc, text: String) {

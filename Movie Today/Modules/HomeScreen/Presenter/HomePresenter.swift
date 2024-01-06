@@ -57,7 +57,7 @@ final class HomePresenter: HomePresenterProtocol {
                         self.view?.update()
                         self.view?.reloadData()
                     }
-                }
+             }
             case .failure(let error):
                 print(error.localizedDescription)
             }

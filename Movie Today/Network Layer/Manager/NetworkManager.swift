@@ -10,7 +10,7 @@ import Foundation
 struct NetworkManager {
     static let environment: NetworkEnvironment = .production
     // MARK: - Указываем свой токен API
-    static let movieAPIKey: String = "9N8XS3Z-S7K4R3X-QVP6VG9-B5SE2RX"
+    static let movieAPIKey: String = ""
     private let router = Router<MovieApi>()
     private let jsonDecoder = JSONDecoder()
 
@@ -51,6 +51,11 @@ struct NetworkManager {
         }
     }
 
+        // MARK: - Поиск фильма по ID
+    func searchMovieFor(id:Int, completion: @escaping (Result<Doc, Error>) -> Void ) {
+        performRequest(for: .searchMovieFor(id: id), completion: completion)
+    }
+
     // MARK: - Поиск фильмов по названию
     func searchMovie(searchText: String, completion: @escaping (Result<SearchMovieModel, Error>) -> Void ) {
         performRequest(for: .searchMovie(searchText: searchText), completion: completion)
@@ -71,21 +76,17 @@ struct NetworkManager {
         performRequest(for: .collectionMovieList, completion: completion)
     }
 
-    // MARK: - Получение актеров по ID фильма
-
-    func getPersonForMovie(id:Int, completion: @escaping (Result<FilmPersonnelModel, Error>) -> Void ) {
-        performRequest(for: .searchPersonForMovie(id: id), completion: completion)
-    }
-
     // MARK: - Поиск персон по имени
     func searchPerson(searchText: String, completion: @escaping (Result<FilmPersonnelModel, Error>) -> Void ) {
         performRequest(for: .searchPerson(searchText: searchText), completion: completion)
     }
 
-    // MARK: - Получение данных о персоне по id
-    func searchPersonInfo(id: Int, completion: @escaping (Result<PersonModel, Error>) -> Void ) {
-        performRequest(for: .searchMovieForPerson(id: id), completion: completion)
+    // MARK: - Получение фильмов по id актёра
+    func getMovieFor(personId: Int, completion: @escaping (Result<MovieModel, Error>) -> Void ) {
+        performRequest(for: .searchMovieFor(personID: personId), completion: completion)
     }
+    
+
 }
 
 
@@ -97,6 +98,8 @@ extension NetworkManager {
                 return .success("Success: OK")
             case 401 :
                 return .failure(.unauthorised)
+            case 403:
+                return .failure(.limit)
             case 400...499:
                 return .failure(.clientError)
             case 500...599:
