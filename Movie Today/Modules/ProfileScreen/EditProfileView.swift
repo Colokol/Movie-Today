@@ -11,9 +11,7 @@ final class EditProfileView: UIView {
 
     //MARK: - User interface elements
     
-    private let tabBar = TabBarController()
-    
-    private lazy var userImage: UIImageView = {
+    let userImage: UIImageView = {
         let image = UIImageView()
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill
@@ -117,6 +115,10 @@ final class EditProfileView: UIView {
     func signatureTextFieldDelegate() {
         nameTextField.delegate = self
         emailTextField.delegate = self
+    }
+    
+    func addTargetFofEditButton(target: Any, selector: Selector) {
+        editUserImage.addTarget(target, action: selector, for: .touchUpInside)
     }
     
     //MARK: - Private methods

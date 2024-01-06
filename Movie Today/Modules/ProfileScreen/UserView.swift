@@ -11,7 +11,7 @@ final class UserView: UIView {
     
     //MARK: - User interface element
     
-    private lazy var userImage: UIImageView = {
+    let userImage: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .white
         image.contentMode = .scaleToFill
