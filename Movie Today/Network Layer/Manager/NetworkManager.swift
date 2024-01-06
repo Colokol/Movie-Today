@@ -10,7 +10,7 @@ import Foundation
 struct NetworkManager {
     static let environment: NetworkEnvironment = .production
     // MARK: - Указываем свой токен API
-    static let movieAPIKey: String = "TRFZCT7-KY149CD-GGZ9SBT-Y0R9B3K"
+    static let movieAPIKey: String = ""
     private let router = Router<MovieApi>()
     private let jsonDecoder = JSONDecoder()
 
@@ -18,7 +18,7 @@ struct NetworkManager {
     private func performRequest<T: Decodable>(for endpoint: MovieApi, completion: @escaping (Result<T, Error>) -> Void) {
         router.request(endpoint) { [jsonDecoder] data, response, error in
             let result: Result<T, Error>
-           // print(response)
+
             if let error = error {
                 result = .failure(error)
             }else if let response = response as? HTTPURLResponse {
@@ -75,7 +75,6 @@ struct NetworkManager {
     func getCollectionMovie(completion: @escaping (Result<CollectionMovieModel, Error>) -> Void ) {
         performRequest(for: .collectionMovieList, completion: completion)
     }
-
 
     // MARK: - Поиск персон по имени
     func searchPerson(searchText: String, completion: @escaping (Result<FilmPersonnelModel, Error>) -> Void ) {
