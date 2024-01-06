@@ -229,7 +229,7 @@ class DetailViewController: UIViewController {
     }
 
     @objc func trailerButtonTapped() {
-        if let model = presenter?.movies,
+        if let model = presenter?.movie,
            let id = presenter?.id {
             let vc = Builder.createTrailerVC(model: model, id: id)
             navigationController?.pushViewController(vc, animated: true)

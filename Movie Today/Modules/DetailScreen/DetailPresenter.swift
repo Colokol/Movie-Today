@@ -23,10 +23,12 @@ protocol DetailPresenterProtocol: AnyObject {
 
 final class DetailPresenter: DetailPresenterProtocol {
 
-    weak var view: DetailScreenViewProtocol?
-    let youtubeManager = YouTubeManager()
+    var favoriteButtonState: Bool = false
     var movie: Doc
     var id: String?
+    let storageManager = CoreDataManager.shared
+    let youtubeManager = YouTubeManager()
+    weak var view: DetailScreenViewProtocol!
 
     func configureScreen(){
         self.view?.update(model: self.movie )
@@ -46,7 +48,6 @@ final class DetailPresenter: DetailPresenterProtocol {
         }
     }
 
-    weak var view: DetailScreenViewProtocol!
 
     init(view: DetailScreenViewProtocol, model: Doc) {
         self.view = view
@@ -64,11 +65,6 @@ final class DetailPresenter: DetailPresenterProtocol {
         fetchVideoID()
 
     }
-
-    func configureScreen(){
-        view.update(model: movie )
-    }
-
 
     func saveToFavorit() {
         favoriteButtonState.toggle()
