@@ -52,7 +52,7 @@ final class MovieListCell: UICollectionViewCell {
     }
     
     func config(with model: Doc) {
-        let image = model.poster.url 
+        guard let image = model.poster?.url else {return}
             imageView.sd_setImage(with: URL(string: image))
         
         title.text = model.name
