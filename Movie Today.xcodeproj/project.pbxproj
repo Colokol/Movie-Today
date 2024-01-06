@@ -32,9 +32,6 @@
 		CE7E5B492B487AA20001524A /* YoutubeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E5B482B487AA20001524A /* YoutubeManager.swift */; };
 		CE7E5B4C2B487AD50001524A /* YouTubeApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E5B4B2B487AD50001524A /* YouTubeApiRequest.swift */; };
 		CE7E5B4E2B487AE50001524A /* YouTubeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E5B4D2B487AE50001524A /* YouTubeError.swift */; };
-		CE7E5B522B496EA40001524A /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E5B502B496EA40001524A /* OnboardingViewController.swift */; };
-		CE7E5B532B496EA40001524A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E5B512B496EA40001524A /* OnboardingView.swift */; };
-		CE7E5B552B49710C0001524A /* OnboardingPresender.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E5B542B49710C0001524A /* OnboardingPresender.swift */; };
 		CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D2082B373B9F005138A9 /* AppDelegate.swift */; };
 		CED4D20B2B373B9F005138A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D20A2B373B9F005138A9 /* SceneDelegate.swift */; };
 		CED4D20D2B373B9F005138A9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D20C2B373B9F005138A9 /* HomeViewController.swift */; };
@@ -108,9 +105,9 @@
 		CE7E5B482B487AA20001524A /* YoutubeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeManager.swift; sourceTree = "<group>"; };
 		CE7E5B4B2B487AD50001524A /* YouTubeApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeApiRequest.swift; sourceTree = "<group>"; };
 		CE7E5B4D2B487AE50001524A /* YouTubeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeError.swift; sourceTree = "<group>"; };
-		CE7E5B502B496EA40001524A /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
-		CE7E5B512B496EA40001524A /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		CE7E5B542B49710C0001524A /* OnboardingPresender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPresender.swift; sourceTree = "<group>"; };
+		CECEF6682B49E5440019FA36 /* OnboardingPresender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPresender.swift; sourceTree = "<group>"; };
+		CECEF6692B49E5440019FA36 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		CECEF66A2B49E5440019FA36 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		CED4D2052B373B9F005138A9 /* Movie Today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie Today.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4D2082B373B9F005138A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CED4D20A2B373B9F005138A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -248,15 +245,14 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		CE7E5B4F2B496EA40001524A /* Onboarding */ = {
+		CECEF6672B49E5440019FA36 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				CE7E5B502B496EA40001524A /* OnboardingViewController.swift */,
-				CE7E5B512B496EA40001524A /* OnboardingView.swift */,
-				CE7E5B542B49710C0001524A /* OnboardingPresender.swift */,
+				CECEF6692B49E5440019FA36 /* OnboardingViewController.swift */,
+				CECEF66A2B49E5440019FA36 /* OnboardingView.swift */,
+				CECEF6682B49E5440019FA36 /* OnboardingPresender.swift */,
 			);
-			name = Onboarding;
-			path = ../../../Documents/Onboarding;
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		CED4D1FC2B373B9F005138A9 = {
@@ -326,10 +322,10 @@
 			children = (
 				FA41B3F22B42B36A00DE620F /* TrailerScreen */,
 				CE621C0F2B3F612400F75743 /* SearchScreen */,
-				CE7E5B4F2B496EA40001524A /* Onboarding */,
 				CE621C002B3F611D00F75743 /* ProfileScreen */,
 				CED4D2302B38A803005138A9 /* DetailScreen */,
 				CED4D22D2B389DEA005138A9 /* TabBar */,
+				CECEF6672B49E5440019FA36 /* Onboarding */,
 				CED4D2282B387BFD005138A9 /* HomeScreen */,
 				792A568A2B3CFA8100617440 /* WishlistScreen */,
 			);
@@ -614,7 +610,6 @@
 				CE48A8F02B3D564900244CCF /* UIFont + Extension.swift in Sources */,
 				FAE057B52B3AD85D008BC8DE /* MovieListController.swift in Sources */,
 				FA8492772B3B19700025B8BC /* PopularMoviePresenter.swift in Sources */,
-				CE7E5B522B496EA40001524A /* OnboardingViewController.swift in Sources */,
 				CE7E5B462B487A570001524A /* YouTubeModel.swift in Sources */,
 				CE621C0D2B3F611D00F75743 /* PrivacyViewController.swift in Sources */,
 				FAF734D92B38A17500AE7750 /* Sections.swift in Sources */,
@@ -632,7 +627,6 @@
 				CED4D2452B3A0C42005138A9 /* JSONParameterEncoder.swift in Sources */,
 				CED4D24F2B3AE837005138A9 /* CollectionMovieModel.swift in Sources */,
 				CED4D2512B3B0B59005138A9 /* ParametersRequest.swift in Sources */,
-				CE7E5B532B496EA40001524A /* OnboardingView.swift in Sources */,
 				792A56822B3CF98200617440 /* WishListVC.swift in Sources */,
 				CE621C082B3F611D00F75743 /* EditProfileView.swift in Sources */,
 				CED4D2412B3A056A005138A9 /* ParameterEncoding.swift in Sources */,
@@ -658,7 +652,6 @@
 				CE621C0A2B3F611D00F75743 /* UserView.swift in Sources */,
 				FAF734DB2B38AA8A00AE7750 /* SectionHeader.swift in Sources */,
 				CE7E5B4C2B487AD50001524A /* YouTubeApiRequest.swift in Sources */,
-				CE7E5B552B49710C0001524A /* OnboardingPresender.swift in Sources */,
 				CE5C854A2B452A240083A97C /* FilmPersonnelModel.swift in Sources */,
 				FA9D9FA92B3B31BD00CD190F /* Item.swift in Sources */,
 				792A56802B3CF96000617440 /* WishlistCell.swift in Sources */,
