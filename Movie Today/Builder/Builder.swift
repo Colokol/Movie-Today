@@ -46,11 +46,17 @@ final class Builder {
         return view
     }
 
+    static func createTrailerVC(model: Doc, id: String) -> UIViewController {
+        let view = TrailerController()
+        let presenter = TrailerPresenter(view: view, model: model, text: id)
+        view.presenter = presenter
+        return view
+    }
+
     static func createWishListVC() -> UIViewController {
         let view = WishListVC()
 
         return view
     }
-
 
 }

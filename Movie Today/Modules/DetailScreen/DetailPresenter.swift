@@ -15,17 +15,36 @@ protocol DetailScreenViewProtocol: AnyObject {
 protocol DetailPresenterProtocol: AnyObject {
     var movie: Doc { get set }
     var favoriteButtonState: Bool {get set}
-    func configureScreen()
+    var id: String? { get set }
+ 	func configureScreen()
     func saveToFavorit()
     init(view: DetailScreenViewProtocol, model: Doc)
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
 
-    var favoriteButtonState: Bool = false
+    weak var view: DetailScreenViewProtocol?
+    let youtubeManager = YouTubeManager()
     var movie: Doc
+    var id: String?
 
-    private let storageManager = CoreDataManager.shared
+    func configureScreen(){
+        self.view?.update(model: self.movie )
+    }
+    
+    func fetchVideoID() {
+        youtubeManager.fetchData(query: movie.name + "film trailer") { result in
+            switch result {
+            case .success(let model):
+                if self.id == nil {
+                    self.id = ""
+                }
+                self.id = model.items[0].id.videoId
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 
     weak var view: DetailScreenViewProtocol!
 
@@ -42,6 +61,8 @@ final class DetailPresenter: DetailPresenterProtocol {
                 }
             }
         }
+        fetchVideoID()
+
     }
 
     func configureScreen(){
