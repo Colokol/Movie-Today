@@ -71,15 +71,8 @@ class WishlistCell: UICollectionViewCell {
         genreLabel.text = model.genre
         ratingLabel.text = String(model.rating)
         
-        if let posterURL = URL(string: model.poster ?? "") {
-            URLSession.shared.dataTask(with: posterURL) { [weak self] (data, _, error) in
-                guard let data = data, error == nil else {
-                    return
-                }
-                DispatchQueue.main.async {
-                    self?.movieImage.image = UIImage(data: data)
-                }
-            }.resume()
+        if let imageData = model.image {
+            movieImage.image = UIImage(data: imageData)
         } else {
             movieImage.image = UIImage(named: "film")
         }

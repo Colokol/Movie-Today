@@ -58,8 +58,9 @@ class WishListVC: UIViewController {
     private func likePressed(_ favoriteMovie: FavoriteMovies) {
         CoreDataManager.shared.deleteFromFavorites(favoriteMovie)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.main.async {
             self.loadMovies()
+            self.collectionView.reloadData()
         }
     }
 }
