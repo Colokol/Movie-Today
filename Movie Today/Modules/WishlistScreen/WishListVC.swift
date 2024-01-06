@@ -9,8 +9,7 @@ import UIKit
 
 class WishListVC: UIViewController {
     
-    private var favoriteMovies: [FavoriteMovies] = []
-    let storageManager = CoreDataManager.shared
+    var presenter: WishListPresenterProtocol!
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -25,9 +24,8 @@ class WishListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
-        navigationController?.navigationItem.title = "Wishlist"
+        title = "Wishlist"
         setupUI()
-        loadMovies()
     }
     
     private func setupUI() {
@@ -43,33 +41,14 @@ class WishListVC: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
-    
-    private func loadMovies() {
-        storageManager.loadFavoriteMovies { result in
-            switch result{
-                case .success(let movies):
-                    favoriteMovies = movies
-                case .failure(let error):
-                    print(error.localizedDescription)
-            }
-        }
-    }
-    
-    private func likePressed(_ favoriteMovie: FavoriteMovies) {
-        CoreDataManager.shared.deleteFromFavorites(favoriteMovie)
-        
-        DispatchQueue.main.async {
-            self.loadMovies()
-            self.collectionView.reloadData()
-        }
-    }
+
 }
 
-//MARK: Extensions
+//MARK: Extensions CollectionView
 
 extension WishListVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return favoriteMovies.count
+        return presenter.favoriteMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -79,12 +58,16 @@ extension WishListVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WishlistCell.identifier, for: indexPath) as! WishlistCell
         
-        let favoriteMovie = favoriteMovies[indexPath.section]
+        let favoriteMovie = presenter.favoriteMovies[indexPath.section]
         cell.configure(with: favoriteMovie)
         
         cell.likeButtonPressedHandler = { [weak self] in
             guard let self = self else { return }
-            self.likePressed(favoriteMovie)
+            cell.isInWishlist = false
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                self.presenter.likePressed(favoriteMovie)
+            }
         }
         return cell
     }
@@ -104,8 +87,19 @@ extension WishListVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print ("tap cell")
+        
     }
 }
 
+// MARK: - WishListViewProtocol
+extension WishListVC: WishListViewProtocol {
+  
+    func update() {
+        collectionView.reloadData()
+    }
+
+    func changeHeartColor() {
+
+    }
+}
 
