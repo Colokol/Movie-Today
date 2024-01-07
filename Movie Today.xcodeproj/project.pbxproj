@@ -813,6 +813,7 @@
 				DEVELOPMENT_TEAM = Q32WAK9PQ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Movie Today/Supports/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Set user photo";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -844,6 +845,7 @@
 				DEVELOPMENT_TEAM = Q32WAK9PQ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Movie Today/Supports/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Set user photo";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
