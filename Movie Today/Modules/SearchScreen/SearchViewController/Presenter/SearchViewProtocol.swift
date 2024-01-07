@@ -13,7 +13,7 @@ protocol SearchViewProtocol: AnyObject {
     func animate(_ bool: Bool)
     func hideError(hide: Bool)
     func updateSearchResults(_ movies: [Doc], hideError: Bool)
-    func updateActors(_ actors: [Person])
+    func updateActors(_ actors: [PersonModel])
 }
 
 protocol SearchPresentorProtocol: AnyObject {
@@ -22,10 +22,12 @@ protocol SearchPresentorProtocol: AnyObject {
     var movies: [Doc]? { get set }
     var moviesTwo: [Doc]? { get set }
     var categories: [Categories] { get set }
-    var actors: [Person]? { get set }
+    var actors: [PersonModel]? { get set }
     func getUpcomingMovie()
     func getFilms(with text: String)
-    func getActors(with: [Person])
+//    func getActors(with: [Person])
+    func getActorsWithName(_ name: String)
+    func getMovieForActordID(with id: Int)
     func didSelectItem(at: IndexPath)
 }
 
@@ -45,7 +47,7 @@ final class SearchPresentor: SearchPresentorProtocol {
                           Categories(name: "Фантастика", isSelected: false),
                           Categories(name: "Мультфильм", isSelected: false),
                           Categories(name: "Документальный", isSelected: false)]
-    var actors: [Person]?
+    var actors: [PersonModel]?
     
     
     init(view: SearchViewProtocol) {
@@ -58,10 +60,8 @@ final class SearchPresentor: SearchPresentorProtocol {
             case .success(let movie):
                 if self.movies == nil && self.moviesTwo == nil {
                     self.movies = [Doc]()
-                    self.moviesTwo = [Doc]()
                 }
                 self.movies = movie.docs
-                self.moviesTwo = movie.docs
                 DispatchQueue.main.async {
                     self.view?.updateData()
                     self.view?.reloadData()
@@ -76,32 +76,20 @@ final class SearchPresentor: SearchPresentorProtocol {
         networkManager.searchMovie(searchText: text) { [weak self] result in
             switch result {
             case .success(let movie):
-                print(movie.docs[0].persons)
-                if self?.searchMovies == nil {
-                    self?.searchMovies = [Doc]()
+                if self?.moviesTwo == nil {
+                    self?.moviesTwo = [Doc]()
                 }
-                let filteredMovies = movie.docs.filter {
-                    $0.id != nil
-                    && $0.ageRating != nil
-                    && $0.genres != nil
-                    && $0.movieLength != nil
-                    && $0.name != nil
-                    && $0.poster != nil
-                    && $0.rating != nil
-                    && $0.type != nil
-                    && $0.year != nil
-                }
-                self?.searchMovies = filteredMovies
-                print(filteredMovies[0].persons)
+                let filteredMovies = movie.docs.filter { $0.poster?.url?.isEmpty == false }
+                self?.moviesTwo = filteredMovies
                 if filteredMovies.count == 0 {
                     self?.view?.updateSearchResults(filteredMovies, hideError: false)
                 } else {
                     self?.view?.updateSearchResults(filteredMovies, hideError: true)
-                    for person in filteredMovies {
-                        guard let actors = person.persons else { return }
-                        print(actors)
-                        self?.getActors(with: actors)
-                    }
+//                    for person in filteredMovies {
+//                        guard let actors = person.persons else { return }
+//                        print(actors)
+//                        self?.getActors(with: actors)
+//                    }
 
                 }
             case .failure(let error):
@@ -110,18 +98,56 @@ final class SearchPresentor: SearchPresentorProtocol {
         }
     }
     
-    func getActors(with: [Person]) {
-        let actor = with
-        if self.actors == nil {
-            self.actors = [Person]()
-        }
-        self.actors = actor
-        print("актеры получены")
-        guard let actors = self.actors else { return }
-        self.view?.updateActors(actors)
-        print("актеры отданы")
+    func getActorsWithName(_ name: String) {
+        networkManager.searchPerson(searchText: name) { result in
+            switch result {
+            case .success(let actors):
+                if self.actors == nil {
+                    self.actors = [PersonModel]()
+                }
+                let filteredActors = Array(actors.docs.filter { $0.photo?.isEmpty == false }.prefix(3))
+                print(filteredActors)
+                self.actors = filteredActors
+                let actors = filteredActors
+                self.view?.updateActors(filteredActors)
+                self.getMovieForActordID(with: filteredActors[0].id ?? 0)
 
+            case .failure(let error):
+                print(error.localizedDescription, "Ошибка в getActorsWithName")
+            }
+        }
     }
+    
+    func getMovieForActordID(with id: Int) {
+        networkManager.getMovieFor(personId: id) { result in
+            switch result {
+            case .success(let movie):
+                if self.searchMovies == nil {
+                    self.searchMovies = [Doc]()
+                } else {
+                    self.searchMovies?.removeAll()
+                }
+                let filteredMovie = movie.docs.filter { $0.poster?.url?.isEmpty == false }
+                self.searchMovies = filteredMovie
+                self.view?.updateSearchResults(filteredMovie, hideError: true)
+            case .failure(let error):
+                print(error.localizedDescription, "Ошибка в getMovieForActordID")
+            }
+        }
+    }
+//
+//    func getActors(with: [Person]) {
+//        let actor = with
+//        if self.actors == nil {
+//            self.actors = [Person]()
+//        }
+//        self.actors = actor
+//        print("актеры получены")
+//        guard let actors = self.actors else { return }
+//        self.view?.updateActors(actors)
+//        print("актеры отданы")
+//
+//    }
     
     func getGenre(genre: MovieGenres) {
         self.view?.animate(true)

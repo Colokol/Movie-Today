@@ -237,11 +237,9 @@
 		CE621C0F2B3F612400F75743 /* SearchScreen */ = {
 			isa = PBXGroup;
 			children = (
-				FAA71AF82B49ECE2001F361A /* View */,
+				FAFE32B02B4AC91D0031E185 /* SearchViewController */,
 				FAA71AF52B49ECC5001F361A /* Sections */,
 				FAA71AF02B49EC9A001F361A /* SearchResult */,
-				CE621C102B3F612400F75743 /* SearchViewController.swift */,
-				CE621C112B3F612400F75743 /* SearchViewProtocol.swift */,
 				FAA71AEE2B49EC4C001F361A /* ActorsCell.swift */,
 			);
 			path = SearchScreen;
@@ -547,8 +545,8 @@
 		FAA71AF02B49EC9A001F361A /* SearchResult */ = {
 			isa = PBXGroup;
 			children = (
-				FAA71AF12B49ECA4001F361A /* SearchResultController.swift */,
-				FAA71AF32B49ECB4001F361A /* SearchResultPresenter.swift */,
+				FAFE32B42B4AC94C0031E185 /* Presenter */,
+				FAFE32B32B4AC9470031E185 /* View */,
 			);
 			path = SearchResult;
 			sourceTree = "<group>";
@@ -561,14 +559,6 @@
 			path = Sections;
 			sourceTree = "<group>";
 		};
-		FAA71AF82B49ECE2001F361A /* View */ = {
-			isa = PBXGroup;
-			children = (
-				FAA71AF92B49ECE9001F361A /* NotFoundView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		FAAB771E2B3B3A7800166219 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -579,6 +569,48 @@
 				FA6913B12B3D755E000DE262 /* CategoriesCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		FAFE32B02B4AC91D0031E185 /* SearchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FAFE32B22B4AC9350031E185 /* Presenter */,
+				FAFE32B12B4AC92F0031E185 /* View */,
+			);
+			path = SearchViewController;
+			sourceTree = "<group>";
+		};
+		FAFE32B12B4AC92F0031E185 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FAA71AF92B49ECE9001F361A /* NotFoundView.swift */,
+				CE621C102B3F612400F75743 /* SearchViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FAFE32B22B4AC9350031E185 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				CE621C112B3F612400F75743 /* SearchViewProtocol.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		FAFE32B32B4AC9470031E185 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FAA71AF12B49ECA4001F361A /* SearchResultController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FAFE32B42B4AC94C0031E185 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				FAA71AF32B49ECB4001F361A /* SearchResultPresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

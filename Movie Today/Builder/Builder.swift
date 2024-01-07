@@ -52,7 +52,7 @@ final class Builder {
         view.presenter = presenter
         return view
     }
-    static func createSearchResultController(person: [Person]?, movie: [Doc]?) -> SearchResultController {
+    static func createSearchResultController(person: [PersonModel]?, movie: [Doc]?) -> SearchResultController {
         let view = SearchResultController()
         let presenter = SearchResultPresenter(view: view, actors: person, movies: movie)
         view.presenter = presenter

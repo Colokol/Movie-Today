@@ -15,7 +15,7 @@ class SearchViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<SectionsSearch, Item>?
     var presenter: SearchPresentorProtocol!
     private let activityIndicator = UIActivityIndicatorView(style: .large)
-    private var timer: Timer!
+    private var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +70,7 @@ class SearchViewController: UIViewController {
         searchController.searchBar.scopeButtonTitles = ["Фильмы", "Актеры"]
         searchController.searchBar.setScopeBarButtonBackgroundImage(UIImage(named: "back"), for: .normal)
         searchController.searchBar.setScopeBarButtonBackgroundImage(UIImage(named: "selectedBack"), for: .selected)
+        searchController.searchBar.selectedScopeButtonIndex = 0
         searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.blueAccent], for: .selected)
         searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
         searchController.searchBar.showsScopeBar = false
@@ -254,12 +255,12 @@ extension SearchViewController: SearchViewProtocol {
         }
     }
     
-    func updateActors(_ actors: [Person]) {
+    func updateActors(_ actors: [PersonModel]) {
         print("СерчРезалт обновлен с актерами")
         searchResultController.presenter.actors = actors
         searchResultController.presenter.updateModels()
         searchResultController.presenter.reloadData()
-//        searchResultController.presenter.getActorInfo(with: actors[0].id)
+//        searchResultController.presenter.reloadData()
     }
     
     func hideError(hide: Bool) {
@@ -276,19 +277,20 @@ extension SearchViewController: SearchViewProtocol {
     }
     
     func updateSearchResults(_ movies: [Doc], hideError: Bool) {
-        if hideError {
-            searchResultController.showError(true)
-            searchResultController.presenter.movies = movies
+        searchResultController.presenter.movies = movies
             searchResultController.presenter.updateModels()
-            searchResultController.presenter.reloadData()
-            print("СерчРезалт обновлен с фильмами")
-        } else {
-            searchResultController.showError(false)
-            searchResultController.presenter.movies = movies
-            searchResultController.presenter.updateModels()
-            searchResultController.presenter.reloadData()
-            print("СерчРезалт обновлен с фильмами")
-        }
+        searchResultController.presenter.reloadData()
+//        if hideError {
+//            searchResultController.presenter.movies = movies
+//            searchResultController.presenter.updateModels()
+////            searchResultController.presenter.reloadData()
+//            print("СерчРезалт обновлен с фильмами")
+//        } else {
+//            searchResultController.presenter.movies = movies
+//            searchResultController.presenter.updateModels()
+////            searchResultController.presenter.reloadData()
+//            print("СерчРезалт обновлен с фильмами")
+//        }
         
     }
 
@@ -298,7 +300,7 @@ extension SearchViewController: UISearchBarDelegate {
  
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
-        presenter.getFilms(with: searchText)
+//        presenter.getFilms(with: searchText)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -311,29 +313,52 @@ extension SearchViewController: UISearchBarDelegate {
         searchBar.setNeedsLayout()
     }
     
-//    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-//        switch selectedScope {
-//        case 0:
-//            guard let searchText = searchBar.text, !searchText.isEmpty else { return }
-//            presenter.getFilms(with: searchText)
-//        case 1:
-//            //MARK: - Добавить поиск актеров и фильмов по актерам
-//            presenter.getActors(with: 1)
-//        default: break
-//
-//        }
-//    }
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        switch selectedScope {
+        case 0:
+            guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+            searchResultController.presenter.actors?.removeAll()
+            searchResultController.presenter.updateModels()
+            searchResultController.presenter.reloadData()
+            presenter.getFilms(with: searchText)
+        case 1:
+            //MARK: - Добавить поиск актеров и фильмов по актерам
+            searchResultController.presenter.movies?.removeAll()
+            searchResultController.presenter.updateModels()
+            searchResultController.presenter.reloadData()
+            guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+            presenter.getActorsWithName(searchText)
+            
+        default: break
+
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { [weak self] _ in
+            if !searchText.isEmpty {
+                if searchBar.selectedScopeButtonIndex == 0 {
+                    self?.presenter.getFilms(with: searchText)
+                    self?.searchResultController.presenter.actors?.removeAll()
+                } else if searchBar.selectedScopeButtonIndex == 1 {
+                    self?.searchResultController.presenter.movies?.removeAll()
+                    self?.presenter.getActorsWithName(searchText)
+                }
+            }
+        })
+        
+    }
 }
 
 extension SearchViewController: UISearchControllerDelegate {
     
     func willDismissSearchController(_ searchController: UISearchController) {
         if let searchResultController = searchController.searchResultsController as? SearchResultController {
-            searchResultController.presenter.movies?.removeAll()
-            searchResultController.presenter.actors?.removeAll()
-            searchResultController.showError(true)
-            searchResultController.presenter.reloadData()
-        }
+              searchResultController.presenter.movies?.removeAll()
+              searchResultController.presenter.actors?.removeAll()
+              searchResultController.presenter.updateModels()
+          }
     }
 }
 

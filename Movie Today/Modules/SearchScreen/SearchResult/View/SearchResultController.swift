@@ -83,8 +83,8 @@ final class SearchResultController: UIViewController {
     
     //MARK: - Методы регистрации ячеек
     
-    private func actorCellRegister() -> UICollectionView.CellRegistration<ActorsCell, Person> {
-        return UICollectionView.CellRegistration<ActorsCell, Person> { (cell, indexPath, item) in
+    private func actorCellRegister() -> UICollectionView.CellRegistration<ActorsCell, PersonModel> {
+        return UICollectionView.CellRegistration<ActorsCell, PersonModel> { (cell, indexPath, item) in
             cell.config(with: item)
         }
     }
@@ -148,11 +148,7 @@ extension SearchResultController: UISearchResultsUpdating {
 
 extension SearchResultController: SearchResultViewProtocol {
     func showError(_ show: Bool) {
-        if show {
-            errorView.isHidden = true
-        } else {
-            errorView.isHidden = false
-        }
+        errorView.isHidden = !show
     }
     
     func reloadData() {
@@ -160,6 +156,10 @@ extension SearchResultController: SearchResultViewProtocol {
     }
     
     func update() {
+        let hasActors = !(presenter.actors?.isEmpty ?? true)
+        let hasMovies = !(presenter.movies?.isEmpty ?? true)
+        showError(!(hasActors || hasMovies))
+        
         applySnapshot()
     }
     
