@@ -7,11 +7,11 @@
 
 import UIKit
 
-class OnboardingViewController: UIViewController {
+class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     
     //MARK: - Properties
     
-    private var slides = [OnboardingView]()
+    var presenter: OnboardingViewPresenterProtocol! = nil
     
     //MARK: - UI Elements
     
@@ -61,8 +61,7 @@ class OnboardingViewController: UIViewController {
         setConstraints()
         currentNextButtonImage()
         
-        slides = createSlides()
-        setupSlidesScrollView(slides: slides)
+        setupSlidesScrollView(slides: presenter.slides)
 
     }
     
@@ -81,32 +80,13 @@ class OnboardingViewController: UIViewController {
     }
     
     private func currentNextButtonImage() {
-        if pageControl.currentPage == slides.count - 1 {
+        if pageControl.currentPage == presenter.slides.count - 1 {
             nextButtonFrameImage.image = UIImage(named: "ButtonFrame3")
-        } else if pageControl.currentPage == slides.count - 2 {
+        } else if pageControl.currentPage == presenter.slides.count - 2 {
             nextButtonFrameImage.image = UIImage(named: "ButtonFrame2")
         } else {
             nextButtonFrameImage.image = UIImage(named: "ButtonFrame1")
         }
-    }
-    
-    private func createSlides() -> [OnboardingView] {
-        let firstOnboardingView = OnboardingView()
-        firstOnboardingView.setFirstLabelText(text: "Lorem ipsum dolor sit amet consecteur esplicit")
-        firstOnboardingView.setSecondLabelText(text: "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient.")
-        firstOnboardingView.setOnboardingImage(image: #imageLiteral(resourceName: "FirstImage"))
-        
-        let secondOnboardingView = OnboardingView()
-        secondOnboardingView.setFirstLabelText(text: "Lorem ipsum dolor sit amet consecteur esplicit")
-        secondOnboardingView.setSecondLabelText(text: "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient.")
-        secondOnboardingView.setOnboardingImage(image: #imageLiteral(resourceName: "SecondImage"))
-        
-        let thirdOnboardingView = OnboardingView()
-        thirdOnboardingView.setFirstLabelText(text: "Lorem ipsum dolor sit amet consecteur esplicit")
-        thirdOnboardingView.setSecondLabelText(text: "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient.")
-        thirdOnboardingView.setOnboardingImage(image: #imageLiteral(resourceName: "ThirdImage"))
-        
-        return [firstOnboardingView, secondOnboardingView, thirdOnboardingView]
     }
     
     private func goToHomeScreen() {
@@ -123,7 +103,7 @@ class OnboardingViewController: UIViewController {
         let nextPageIndex = currentPageIndex + 1
         
         // Проверяем, что существует следующий слайд
-        guard nextPageIndex < slides.count else {
+        guard nextPageIndex < presenter.slides.count else {
             goToHomeScreen()
             return
         }
@@ -165,16 +145,16 @@ extension OnboardingViewController: UIScrollViewDelegate {
                                                     y: (0.5 - percentHorizontalOffset) / 0.5)
             let secondTransform = CGAffineTransform(scaleX: percentHorizontalOffset / 0.5,
                                                     y: percentHorizontalOffset / 0.5)
-            slides[0].setPageLabelTransform(transform: firstTransform)
-            slides[1].setPageLabelTransform(transform: secondTransform)
+            presenter.slides[0].setPageLabelTransform(transform: firstTransform)
+            presenter.slides[1].setPageLabelTransform(transform: secondTransform)
             
         } else {
             let secondTransform = CGAffineTransform(scaleX: (1 - percentHorizontalOffset) / 0.5,
                                                     y: (1 - percentHorizontalOffset) / 0.5)
             let thirdTransform = CGAffineTransform(scaleX: percentHorizontalOffset,
                                                     y: percentHorizontalOffset)
-            slides[1].setPageLabelTransform(transform: secondTransform)
-            slides[2].setPageLabelTransform(transform: thirdTransform)
+            presenter.slides[1].setPageLabelTransform(transform: secondTransform)
+            presenter.slides[2].setPageLabelTransform(transform: thirdTransform)
         }
     }
     
@@ -216,4 +196,3 @@ extension OnboardingViewController {
         ])
     }
 }
-
