@@ -18,10 +18,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        if onboardingCompleted() { window?.rootViewController = Builder.createTabBarViewController()}
-        else {
+        if onboardingCompleted() { 
+            window?.rootViewController = Builder.createTabBarViewController()
+        } else {
             window?.rootViewController = Builder.createOnboardingViewController()
         }
+        
         window?.makeKeyAndVisible()
     }
     

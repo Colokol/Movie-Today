@@ -24,13 +24,13 @@ class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     }()
     
     private let pageControl: UIPageControl = {
-        var customPageControl = UIPageControl()
-        customPageControl.translatesAutoresizingMaskIntoConstraints = false
-        customPageControl.numberOfPages = 3
-        customPageControl.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-        customPageControl.currentPageIndicatorTintColor = UIColor.blueAccent
-        customPageControl.pageIndicatorTintColor = UIColor(red: 26/255, green: 99/255, blue: 113/255, alpha: 1.0)
-        return customPageControl
+        var pageControl = UIPageControl()
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        pageControl.numberOfPages = 3
+        pageControl.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+        pageControl.currentPageIndicatorTintColor = UIColor.blueAccent
+        pageControl.pageIndicatorTintColor = UIColor(red: 26/255, green: 99/255, blue: 113/255, alpha: 1.0)
+        return pageControl
     }()
     
     private lazy var nextButton: UIButton = {

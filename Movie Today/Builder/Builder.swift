@@ -66,7 +66,7 @@ final class Builder {
 
     static func createOnboardingViewController() -> UIViewController {
         let vc = OnboardingViewController()
-        let presenter = OnboardingPresenter(view: vc as! OnboardingViewProtocol)
+        let presenter = OnboardingPresenter(view: vc)
         vc.presenter = presenter
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.navigationBar.isHidden = true
