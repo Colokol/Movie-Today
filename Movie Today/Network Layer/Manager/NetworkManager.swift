@@ -54,7 +54,7 @@ struct NetworkManager {
 
         // MARK: - Поиск фильма по ID
     func searchMovieFor(id:Int, completion: @escaping (Result<Doc, Error>) -> Void ) {
-        performRequest(for: .searchMovieFor(id: id), completion: completion)
+        performRequest(for: .searchMovieForID(id), completion: completion)
     }
 
     // MARK: - Поиск фильмов по названию

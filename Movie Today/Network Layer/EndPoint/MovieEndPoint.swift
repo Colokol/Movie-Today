@@ -17,7 +17,7 @@ public enum MovieApi {
     case collectionMovieList
     case searchMovie(searchText: String)
     case searchPerson(searchText: String)
-    case searchMovieFor(id:Int)
+    case searchMovieForID(_ id:Int)
     case searchMovieFor(personID: Int)
 }
 
@@ -54,6 +54,8 @@ extension MovieApi: EndpointType {
                return "person/search"
             case .searchMovieFor:
                 return "movie"
+            case .searchMovieForID(let id):
+                return "movie/\(id)"
         }
     }
 
@@ -114,6 +116,12 @@ extension MovieApi: EndpointType {
                     urlParameters: ["persons.id":"\(id)",
                                     "limit": MovieApi.defaultLimit,
                                     "page": MovieApi.defaultPage],
+                    additionalHeaders: headers
+                )
+            case .searchMovieForID:
+                return .requestParametersAndHeaders(
+                    bodyParameters: nil,
+                    urlParameters: nil,
                     additionalHeaders: headers
                 )
         }
