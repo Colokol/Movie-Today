@@ -29,7 +29,7 @@ final class TabBarController: UITabBarController {
         let vc1 = UINavigationController(rootViewController: Builder.createHomeVC())
         let vc2 = UINavigationController(rootViewController: Builder.createSearchViewController())
         let vc3 = UINavigationController(rootViewController: UIViewController())
-        let vc4 = UINavigationController(rootViewController: ProfileViewController())
+        let vc4 = UINavigationController(rootViewController: Builder.createProfileVC())
 
         vc1.tabBarItem.image = UIImage(named: "Home")
         vc2.tabBarItem.image = UIImage(named: "Search")
@@ -46,7 +46,7 @@ final class TabBarController: UITabBarController {
         vc3.tabBarItem.imageInsets = UIEdgeInsets(top: 30, left: 0, bottom: 10, right: 0)
         vc4.tabBarItem.imageInsets = UIEdgeInsets(top: 30, left: 0, bottom: 10, right: 30)
 
-        tabBar.tintColor = .black
+        tabBar.tintColor = .clear
         setViewControllers([vc1,vc2,vc3,vc4], animated: true)
     }
 

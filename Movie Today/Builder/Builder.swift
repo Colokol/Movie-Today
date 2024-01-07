@@ -59,5 +59,10 @@ final class Builder {
         view.presenter = presenter
         return view
     }
+    
+    static func createProfileVC() -> UIViewController {
+        let view = ProfileViewController()
+        return view
+    }
 
 }

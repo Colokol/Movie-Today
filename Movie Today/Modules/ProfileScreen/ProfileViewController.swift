@@ -10,7 +10,6 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     //MARK: - User interface elements
-    
     let profileView = ProfileView()
 
     //MARK: - Life cycle
@@ -19,6 +18,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         navigationController?.navigationBar.barTintColor = .background
+        tabBarController?.tabBar.barTintColor = .background
 
         // Call function's
         setupView()
