@@ -11,7 +11,7 @@ import SDWebImage
 
 class DetailViewController: UIViewController {
 
-    var presenter: DetailPresenterProtocol? = nil
+    var presenter: DetailPresenterProtocol!
 
     // MARK: - UI Components
     let backButton = UIButton(type: .system)
@@ -41,6 +41,8 @@ class DetailViewController: UIViewController {
         setupConstraints()
         navigationController?.navigationBar.isHidden = false
         presenter?.configureScreen()
+
+        favoriteButtonTap()
     }
     
     override func viewDidLayoutSubviews() {
@@ -223,11 +225,11 @@ class DetailViewController: UIViewController {
     }
     
     @objc func favouriteButtonTapped() {
-        // Tapped button logic
+        presenter.saveToFavorit()
     }
-    
+
     @objc func trailerButtonTapped() {
-        if let model = presenter?.movies,
+        if let model = presenter?.movie,
            let id = presenter?.id {
             let vc = Builder.createTrailerVC(model: model, id: id)
             navigationController?.pushViewController(vc, animated: true)
@@ -240,6 +242,17 @@ class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: DetailScreenViewProtocol {
+
+    func favoriteButtonTap() {
+        if presenter.favoriteButtonState {
+            favouriteButton.tintColor = .red
+        }else {
+            favouriteButton.tintColor = .white
+        }
+    }
+    
+
+    
     func update(model: Doc) {
         title = model.name
         descriptionTextView.text = model.description
