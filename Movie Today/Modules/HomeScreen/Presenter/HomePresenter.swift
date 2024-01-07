@@ -11,14 +11,14 @@ protocol HomeScreenViewProtocol: AnyObject {
     func update()
     func reloadData()
     func animate(_ start: Bool)
-    func updateSearchResults(_ movies: [DocSearch])
+    func updateSearchResults(_ movies: [Doc])
 }
 
 protocol HomePresenterProtocol: AnyObject {
     var movies: [Doc]? { get set }
     var collectionMovies: [Collection]? { get set }
     var categories: [Categories] { get set }
-    var searchMovies: [DocSearch]? { get set }
+    var searchMovies: [Doc]? { get set }
     func getCollectionMovie()
     func getMoviesFromCollection()
     func updateController()
@@ -34,7 +34,7 @@ final class HomePresenter: HomePresenterProtocol {
     
     var movies: [Doc]?
     var collectionMovies: [Collection]?
-    var searchMovies: [DocSearch]?
+    var searchMovies: [Doc]?
     var categories = [Categories(name: "Ужасы", isSelected: true),
                       Categories(name: "Комедия", isSelected: false),
                       Categories(name: "Криминал", isSelected: false),
@@ -142,7 +142,7 @@ final class HomePresenter: HomePresenterProtocol {
             switch result {
             case .success(let movie):
                 if self?.searchMovies == nil {
-                    self?.searchMovies = [DocSearch]()
+                    self?.searchMovies = [Doc]()
                 }
                 let filteredMovies = movie.docs.filter { 
                     $0.id != nil

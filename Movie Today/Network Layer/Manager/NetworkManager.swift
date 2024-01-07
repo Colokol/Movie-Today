@@ -36,6 +36,7 @@ struct NetworkManager {
                             result = .success(decodedData)
                         } catch let decodingError as DecodingError {
                             result = .failure(decodingError)
+                            print(decodingError)
                         } catch {
                             result = .failure(error)
                         }
@@ -57,7 +58,7 @@ struct NetworkManager {
     }
 
     // MARK: - Поиск фильмов по названию
-    func searchMovie(searchText: String, completion: @escaping (Result<SearchMovieModel, Error>) -> Void ) {
+    func searchMovie(searchText: String, completion: @escaping (Result<MovieModel, Error>) -> Void ) {
         performRequest(for: .searchMovie(searchText: searchText), completion: completion)
     }
 

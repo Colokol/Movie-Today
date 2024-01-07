@@ -13,16 +13,16 @@ struct MovieModel: Codable {
 
     // MARK: - Doc
 struct Doc: Hashable, Codable {
-    let id: Int
+    let id: Int?
     let externalId: ExternalId?
-    let name: String
+    let name: String?
     let alternativeName: String?
     let enName: String?
     let names: [Name]?
     let type: String?
     let typeNumber: Int?
-    let year: Int
-    let description: String
+    let year: Int?
+    let description: String?
     let shortDescription: String?
     let slogan: String?
     let status: String?
@@ -64,13 +64,13 @@ struct Doc: Hashable, Codable {
 
     //    // MARK: - Backdrop
 struct Poster: Codable, Hashable {
-    let url: String
+    let url: String?
     let previewUrl: String?
 }
 
     // MARK: - Country
 struct Genres: Codable, Hashable {
-    let name: String
+    let name: String?
 }
 
     // MARK: - Audience
@@ -165,7 +165,7 @@ struct Premiere: Hashable, Codable {
 
     // MARK: - Rating
 struct Rating: Hashable, Codable {
-    let kp: Double
+    let kp: Double?
     let imdb: Double?
     let tmdb: Double?
     let filmCritics: Double?
