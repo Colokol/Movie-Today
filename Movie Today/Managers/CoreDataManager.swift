@@ -52,14 +52,15 @@ final class CoreDataManager {
     private func configureFavoriteMovie(_ movie: FavoriteMovies, with model: Doc) {
         movie.name = model.name
         movie.type = model.type
-        movie.poster = model.poster.url
-        movie.rating = model.rating.kp
+        movie.poster = model.poster?.url
+        movie.rating = model.rating?.kp ?? 0
 
-        if let firstGenre = model.genres.first {
+        if let firstGenre = model.genres?.first {
             movie.genre = firstGenre.name
         }
+        guard let url =  model.poster?.url else {return}
 
-        dataLoader.loadData(fromURL: model.poster.url) { imageData in
+        dataLoader.loadData(fromURL: url) { imageData in
             if let imageData = imageData {
                 movie.image = imageData
                 self.saveContext()
@@ -86,8 +87,9 @@ final class CoreDataManager {
     }
 
     func removeFromFavorites(model: Doc) {
+        guard let name = model.name else {return}
         let fetchRequest = FavoriteMovies.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "name == %@", model.name)
+        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
 
         do {
             let results = try mainContext.fetch(fetchRequest)

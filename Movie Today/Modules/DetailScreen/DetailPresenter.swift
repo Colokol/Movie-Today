@@ -35,7 +35,7 @@ final class DetailPresenter: DetailPresenterProtocol {
     }
     
     func fetchVideoID() {
-        youtubeManager.fetchData(query: movie.name + "film trailer") { result in
+        youtubeManager.fetchData(query: movie.name! + "film trailer") { result in
             switch result {
             case .success(let model):
                 if self.id == nil {
