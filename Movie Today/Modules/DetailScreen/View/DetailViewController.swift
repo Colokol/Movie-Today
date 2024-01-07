@@ -17,7 +17,6 @@ class DetailViewController: UIViewController {
     let backButton = UIButton(type: .system)
     let favouriteButton = UIButton(type: .system)
     let movieTitleLabel = UILabel()
-//    let headerStackView = UIStackView()
     let movieBackgroundView = UIImageView()
     let gradientLayer = CAGradientLayer()
     let scrollView = UIScrollView()
@@ -233,7 +232,6 @@ class DetailViewController: UIViewController {
             let vc = Builder.createTrailerVC(model: model)
             navigationController?.pushViewController(vc, animated: true)
         }
-//           let id = presenter?.id
             
         
     }
