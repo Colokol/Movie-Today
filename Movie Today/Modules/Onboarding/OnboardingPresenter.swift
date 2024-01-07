@@ -27,26 +27,20 @@ class OnboardingPresenter: OnboardingViewPresenterProtocol {
         self.view = view
         slides = createSlides()
     }
-
+    
     private func createSlides() -> [OnboardingView] {
-        let firstOnboardingView = OnboardingView()
-        firstOnboardingView.setFirstLabelText(text: "Lorem ipsum dolor sit amet consecteur esplicit")
-        firstOnboardingView.setSecondLabelText(text: "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient.")
-        firstOnboardingView.setOnboardingImage(image: UIImage(named: "FirstImage")! )
-
-        let secondOnboardingView = OnboardingView()
-        secondOnboardingView.setFirstLabelText(text: "Lorem ipsum dolor sit amet consecteur esplicit")
-        secondOnboardingView.setSecondLabelText(text: "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient.")
-        secondOnboardingView.setOnboardingImage(image: UIImage(named: "SecondImage")!)
-
-
-        let thirdOnboardingView = OnboardingView()
-        thirdOnboardingView.setFirstLabelText(text: "Lorem ipsum dolor sit amet consecteur esplicit")
-        thirdOnboardingView.setSecondLabelText(text: "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient.")
-        thirdOnboardingView.setOnboardingImage(image: UIImage(named: "ThirdImage")!)
-
-        return [firstOnboardingView, secondOnboardingView, thirdOnboardingView]
+        var slides: [OnboardingView] = []
+        
+        for index in 0 ..< OnboardingTexts.titles.count {
+            let onboardingView = OnboardingView()
+            onboardingView.setFirstLabelText(text: OnboardingTexts.titles[index])
+            onboardingView.setSecondLabelText(text: OnboardingTexts.descriptions[index])
+            onboardingView.setOnboardingImage(image: UIImage(named: "Image\(index + 1)")!)
+            
+            slides.append(onboardingView)
+        }
+        
+        return slides
     }
-
 
 }
