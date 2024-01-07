@@ -115,5 +115,11 @@ final class CoreDataManager {
             print("Ошибка при удалении всех данных: \(error)")
         }
     }
-
+    
+    func saveUser(username: String, password: String) {
+            let authorization = User(context: mainContext)
+            authorization.username = username
+            authorization.password = password
+            saveContext()
+        }
 }
