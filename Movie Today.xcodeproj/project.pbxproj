@@ -18,6 +18,7 @@
 		7BAA797E2B3DA46F002FA5F5 /* UIButton + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA797D2B3DA46F002FA5F5 /* UIButton + Extension.swift */; };
 		7BAA79802B3DA5C3002FA5F5 /* ConstraintsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA797F2B3DA5C3002FA5F5 /* ConstraintsEnum.swift */; };
 		92AA60ED2B4ACE02004CC79A /* OnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AA60EC2B4ACE02004CC79A /* OnboardingPresenter.swift */; };
+		92AA60EF2B4AF762004CC79A /* OnboardingTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AA60EE2B4AF762004CC79A /* OnboardingTexts.swift */; };
 		CE48A8ED2B3C92EA00244CCF /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EB2B3C92EA00244CCF /* OnboardingViewController.swift */; };
 		CE48A8EE2B3C92EA00244CCF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EC2B3C92EA00244CCF /* OnboardingView.swift */; };
 		CE48A8F02B3D564900244CCF /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EF2B3D564900244CCF /* UIFont + Extension.swift */; };
@@ -96,6 +97,7 @@
 		7BAA797D2B3DA46F002FA5F5 /* UIButton + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extension.swift"; sourceTree = "<group>"; };
 		7BAA797F2B3DA5C3002FA5F5 /* ConstraintsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintsEnum.swift; sourceTree = "<group>"; };
 		92AA60EC2B4ACE02004CC79A /* OnboardingPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPresenter.swift; sourceTree = "<group>"; };
+		92AA60EE2B4AF762004CC79A /* OnboardingTexts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingTexts.swift; path = "Movie Today/Modules/HomeScreen/OnboardingTexts.swift"; sourceTree = SOURCE_ROOT; };
 		CE48A8EB2B3C92EA00244CCF /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		CE48A8EC2B3C92EA00244CCF /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		CE48A8EF2B3D564900244CCF /* UIFont + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				CE48A8EB2B3C92EA00244CCF /* OnboardingViewController.swift */,
 				CE48A8EC2B3C92EA00244CCF /* OnboardingView.swift */,
 				92AA60EC2B4ACE02004CC79A /* OnboardingPresenter.swift */,
+				92AA60EE2B4AF762004CC79A /* OnboardingTexts.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 				FA290FC92B3C5B52007970F2 /* MovieListCell.swift in Sources */,
 				CE96EB872B49758E001184C4 /* WishListPresenter.swift in Sources */,
 				FAA13DCC2B3C103000DFF081 /* UIView + Extension.swift in Sources */,
+				92AA60EF2B4AF762004CC79A /* OnboardingTexts.swift in Sources */,
 				CE621C0E2B3F611D00F75743 /* ProfileViewController.swift in Sources */,
 				FA9CE7982B3A037D00996564 /* Builder.swift in Sources */,
 				CED4D20D2B373B9F005138A9 /* HomeViewController.swift in Sources */,
