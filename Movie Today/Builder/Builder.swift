@@ -46,9 +46,9 @@ final class Builder {
         return view
     }
 
-    static func createTrailerVC(model: Doc, id: String) -> UIViewController {
+    static func createTrailerVC(model: Doc) -> UIViewController {
         let view = TrailerController()
-        let presenter = TrailerPresenter(view: view, model: model, text: id)
+        let presenter = TrailerPresenter(view: view, model: model)
         view.presenter = presenter
         return view
     }
