@@ -217,7 +217,7 @@ final class FilmCell: UICollectionViewCell {
         imageView.sd_setImage(with: URL(string: image))
     }
     
-    func configSearch(with model: DocSearch) {
+    func configSearch(with model: Doc) {
         if let name = model.name {
             title.text = name
         }
@@ -228,7 +228,7 @@ final class FilmCell: UICollectionViewCell {
             minutes.text = "\(movieLength) minutes"
         }
         if let genre = model.genres?.first, let type = model.type {
-            self.genre.text = "\(String(describing: genre?.name)) | \(String(describing: type))"
+            self.genre.text = "\(String(describing: genre.name)) | \(String(describing: type))"
         }
         if let pg = model.ageRating {
             self.pg.text = "PG - \(pg)"
