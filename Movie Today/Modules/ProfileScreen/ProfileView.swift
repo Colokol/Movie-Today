@@ -21,7 +21,7 @@ final class ProfileView: UIView {
     let contentView = UIView()
     let userView = UserView()
     let generalView = GeneralAndMore(labelText: "General", firstButtonTitle: "Notification", firstImage: "notif", secondButtonTitle: "Language", secondImage: "lang")
-    let moreView = GeneralAndMore(labelText: "More", firstButtonTitle: "Legal and Policies", firstImage: "shield", secondButtonTitle: "About Us", secondImage: "about")
+    let moreView = GeneralAndMore(labelText: "More", firstButtonTitle: "Legal and Policies", firstImage: "legal", secondButtonTitle: "About Us", secondImage: "about")
     
     //MARK: - Initialize
     

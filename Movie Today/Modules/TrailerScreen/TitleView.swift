@@ -102,9 +102,9 @@ final class TitleView: UIView {
     
     func config(with model: Doc) {
         titleLabel.text = model.name
-        if let genre = model.genres.first {
+        if let genre = model.genres?.first {
             genreLabel.text = genre.name
         }
-        yearLabel.text = String(model.year)
+       // yearLabel.text = String(model.year)
     }
 }

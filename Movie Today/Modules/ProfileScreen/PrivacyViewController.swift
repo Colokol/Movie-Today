@@ -19,6 +19,8 @@ class PrivacyViewController: UIViewController {
     
     //MARK: - User interface elements
     
+    private let tabBar = TabBarController()
+    
     private lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.alwaysBounceVertical = true

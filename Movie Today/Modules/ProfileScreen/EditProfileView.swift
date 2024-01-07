@@ -11,7 +11,7 @@ final class EditProfileView: UIView {
 
     //MARK: - User interface elements
     
-    private lazy var userImage: UIImageView = {
+    let userImage: UIImageView = {
         let image = UIImageView()
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill
@@ -100,6 +100,7 @@ final class EditProfileView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        
         // Call function's
         setupView()
         setupConstraints()
@@ -114,6 +115,10 @@ final class EditProfileView: UIView {
     func signatureTextFieldDelegate() {
         nameTextField.delegate = self
         emailTextField.delegate = self
+    }
+    
+    func addTargetFofEditButton(target: Any, selector: Selector) {
+        editUserImage.addTarget(target, action: selector, for: .touchUpInside)
     }
     
     //MARK: - Private methods
@@ -223,7 +228,7 @@ private extension EditProfileView {
             emailLabelTextField.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
             emailLabelTextField.widthAnchor.constraint(equalToConstant: Constans.fiftyPoints),
             
-            saveChangesButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constans.seventyPoints),
+            saveChangesButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -Constans.seventyPoints),
             saveChangesButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sideMargin),
             saveChangesButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.sideMargin),
             saveChangesButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints),

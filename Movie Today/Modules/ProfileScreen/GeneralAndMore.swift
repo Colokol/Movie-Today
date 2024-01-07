@@ -29,6 +29,11 @@ final class GeneralAndMore: UIView {
         button.titleLabel?.font = .montserratMedium(ofSize: 14)
         return button
     }()
+    private lazy var firstArrowImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "arrowBut")
+        return image
+    }()
     private lazy var separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .gray
@@ -43,6 +48,11 @@ final class GeneralAndMore: UIView {
     private lazy var secondImage: UIImageView = {
         let image = UIImageView()
         image.clipsToBounds = true
+        return image
+    }()
+    private lazy var secondArrowImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "arrowBut")
         return image
     }()
     
@@ -68,7 +78,7 @@ final class GeneralAndMore: UIView {
     //MARK: - Private method
     
     private func setupView() {
-        self.addSubviews(viewLabel, firstButton, firstImage, separatorView, secondButton, secondImage)
+        self.addSubviews(viewLabel, firstButton, firstImage, firstArrowImage, separatorView, secondButton, secondImage, secondArrowImage)
     }
 }
 
@@ -105,6 +115,12 @@ private extension GeneralAndMore {
             firstImage.heightAnchor.constraint(equalToConstant: Constans.thiryPoints),
             firstImage.centerYAnchor.constraint(equalTo: firstButton.centerYAnchor),
             
+            // First arrow image
+            firstArrowImage.leadingAnchor.constraint(equalTo: firstButton.trailingAnchor, constant: Constans.tenPoints),
+            firstArrowImage.centerYAnchor.constraint(equalTo: firstButton.centerYAnchor),
+            firstArrowImage.heightAnchor.constraint(equalToConstant: Constans.thiryPoints),
+            firstArrowImage.widthAnchor.constraint(equalToConstant: Constans.thiryPoints),
+            
             // Separator view
             separatorView.topAnchor.constraint(equalTo: firstButton.bottomAnchor, constant: Constans.tenPoints),
             separatorView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.thiryPoints),
@@ -122,6 +138,12 @@ private extension GeneralAndMore {
             secondImage.widthAnchor.constraint(equalToConstant: Constans.thiryPoints),
             secondImage.heightAnchor.constraint(equalToConstant: Constans.thiryPoints),
             secondImage.centerYAnchor.constraint(equalTo: secondButton.centerYAnchor),
+            
+            // Second arrow image
+            secondArrowImage.leadingAnchor.constraint(equalTo: secondButton.trailingAnchor, constant: Constans.tenPoints),
+            secondArrowImage.centerYAnchor.constraint(equalTo: secondButton.centerYAnchor),
+            secondArrowImage.heightAnchor.constraint(equalToConstant: Constans.thiryPoints),
+            secondArrowImage.widthAnchor.constraint(equalToConstant: Constans.thiryPoints),
         ])
     }
 }

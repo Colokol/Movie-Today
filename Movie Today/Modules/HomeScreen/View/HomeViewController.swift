@@ -261,7 +261,7 @@ final class HomeViewController: UIViewController {
 
 //MARK: - HomeViewProtocol
 extension HomeViewController: HomeScreenViewProtocol {
-    func updateSearchResults(_ movies: [DocSearch]) {
+    func updateSearchResults(_ movies: [Doc]) {
         searchResultController.results = movies
         searchResultController.collectionView.reloadData()
     }

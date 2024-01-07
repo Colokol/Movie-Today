@@ -255,9 +255,11 @@ extension DetailViewController: DetailScreenViewProtocol {
     
     func update(model: Doc) {
         title = model.name
-        movieImageView.sd_setImage(with: URL(string: model.poster.url))
         descriptionTextView.text = model.description
-        ratingLabel.text = String(model.rating.kp)
+        let rait =  model.rating?.kp
+        ratingLabel.text = String(format: "%.1f", rait ?? "нет информации")
+        guard let url = model.poster?.url else {return}
+        movieImageView.sd_setImage(with: URL(string: url))
     }
     
 
