@@ -76,8 +76,15 @@ final class HomeViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+
+        likeButton.addTarget(self, action: #selector(wishListTap), for: .touchUpInside)
     }
-    
+
+    @objc func wishListTap() {
+        let wishListViewController = Builder.createWishListVC()
+        navigationController?.pushViewController(wishListViewController, animated: true)
+    }
+
     //MARK: - CollectionViewSetup
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -254,7 +261,7 @@ final class HomeViewController: UIViewController {
 
 //MARK: - HomeViewProtocol
 extension HomeViewController: HomeScreenViewProtocol {
-    func updateSearchResults(_ movies: [DocSearch]) {
+    func updateSearchResults(_ movies: [Doc]) {
         searchResultController.results = movies
         searchResultController.collectionView.reloadData()
     }
