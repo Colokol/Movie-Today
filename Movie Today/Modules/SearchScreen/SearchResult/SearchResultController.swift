@@ -52,6 +52,7 @@ final class SearchResultController: UIViewController {
                 
                 section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = NSDirectionalEdgeInsets(top: 30, leading: 0, bottom: 30, trailing: 0)
+                section.orthogonalScrollingBehavior = .continuous
                 return section
             }
         }
@@ -88,8 +89,8 @@ final class SearchResultController: UIViewController {
         }
     }
     
-    private func relatedCellRegister() -> UICollectionView.CellRegistration<FilmCell, DocSearch> {
-        return UICollectionView.CellRegistration<FilmCell, DocSearch> { (cell, indexPath, item) in
+    private func relatedCellRegister() -> UICollectionView.CellRegistration<FilmCell, Doc> {
+        return UICollectionView.CellRegistration<FilmCell, Doc> { (cell, indexPath, item) in
             cell.configSearch(with: item)
             
         }
@@ -105,10 +106,10 @@ final class SearchResultController: UIViewController {
             switch SearchSections(rawValue: indexPath.section)! {
             case .actors:
                 print("ячейка актеров создана")
-                return collectionView.dequeueConfiguredReusableCell(using: actors, for: indexPath, item: item.actor)
+                return collectionView.dequeueConfiguredReusableCell(using: actors, for: indexPath, item: item.actors)
             case .related:
                 print("ячейка фильмов создана")
-                return collectionView.dequeueConfiguredReusableCell(using: related, for: indexPath, item: item.search)
+                return collectionView.dequeueConfiguredReusableCell(using: related, for: indexPath, item: item.movieModel)
             }
         })
     }
@@ -118,11 +119,11 @@ final class SearchResultController: UIViewController {
     private func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<SearchSections, Item>()
         snapshot.appendSections([.actors, .related])
-        if let actors = presenter.actors?.compactMap({ Item(actor: $0)}) {
+        if let actors = presenter.actors?.compactMap({ Item(actors: $0)}) {
             snapshot.appendItems(actors, toSection: .actors)
             print("в снэпшот добавлены актеры")
         }
-        if let related = presenter.movies?.compactMap({ Item(search: $0)}) {
+        if let related = presenter.movies?.compactMap({ Item(movieModel: $0)}) {
             snapshot.appendItems(related, toSection: .related)
             print("в снэпшот добавлены фильмы")
         }

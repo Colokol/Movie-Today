@@ -259,7 +259,7 @@ extension SearchViewController: SearchViewProtocol {
         searchResultController.presenter.actors = actors
         searchResultController.presenter.updateModels()
         searchResultController.presenter.reloadData()
-        searchResultController.presenter.getActorInfo(with: actors[0].id)
+//        searchResultController.presenter.getActorInfo(with: actors[0].id)
     }
     
     func hideError(hide: Bool) {
@@ -275,7 +275,7 @@ extension SearchViewController: SearchViewProtocol {
         applySnapshot()
     }
     
-    func updateSearchResults(_ movies: [DocSearch], hideError: Bool) {
+    func updateSearchResults(_ movies: [Doc], hideError: Bool) {
         if hideError {
             searchResultController.showError(true)
             searchResultController.presenter.movies = movies

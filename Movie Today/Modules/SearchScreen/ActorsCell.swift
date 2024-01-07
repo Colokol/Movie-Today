@@ -54,8 +54,10 @@ final class ActorsCell: UICollectionViewCell {
     }
     
     func config(with actor: Person) {
-        imageView.sd_setImage(with: URL(string: actor.photo ?? ""))
+        if let photo = actor.photo, let name = actor.enName {
+            imageView.sd_setImage(with: URL(string: photo))
+            label.text = name
+        }
         imageView.layer.cornerRadius = 40
-        label.text = actor.enName
     }
 }

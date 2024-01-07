@@ -12,28 +12,30 @@ protocol SearchViewProtocol: AnyObject {
     func reloadData()
     func animate(_ bool: Bool)
     func hideError(hide: Bool)
-    func updateSearchResults(_ movies: [DocSearch], hideError: Bool)
+    func updateSearchResults(_ movies: [Doc], hideError: Bool)
     func updateActors(_ actors: [Person])
 }
 
 protocol SearchPresentorProtocol: AnyObject {
     init(view: SearchViewProtocol)
-    var searchMovies: [DocSearch]? { get set }
+    var searchMovies: [Doc]? { get set }
     var movies: [Doc]? { get set }
     var moviesTwo: [Doc]? { get set }
     var categories: [Categories] { get set }
     var actors: [Person]? { get set }
     func getUpcomingMovie()
     func getFilms(with text: String)
-    func getActors(with id: Int)
+    func getActors(with: [Person])
     func didSelectItem(at: IndexPath)
 }
 
 final class SearchPresentor: SearchPresentorProtocol {
+
+    
     
     weak var view: SearchViewProtocol?
     let networkManager = NetworkManager()
-    var searchMovies: [DocSearch]?
+    var searchMovies: [Doc]?
     var movies: [Doc]?
     var moviesTwo: [Doc]?
     var categories = [Categories(name: "Ужасы", isSelected: true),
@@ -74,8 +76,9 @@ final class SearchPresentor: SearchPresentorProtocol {
         networkManager.searchMovie(searchText: text) { [weak self] result in
             switch result {
             case .success(let movie):
+                print(movie.docs[0].persons)
                 if self?.searchMovies == nil {
-                    self?.searchMovies = [DocSearch]()
+                    self?.searchMovies = [Doc]()
                 }
                 let filteredMovies = movie.docs.filter {
                     $0.id != nil
@@ -89,12 +92,16 @@ final class SearchPresentor: SearchPresentorProtocol {
                     && $0.year != nil
                 }
                 self?.searchMovies = filteredMovies
+                print(filteredMovies[0].persons)
                 if filteredMovies.count == 0 {
                     self?.view?.updateSearchResults(filteredMovies, hideError: false)
-
                 } else {
                     self?.view?.updateSearchResults(filteredMovies, hideError: true)
-                    self?.getActors(with: filteredMovies[0].id ?? 0)
+                    for person in filteredMovies {
+                        guard let actors = person.persons else { return }
+                        print(actors)
+                        self?.getActors(with: actors)
+                    }
 
                 }
             case .failure(let error):
@@ -103,20 +110,17 @@ final class SearchPresentor: SearchPresentorProtocol {
         }
     }
     
-    func getActors(with id: Int) {
-        networkManager.getPersonForMovie(id: id) { result in
-            switch result {
-            case .success(let actor):
-                if self.actors == nil {
-                    self.actors = [Person]()
-                }
-                self.actors = actor.docs
-                self.view?.updateActors(actor.docs)
-
-            case .failure(let error):
-                print(error.localizedDescription, "Данных нет")
-            }
+    func getActors(with: [Person]) {
+        let actor = with
+        if self.actors == nil {
+            self.actors = [Person]()
         }
+        self.actors = actor
+        print("актеры получены")
+        guard let actors = self.actors else { return }
+        self.view?.updateActors(actors)
+        print("актеры отданы")
+
     }
     
     func getGenre(genre: MovieGenres) {

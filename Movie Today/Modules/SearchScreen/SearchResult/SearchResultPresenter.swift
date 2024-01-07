@@ -14,9 +14,9 @@ protocol SearchResultViewProtocol: AnyObject {
 }
 
 protocol SearchResultPresenterProtocol: AnyObject {
-    init(view: SearchResultViewProtocol, actors: [Person]?, movies: [DocSearch]?)
+    init(view: SearchResultViewProtocol, actors: [Person]?, movies: [Doc]?)
     var actors: [Person]? { get set }
-    var movies: [DocSearch]? { get set }
+    var movies: [Doc]? { get set }
     var personInfo: [PersonModel]? { get set }
     func updateModels()
     func reloadData()
@@ -29,7 +29,7 @@ final class SearchResultPresenter: SearchResultPresenterProtocol {
     //MARK: - Properties
     weak var view: SearchResultViewProtocol?
     var actors: [Person]?
-    var movies: [DocSearch]?
+    var movies: [Doc]?
     var personInfo: [PersonModel]?
     let networkManager = NetworkManager()
     
@@ -66,7 +66,7 @@ final class SearchResultPresenter: SearchResultPresenterProtocol {
     }
     
     //MARK: - Init
-    init(view: SearchResultViewProtocol, actors: [Person]?, movies: [DocSearch]?) {
+    init(view: SearchResultViewProtocol, actors: [Person]?, movies: [Doc]?) {
         self.view = view
         self.actors = actors
         self.movies = movies
