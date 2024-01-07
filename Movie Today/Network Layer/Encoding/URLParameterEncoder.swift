@@ -15,6 +15,7 @@ enum NetworkError: Error {
     case serverError
     case decodingError(String)
     case unauthorised
+    case limit
 
     var localizedDescription: String {
         switch self {
@@ -32,6 +33,8 @@ enum NetworkError: Error {
                 return "Server Error: Bad Gateway"
             case .unauthorised:
                 return "Error API Token"
+            case .limit:
+                return "Превышен дневной лимит"
         }
     }
 }

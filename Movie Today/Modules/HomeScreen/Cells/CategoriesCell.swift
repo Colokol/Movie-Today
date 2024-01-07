@@ -11,8 +11,7 @@ final class CategoriesCell: UICollectionViewCell {
     
     private let label: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = .white
+        label.font = .montserratMedium(ofSize: 12)
         return label
     }()
     
@@ -54,8 +53,10 @@ final class CategoriesCell: UICollectionViewCell {
         label.text = model.name
         if model.isSelected {
             view.backgroundColor =  UIColor(red: 0.145, green: 0.157, blue: 0.212, alpha: 1)
+            label.textColor = .blueAccent
         } else {
             view.backgroundColor = .clear
+            label.textColor = .white
         }
     }
 }

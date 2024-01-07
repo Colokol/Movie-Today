@@ -7,8 +7,10 @@
 
 import Foundation
 
+
 protocol PopularMovieView: AnyObject {
     func update()
+    func animate(_ start: Bool)
 }
 
 protocol PopularMoviePresenterProtocol: AnyObject {
@@ -39,6 +41,7 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
                 }
                 self.array?.append(contentsOf: movie.docs)
                 DispatchQueue.main.async {
+                    self.view?.animate(false)
                     self.view?.update()
                 }
             case .failure(let error):
@@ -53,12 +56,13 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
                 if self.array == nil {
                     self.array = [Doc]()
                 }
+                let filteredMovie = movie.docs.filter { $0.poster != nil }
                 self.array?.append(contentsOf: movie.docs)
                     DispatchQueue.main.async {
+                        self.view?.animate(false)
                         self.view?.update()
                     }
                 
-                print(movie.docs)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -77,5 +81,6 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
     init(view: PopularMovieView, slug: String?) {
         self.view = view
         self.slug = slug
+        self.view?.animate(true)
     }
 }

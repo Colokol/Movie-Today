@@ -9,6 +9,13 @@ import UIKit
 
 class WishlistCell: UICollectionViewCell {
     
+    var likeButtonPressedHandler: (() -> Void)?
+    var isInWishlist: Bool = true {
+        didSet {
+            setLikeButtonImage(isInWishlist: isInWishlist)
+        }
+    }
+    
     static let identifier = "WishlistCell"
     private let bgView: UIView = {
         let view = UIView()
@@ -19,6 +26,8 @@ class WishlistCell: UICollectionViewCell {
     
     private lazy var  movieImage: UIImageView = {
         let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         image.layer.cornerRadius = 8
         image.backgroundColor = .red
         return image
@@ -33,16 +42,17 @@ class WishlistCell: UICollectionViewCell {
     private lazy var  ratingLabel = UILabel(text: "4.5", font: .montserratSemiBold(ofSize: 12), textColor: .yellow, textAlignment: .left, numberOfLines: 1)
     
     private lazy var ratingImage = {
-       let image =  UIImageView()
+        let image =  UIImageView()
         image.image = UIImage(systemName: "star.fill")
         image.tintColor = .yellow
         return image
     }()
     
-    private lazy var likeImage: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named: "Wishlist")
-        return image
+    private lazy var likeButton: UIButton = {
+        let button =  UIButton()
+        button.setImage(UIImage(named: "Wishlist"), for: .normal)
+        button.addTarget(self, action: #selector(likeButtonPressed), for: .touchUpInside)
+        return button
     }()
     
     override init(frame: CGRect) {
@@ -55,6 +65,22 @@ class WishlistCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configure(with model: FavoriteMovies) {
+        nameLabel.text = model.name
+        typeLabel.text = model.type
+        genreLabel.text = model.genre
+        ratingLabel.text = String(model.rating)
+        
+        if let imageData = model.image {
+            movieImage.image = UIImage(data: imageData)
+        } else {
+            movieImage.image = UIImage(named: "film")
+        }
+        
+        setLikeButtonImage(isInWishlist: isInWishlist)
+        
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         movieImage.image = nil
@@ -62,12 +88,17 @@ class WishlistCell: UICollectionViewCell {
         nameLabel.text = nil
         typeLabel.text = nil
         ratingLabel.text = nil
-        
     }
+    
+    func setLikeButtonImage(isInWishlist: Bool) {
+           let imageName = isInWishlist ? "Wishlist" : "RemoveFromWishlist"
+           likeButton.setImage(UIImage(named: imageName), for: .normal)
+       }
+    
     
     private func setupUI(){
         addSubviews(bgView)
-        bgView.addSubviews(movieImage,genreLabel,nameLabel,typeLabel,ratingImage,ratingLabel,likeImage)
+        bgView.addSubviews(movieImage,genreLabel,nameLabel,typeLabel,ratingImage,ratingLabel,likeButton)
     }
     
     private func setupConstraints() {
@@ -103,13 +134,15 @@ class WishlistCell: UICollectionViewCell {
             ratingLabel.leadingAnchor.constraint(equalTo: ratingImage.trailingAnchor, constant: 4),
             ratingLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 6),
             
-            likeImage.heightAnchor.constraint(equalToConstant: 32),
-            likeImage.widthAnchor.constraint(equalToConstant: 32),
-            likeImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -offset),
-            likeImage.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -offset),
-            
+            likeButton.heightAnchor.constraint(equalToConstant: 32),
+            likeButton.widthAnchor.constraint(equalToConstant: 32),
+            likeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -offset),
+            likeButton.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -offset),
             
         ])
     }
     
+    @objc func likeButtonPressed() {
+        likeButtonPressedHandler?()
+    }
 }

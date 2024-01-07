@@ -7,13 +7,17 @@
 
 import UIKit
 import SwiftUI
+import SDWebImage
 
 class DetailViewController: UIViewController {
+
+    var presenter: DetailPresenterProtocol!
+
     // MARK: - UI Components
     let backButton = UIButton(type: .system)
     let favouriteButton = UIButton(type: .system)
     let movieTitleLabel = UILabel()
-    let headerStackView = UIStackView()
+//    let headerStackView = UIStackView()
     let movieBackgroundView = UIImageView()
     let gradientLayer = CAGradientLayer()
     let scrollView = UIScrollView()
@@ -32,21 +36,37 @@ class DetailViewController: UIViewController {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavBar()
         setupUI()
         setupConstraints()
+        navigationController?.navigationBar.isHidden = false
+        presenter?.configureScreen()
+
+        favoriteButtonTap()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateGradientLayerFrame()
     }
-
+    
+    private func setupNavBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: favouriteButton)
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.configureWithTransparentBackground()
+        appearance.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
     // MARK: - Setup UI
     private func setupUI() {
         view.backgroundColor = UIColor.background
 
         backButton.setImage(UIImage(systemName: "chevron.left.circle.fill"), for: .normal)
-        backButton.tintColor = .white
+        backButton.tintColor = .customGray
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         
         favouriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
@@ -57,11 +77,6 @@ class DetailViewController: UIViewController {
         movieTitleLabel.textAlignment = .center
         movieTitleLabel.textColor = .white
         movieTitleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-
-        headerStackView.axis = .horizontal
-        headerStackView.distribution = .equalSpacing
-        headerStackView.alignment = .center
-        [backButton, movieTitleLabel, favouriteButton].forEach { headerStackView.addArrangedSubview($0)}
         
         movieBackgroundView.contentMode = .scaleAspectFill
         movieBackgroundView.clipsToBounds = true
@@ -136,7 +151,7 @@ class DetailViewController: UIViewController {
         castTextView.isSelectable = true
         castTextView.dataDetectorTypes = .all
 
-        [headerStackView, movieBackgroundView, scrollView, contentView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false; view.addSubview($0)}
+        [movieBackgroundView, scrollView, contentView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false; view.addSubview($0)}
         scrollView.addSubview(contentView)
         
         [movieImageView, metadataStackView, ratingStackView, buttonsStackView, descriptionTextView, castTextView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false; contentView.addSubview($0)}
@@ -145,12 +160,8 @@ class DetailViewController: UIViewController {
     // MARK: - Setup Constraints
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            headerStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LayoutConstants.topMargin),
-            headerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.leadingMargin),
-            headerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: LayoutConstants.trailingMargin),
-            headerStackView.heightAnchor.constraint(equalToConstant: LayoutConstants.headerHeight),
 
-            scrollView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor, constant: LayoutConstants.topMargin),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LayoutConstants.topMargin),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -214,14 +225,42 @@ class DetailViewController: UIViewController {
     }
     
     @objc func favouriteButtonTapped() {
-        // Tapped button logic
+        presenter.saveToFavorit()
     }
-    
+
     @objc func trailerButtonTapped() {
-        // Tapped button logic
+        if let model = presenter?.movie,
+           let id = presenter?.id {
+            let vc = Builder.createTrailerVC(model: model, id: id)
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @objc func shareButtonTapped() {
         // Tapped button logic
     }
+}
+
+extension DetailViewController: DetailScreenViewProtocol {
+
+    func favoriteButtonTap() {
+        if presenter.favoriteButtonState {
+            favouriteButton.tintColor = .red
+        }else {
+            favouriteButton.tintColor = .white
+        }
+    }
+    
+
+    
+    func update(model: Doc) {
+        title = model.name
+        descriptionTextView.text = model.description
+        let rait =  model.rating?.kp
+        ratingLabel.text = String(format: "%.1f", rait ?? "нет информации")
+        guard let url = model.poster?.url else {return}
+        movieImageView.sd_setImage(with: URL(string: url))
+    }
+    
+
 }

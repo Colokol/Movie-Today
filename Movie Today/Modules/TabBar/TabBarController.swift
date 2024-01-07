@@ -22,15 +22,14 @@ final class TabBarController: UITabBarController {
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(red: 31/255, green: 29/255, blue: 43/255, alpha: 1.0)
         appearance.stackedLayoutAppearance.normal.iconColor = .label
-        tabBar.scrollEdgeAppearance = appearance
     }
 
     private func setupViewControllers() {
 
         let vc1 = UINavigationController(rootViewController: Builder.createHomeVC())
-        let vc2 = UINavigationController(rootViewController: UIViewController())
+        let vc2 = UINavigationController(rootViewController: Builder.createSearchViewController())
         let vc3 = UINavigationController(rootViewController: UIViewController())
-        let vc4 = UINavigationController(rootViewController: UIViewController())
+        let vc4 = UINavigationController(rootViewController: ProfileViewController())
 
         vc1.tabBarItem.image = UIImage(named: "Home")
         vc2.tabBarItem.image = UIImage(named: "Search")

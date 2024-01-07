@@ -12,17 +12,22 @@ enum NetworkEnvironment {
 }
 
 public enum MovieApi {
-    case genresMovie(genres:String)
-    case moviesFromCollection(collection:String, genre:String?)
+    case genresMovie(genres: String)
+    case moviesFromCollection(collection: String, genre: String?)
     case collectionMovieList
-    case searchMovie(searchText:String)
+    case searchMovie(searchText: String)
+    case searchPerson(searchText: String)
+    case searchMovieFor(id:Int)
+    case searchMovieFor(personID: Int)
 }
 
 extension MovieApi: EndpointType {
 
     private static let defaultPage = 1
     private static let defaultLimit = 10
-    private static let notNilParameters = ["ageRating", "genres.name", "poster.url", "movieLength", "rating.kp", "type"]
+    private static let selectFields = ["persons","id","name","description","genres","videos","movieLength","poster","year", "type", "rating","ageRating"]
+
+    private static let notNilParameters = ["ageRating", "genres.name", "poster.url", "movieLength", "rating.kp", "type", "persons.name"]
 
     var environmentBaseURL : String {
         switch NetworkManager.environment {
@@ -45,6 +50,10 @@ extension MovieApi: EndpointType {
                 return "list"
             case .searchMovie:
                 return "movie/search"
+            case .searchPerson:
+               return "person/search"
+            case .searchMovieFor:
+                return "movie"
         }
     }
 
@@ -60,14 +69,15 @@ extension MovieApi: EndpointType {
                         urlParameters: ["genres.name": genre,
                                         "limit": MovieApi.defaultLimit,
                                         "page": MovieApi.defaultPage,
-                                        "notNullFields":MovieApi.notNilParameters],
+                                        "notNullFields":MovieApi.notNilParameters,
+                                        "selectFields":MovieApi.selectFields ],
                         additionalHeaders: headers
                     )
             case .moviesFromCollection(collection: let name, genre: let genre):
                 var urlParameters: [String: Any] = ["lists": name,
                                                     "limit": MovieApi.defaultLimit,
                                                     "page": MovieApi.defaultPage,
-                                                    "notNullFields":MovieApi.notNilParameters]
+                                                    "selectFields":MovieApi.selectFields]
                 if let genre = genre {
                     urlParameters["genres.name"] = genre
                 }
@@ -89,8 +99,23 @@ extension MovieApi: EndpointType {
                 return .requestParametersAndHeaders(bodyParameters: nil,
                                                     urlParameters:["query":"\(searchMovie)",
                                                                    "limit": MovieApi.defaultLimit,
+                                                                   "page": MovieApi.defaultPage,
+                                                                   "notNullFields": MovieApi.notNilParameters],
+                                                    additionalHeaders: headers)
+            case .searchPerson(searchText: let searchPerson):
+                return .requestParametersAndHeaders(bodyParameters: nil,
+                                                    urlParameters:["query":"\(searchPerson)",
+                                                                   "limit": 250,
                                                                    "page": MovieApi.defaultPage],
                                                     additionalHeaders: headers)
+            case .searchMovieFor(personID: let id):
+                return .requestParametersAndHeaders(
+                    bodyParameters: nil,
+                    urlParameters: ["persons.id":"\(id)",
+                                    "limit": MovieApi.defaultLimit,
+                                    "page": MovieApi.defaultPage],
+                    additionalHeaders: headers
+                )
         }
     }
 
