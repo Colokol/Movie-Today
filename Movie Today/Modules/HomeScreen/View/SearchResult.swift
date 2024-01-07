@@ -10,7 +10,7 @@ import UIKit
 final class SearchResult: UIViewController {
     
     var collectionView: UICollectionView!
-    var results = [DocSearch]()
+    var results = [Doc]()
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
