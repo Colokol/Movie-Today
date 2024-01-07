@@ -71,7 +71,7 @@ final class ActorCell: UICollectionViewCell {
     }
     
     func config(with actor: Person) {
-        if let photo = actor.photo, let text = actor.name, let description = actor.enName {
+        if let photo = actor.photo, let text = actor.name, let description = actor.profession {
             image.sd_setImage(with: URL(string: photo))
             name.text = text
             descriptionLabel.text = description
