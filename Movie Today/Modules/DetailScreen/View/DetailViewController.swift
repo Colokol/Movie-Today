@@ -250,6 +250,8 @@ class DetailViewController: UIViewController {
             let vc = Builder.createTrailerVC(model: model)
             navigationController?.pushViewController(vc, animated: true)
         }
+            
+        
     }
     
     @objc func shareButtonTapped() {
