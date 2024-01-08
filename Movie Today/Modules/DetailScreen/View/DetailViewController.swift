@@ -17,7 +17,6 @@ class DetailViewController: UIViewController {
     let backButton = UIButton(type: .system)
     let favouriteButton = UIButton(type: .system)
     let movieTitleLabel = UILabel()
-//    let headerStackView = UIStackView()
     let movieBackgroundView = UIImageView()
     let gradientLayer = CAGradientLayer()
     let scrollView = UIScrollView()
@@ -32,6 +31,8 @@ class DetailViewController: UIViewController {
     let buttonsStackView = UIStackView()
     let descriptionTextView = UITextView()
     let castTextView = UITextView()
+    private let shareView = ShareView()
+    private var blur: UIVisualEffectView?
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -39,9 +40,9 @@ class DetailViewController: UIViewController {
         setupNavBar()
         setupUI()
         setupConstraints()
+        setupShareView()
         navigationController?.navigationBar.isHidden = false
         presenter?.configureScreen()
-
         favoriteButtonTap()
     }
     
@@ -49,7 +50,7 @@ class DetailViewController: UIViewController {
         super.viewDidLayoutSubviews()
         updateGradientLayerFrame()
     }
-    
+    //MARK: - NavBar
     private func setupNavBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: favouriteButton)
@@ -60,6 +61,22 @@ class DetailViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    private func setupShareView() {
+        view.addSubviews(shareView)
+        shareView.isHidden = true
+        shareView.shareButtonAction = {
+            UIPasteboard.general.string = self.presenter.movie.videos?.trailers?.first?.url
+            self.hideShareView()
+        }
+        shareView.closeButtonAction = {
+            self.hideShareView()
+        }
+        NSLayoutConstraint.activate([
+            shareView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            shareView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
     // MARK: - Setup UI
     private func setupUI() {
@@ -229,15 +246,34 @@ class DetailViewController: UIViewController {
     }
 
     @objc func trailerButtonTapped() {
-        if let model = presenter?.movie,
-           let id = presenter?.id {
-            let vc = Builder.createTrailerVC(model: model, id: id)
+        if let model = presenter?.movie {
+            let vc = Builder.createTrailerVC(model: model)
             navigationController?.pushViewController(vc, animated: true)
         }
     }
     
     @objc func shareButtonTapped() {
-        // Tapped button logic
+        if blur == nil {
+            showShareView()
+        } else {
+            hideShareView()
+        }
+    }
+    
+    private func showShareView() {
+        let blurEffect = UIBlurEffect(style: .regular)
+        blur = UIVisualEffectView(effect: blurEffect)
+        blur?.frame = self.view.bounds
+        blur?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view.addSubview(blur!)
+        self.view.bringSubviewToFront(shareView)
+        shareView.isHidden = false
+    }
+    
+    private func hideShareView() {
+        shareView.isHidden = true
+        blur?.isHidden = true
+        blur = nil
     }
 }
 
@@ -264,3 +300,4 @@ extension DetailViewController: DetailScreenViewProtocol {
     
 
 }
+
