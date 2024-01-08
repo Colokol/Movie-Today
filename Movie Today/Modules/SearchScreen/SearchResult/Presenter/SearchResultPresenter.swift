@@ -18,9 +18,11 @@ protocol SearchResultPresenterProtocol: AnyObject {
     var actors: [PersonModel]? { get set }
     var movies: [Doc]? { get set }
     var personInfo: [PersonModel]? { get set }
+    var movie: Doc? { get set }
     func updateModels()
     func reloadData()
     func showError(_ show: Bool)
+    func getFilm(with id: Int, completion: @escaping (Doc?) -> Void)
 //    func getActorInfo(with id: Int)
 }
 
@@ -31,6 +33,7 @@ final class SearchResultPresenter: SearchResultPresenterProtocol {
     var actors: [PersonModel]?
     var movies: [Doc]?
     var personInfo: [PersonModel]?
+    var movie: Doc?
     let networkManager = NetworkManager()
     
     //MARK: - Methods
@@ -64,6 +67,20 @@ final class SearchResultPresenter: SearchResultPresenterProtocol {
         //MARK: - ТУТ ПОИСК ФИЛЬМА ПО ID
         
     }
+    
+    func getFilm(with id: Int, completion: @escaping (Doc?) -> Void) {
+        networkManager.searchMovieFor(id: id) { result in
+            switch result {
+            case .success(let movie):
+                self.movie = movie
+                completion(movie)
+            case .failure(let error):
+                print(error.localizedDescription, "Ошибка в searchresultpresenter getFilmID")
+                completion(nil)
+            }
+        }
+    }
+
     
     //MARK: - Init
     init(view: SearchResultViewProtocol, actors: [PersonModel]?, movies: [Doc]?) {

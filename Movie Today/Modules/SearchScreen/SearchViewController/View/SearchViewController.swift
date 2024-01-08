@@ -33,6 +33,7 @@ class SearchViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.backgroundColor = .background
         collectionView.delegate = self
+        searchResultController.delegate = self
         configureDataSource()
         view.backgroundColor = .background
         view.addSubviews(collectionView)
@@ -372,4 +373,13 @@ extension SearchViewController: UICollectionViewDelegate {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
+}
+
+extension SearchViewController: SearchResultDelegate {
+    func openDetailWithModel(_ model: Doc) {
+        let detail = Builder.createDetailVC(model: model)
+        navigationController?.pushViewController(detail, animated: true)
+    }
+    
+    
 }
