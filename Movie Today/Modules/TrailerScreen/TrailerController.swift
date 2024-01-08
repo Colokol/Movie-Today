@@ -10,8 +10,6 @@ import WebKit
 
 final class TrailerController: UIViewController {
     
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
     private let webView = WKWebView()
     private let titleView = TitleView()
     var presenter: TrailerPresenterProtocol!
@@ -26,7 +24,6 @@ final class TrailerController: UIViewController {
         let text = UITextView()
         text.text = "THE BATMAN is an edgy, action-packed thriller that depicts Batman in his early years, struggling to balance rage with righteousness as he investigates a disturbing mystery that has terrorized Gotham. Robert Pattinson delivers a raw, intense portrayal of Batman as a disillusioned, desperate vigilante awakened by the realization.."
         text.isEditable = false
-        text.isScrollEnabled = false
         text.font = .montserratRegular(ofSize: 14)
         text.textColor = .white
         text.backgroundColor = .clear
@@ -72,9 +69,9 @@ final class TrailerController: UIViewController {
         super.viewDidLoad()
         navigationController?.hidesBottomBarWhenPushed = false
         setupNavBar()
-        collectionViewConfigure()
         setupView()
-        setupConstraints()
+        setupConst()
+        collectionViewConfigure()
         presenter.config()
         presenter.getActors()
     }
@@ -84,13 +81,9 @@ final class TrailerController: UIViewController {
     }
     
     private func setupView() {
-        view.addSubviews(scrollView)
-        scrollView.addSubviews(contentView)
-        contentView.addSubviews(webView, titleView, stack, header, collectionView)
+        view.addSubviews(webView, titleView, stack, header)
         stack.addArrangedSubview(descriptionTitle)
         stack.addArrangedSubview(descriptionTextView)
-        scrollView.backgroundColor = .clear
-               contentView.backgroundColor = .clear
         view.backgroundColor = .background
         webView.backgroundColor = .clear
         webView.layer.cornerRadius = 15
@@ -109,48 +102,31 @@ final class TrailerController: UIViewController {
         descriptionTextView.text = model.description
     }
     
-    private func setupConstraints() {
-        
+    private func setupConst() {
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            
-            webView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            webView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            webView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             webView.heightAnchor.constraint(equalToConstant: 180),
             
             titleView.topAnchor.constraint(equalTo: webView.bottomAnchor, constant: 12),
-            titleView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            titleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            titleView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+            titleView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: 50),
             titleView.heightAnchor.constraint(equalToConstant: 44),
             
-            stack.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 12),
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
+            stack.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 32),
+            stack.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+            stack.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            stack.heightAnchor.constraint(equalToConstant: 300),
             
             header.topAnchor.constraint(equalTo: stack.bottomAnchor, constant: 25),
-            header.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            header.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            header.heightAnchor.constraint(equalToConstant: 20),
+            header.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
+            header.trailingAnchor.constraint(lessThanOrEqualTo: stack.trailingAnchor),
+            header.heightAnchor.constraint(equalToConstant: 20)
             
-            collectionView.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 20),
-            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            collectionView.heightAnchor.constraint(equalToConstant: 50),
-            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            
         ])
     }
-    
     
     //MARK: - CollectionView configure
     private func collectionViewConfigure() {
@@ -162,9 +138,16 @@ final class TrailerController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(ActorCell.self, forCellWithReuseIdentifier: ActorCell.identifier)
-
+        view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 20),
+            collectionView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            collectionView.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
-    
     
     @objc private func backAction() {
         navigationController?.popViewController(animated: true)
@@ -180,22 +163,19 @@ extension TrailerController: TrailerViewProtocol {
         collectionView.reloadData()
     }
     
-    func update(with model: Doc) {
+    func update(with model: Doc, text: String) {
         titleView.config(with: model)
         descriptionTextView.text = model.description
-        let videos = model.videos
-        guard let trailers = videos?.trailers else { return }
-        guard let url = trailers[0].url else { return }
-        guard let videoURL = URL(string: url) else { return }
-        webView.load(URLRequest(url: videoURL))
-        
+        if let youtubeURL = URL(string: "https://www.youtube.com/embed/\(text)?playsinline=1") {
+                   webView.load(URLRequest(url: youtubeURL))
+               }
     }
     
     
 }
 
 extension TrailerController: UICollectionViewDataSource {
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return presenter.filmPersons?.count ?? 0
     }
@@ -216,7 +196,7 @@ extension TrailerController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: 200, height: 45)
     }
     
-    
+
     
 }
 
