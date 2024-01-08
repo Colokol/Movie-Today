@@ -72,6 +72,7 @@
 		FAA71AF42B49ECB4001F361A /* SearchResultPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA71AF32B49ECB4001F361A /* SearchResultPresenter.swift */; };
 		FAA71AF72B49ECCE001F361A /* SearchSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA71AF62B49ECCE001F361A /* SearchSections.swift */; };
 		FAA71AFA2B49ECE9001F361A /* NotFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA71AF92B49ECE9001F361A /* NotFoundView.swift */; };
+		FAA9CF482B4C8AEA00E7507B /* SearchResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA9CF472B4C8AEA00E7507B /* SearchResultDelegate.swift */; };
 		FAAB77202B3B3A8700166219 /* CollectionMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB771F2B3B3A8700166219 /* CollectionMovieCell.swift */; };
 		FAAB77232B3B3E7900166219 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = FAAB77222B3B3E7900166219 /* SDWebImage */; };
 		FAB7C7632B4C131D00DB98A7 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB7C7622B4C131D00DB98A7 /* ShareView.swift */; };
@@ -153,6 +154,7 @@
 		FAA71AF32B49ECB4001F361A /* SearchResultPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultPresenter.swift; sourceTree = "<group>"; };
 		FAA71AF62B49ECCE001F361A /* SearchSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSections.swift; sourceTree = "<group>"; };
 		FAA71AF92B49ECE9001F361A /* NotFoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundView.swift; sourceTree = "<group>"; };
+		FAA9CF472B4C8AEA00E7507B /* SearchResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultDelegate.swift; sourceTree = "<group>"; };
 		FAAB771F2B3B3A8700166219 /* CollectionMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionMovieCell.swift; sourceTree = "<group>"; };
 		FAB7C7622B4C131D00DB98A7 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		FAE057B42B3AD85D008BC8DE /* MovieListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListController.swift; sourceTree = "<group>"; };
@@ -504,6 +506,7 @@
 		FAA71AF02B49EC9A001F361A /* SearchResult */ = {
 			isa = PBXGroup;
 			children = (
+				FAA9CF462B4C8ADF00E7507B /* SearchResultGelegate */,
 				FAFE32B42B4AC94C0031E185 /* Presenter */,
 				FAFE32B32B4AC9470031E185 /* View */,
 			);
@@ -516,6 +519,14 @@
 				FAA71AF62B49ECCE001F361A /* SearchSections.swift */,
 			);
 			path = Sections;
+			sourceTree = "<group>";
+		};
+		FAA9CF462B4C8ADF00E7507B /* SearchResultGelegate */ = {
+			isa = PBXGroup;
+			children = (
+				FAA9CF472B4C8AEA00E7507B /* SearchResultDelegate.swift */,
+			);
+			path = SearchResultGelegate;
 			sourceTree = "<group>";
 		};
 		FAAB771E2B3B3A7800166219 /* Cells */ = {
@@ -676,6 +687,7 @@
 				CE621C082B3F611D00F75743 /* EditProfileView.swift in Sources */,
 				CED4D2412B3A056A005138A9 /* ParameterEncoding.swift in Sources */,
 				7BAA797E2B3DA46F002FA5F5 /* UIButton + Extension.swift in Sources */,
+				FAA9CF482B4C8AEA00E7507B /* SearchResultDelegate.swift in Sources */,
 				CED4D23D2B3A043F005138A9 /* HTTPTask.swift in Sources */,
 				792A568D2B472E9600617440 /* CoreDataManager.swift in Sources */,
 				CE621C0C2B3F611D00F75743 /* GeneralAndMore.swift in Sources */,

@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-
+    
     private var searchController = UISearchController()
     private var collectionView: UICollectionView!
     private var searchResultController = Builder.createSearchResultController(person: nil, movie: nil)
@@ -19,7 +19,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
         // Call function's
         configureActivityIndicator()
@@ -33,6 +33,7 @@ class SearchViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.backgroundColor = .background
         collectionView.delegate = self
+        searchResultController.delegate = self
         configureDataSource()
         view.backgroundColor = .background
         view.addSubviews(collectionView)
@@ -127,7 +128,7 @@ class SearchViewController: UIViewController {
                 header.pinToVisibleBounds = false
                 header.zIndex = 2
                 section.boundarySupplementaryItems = [header]
-
+                
                 return section
                 
             case .mostPopular:
@@ -201,7 +202,7 @@ class SearchViewController: UIViewController {
         dataSource = UICollectionViewDiffableDataSource<SectionsSearch, Item>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             
             switch SectionsSearch(rawValue: indexPath.section)! {
-
+                
             case .compilation:
                 return collectionView.dequeueConfiguredReusableCell(using: upcomingMovie, for: indexPath, item: item.movieModel)
             case .mostPopular:
@@ -234,7 +235,7 @@ class SearchViewController: UIViewController {
         snapShot.appendSections([.categories, .compilation, .mostPopular])
         
         let categories = presenter.categories.compactMap({ Item(categories: $0) })
-            snapShot.appendItems(categories, toSection: .categories)
+        snapShot.appendItems(categories, toSection: .categories)
         
         if let upcomingMovie = presenter.movies?.compactMap({ Item(movieModel: $0) }) {
             snapShot.appendItems(upcomingMovie, toSection: .compilation)
@@ -260,7 +261,7 @@ extension SearchViewController: SearchViewProtocol {
         searchResultController.presenter.actors = actors
         searchResultController.presenter.updateModels()
         searchResultController.presenter.reloadData()
-//        searchResultController.presenter.reloadData()
+        //        searchResultController.presenter.reloadData()
     }
     
     func hideError(hide: Bool) {
@@ -278,29 +279,29 @@ extension SearchViewController: SearchViewProtocol {
     
     func updateSearchResults(_ movies: [Doc], hideError: Bool) {
         searchResultController.presenter.movies = movies
-            searchResultController.presenter.updateModels()
+        searchResultController.presenter.updateModels()
         searchResultController.presenter.reloadData()
-//        if hideError {
-//            searchResultController.presenter.movies = movies
-//            searchResultController.presenter.updateModels()
-////            searchResultController.presenter.reloadData()
-//            print("СерчРезалт обновлен с фильмами")
-//        } else {
-//            searchResultController.presenter.movies = movies
-//            searchResultController.presenter.updateModels()
-////            searchResultController.presenter.reloadData()
-//            print("СерчРезалт обновлен с фильмами")
-//        }
+        //        if hideError {
+        //            searchResultController.presenter.movies = movies
+        //            searchResultController.presenter.updateModels()
+        ////            searchResultController.presenter.reloadData()
+        //            print("СерчРезалт обновлен с фильмами")
+        //        } else {
+        //            searchResultController.presenter.movies = movies
+        //            searchResultController.presenter.updateModels()
+        ////            searchResultController.presenter.reloadData()
+        //            print("СерчРезалт обновлен с фильмами")
+        //        }
         
     }
-
+    
 }
 
 extension SearchViewController: UISearchBarDelegate {
- 
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
-//        presenter.getFilms(with: searchText)
+        //        presenter.getFilms(with: searchText)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -330,7 +331,7 @@ extension SearchViewController: UISearchBarDelegate {
             presenter.getActorsWithName(searchText)
             
         default: break
-
+            
         }
     }
     
@@ -355,10 +356,10 @@ extension SearchViewController: UISearchControllerDelegate {
     
     func willDismissSearchController(_ searchController: UISearchController) {
         if let searchResultController = searchController.searchResultsController as? SearchResultController {
-              searchResultController.presenter.movies?.removeAll()
-              searchResultController.presenter.actors?.removeAll()
-              searchResultController.presenter.updateModels()
-          }
+            searchResultController.presenter.movies?.removeAll()
+            searchResultController.presenter.actors?.removeAll()
+            searchResultController.presenter.updateModels()
+        }
     }
 }
 
@@ -372,4 +373,13 @@ extension SearchViewController: UICollectionViewDelegate {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
+}
+
+extension SearchViewController: SearchResultDelegate {
+    func openDetailWithModel(_ model: Doc) {
+        let detail = Builder.createDetailVC(model: model)
+        navigationController?.pushViewController(detail, animated: true)
+    }
+    
+    
 }

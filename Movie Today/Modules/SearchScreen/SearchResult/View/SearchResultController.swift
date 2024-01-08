@@ -13,6 +13,7 @@ final class SearchResultController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<SearchSections, Item>?
     private let errorView = NotFoundView()
     var presenter: SearchResultPresenterProtocol!
+    weak var delegate: SearchResultDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,7 @@ final class SearchResultController: UIViewController {
                 
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(105))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+                
                 
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
@@ -132,11 +133,26 @@ final class SearchResultController: UIViewController {
         dataSource?.apply(snapshot, animatingDifferences: true)
         
     }
-
+    
 }
 
 extension SearchResultController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            print("НАЖАТО-----------------------------")
+            guard let filmID = presenter.movies?[indexPath.row].id else { return }
+            presenter.getFilm(with: filmID) { [weak self] model in
+                guard let model = model else { return }
+                DispatchQueue.main.async {
+                    self?.delegate?.openDetailWithModel(model)
+                }
+                
+            }
+            
+        } else {
+            return
+        }
+    }
 }
 
 extension SearchResultController: UISearchResultsUpdating {
