@@ -9,7 +9,9 @@
         <attribute name="type" attributeType="String"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="email" attributeType="String"/>
         <attribute name="password" attributeType="String"/>
+        <attribute name="userimage" optional="YES" attributeType="Binary"/>
         <attribute name="username" attributeType="String"/>
     </entity>
 </model>
