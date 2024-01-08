@@ -15,8 +15,7 @@ protocol DetailScreenViewProtocol: AnyObject {
 protocol DetailPresenterProtocol: AnyObject {
     var movie: Doc { get set }
     var favoriteButtonState: Bool {get set}
-    var id: String? { get set }
- 	func configureScreen()
+     func configureScreen()
     func saveToFavorit()
     init(view: DetailScreenViewProtocol, model: Doc)
 }
@@ -25,14 +24,12 @@ final class DetailPresenter: DetailPresenterProtocol {
 
     var favoriteButtonState: Bool = false
     var movie: Doc
-    var id: String?
     let storageManager = CoreDataManager.shared
     weak var view: DetailScreenViewProtocol!
 
     func configureScreen(){
         self.view?.update(model: self.movie )
     }
-
 
     init(view: DetailScreenViewProtocol, model: Doc) {
         self.view = view
