@@ -65,8 +65,6 @@ final class TitleView: UIView {
     private let stack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.distribution = .fill
-        stack.alignment = .fill
         stack.spacing = 5
         return stack
     }()
