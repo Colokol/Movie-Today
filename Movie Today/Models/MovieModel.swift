@@ -150,7 +150,6 @@ struct Person: Hashable, Codable {
     let description: String?
     let profession: String?
     let enProfession: String?
-    
 }
 
     // MARK: - Premiere

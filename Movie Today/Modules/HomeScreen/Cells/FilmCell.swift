@@ -100,7 +100,7 @@ final class FilmCell: UICollectionViewCell {
     private let secondStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .leading
-//        stack.distribution = .equalSpacing
+        stack.distribution = .equalSpacing
         stack.axis = .horizontal
         stack.spacing = 5
         return stack
@@ -116,7 +116,7 @@ final class FilmCell: UICollectionViewCell {
     private let fourStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .leading
-//        stack.distribution = .equalSpacing
+        stack.distribution = .equalSpacing
         stack.axis = .horizontal
         stack.spacing = 5
         return stack
@@ -124,7 +124,7 @@ final class FilmCell: UICollectionViewCell {
     private let fifthStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .leading
-//        stack.distribution = .equalSpacing
+        stack.distribution = .equalSpacing
         stack.axis = .vertical
         stack.spacing = 15
         return stack
@@ -133,7 +133,7 @@ final class FilmCell: UICollectionViewCell {
     private let startStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .center
-//        stack.distribution = .fillEqually
+        stack.distribution = .fillEqually
         stack.axis = .horizontal
         stack.spacing = 5
         stack.backgroundColor = .background
@@ -196,27 +196,22 @@ final class FilmCell: UICollectionViewCell {
     }
     
     func config(with model: Doc) {
-        if let name = model.name {
-            title.text = name
-        }
-        if let year = model.year {
-            self.year.text = String(year)
-        }
+        title.text = model.name
+       // year.text = String(model.year)
 
-        if let movieLength = model.movieLength {
-            self.minutes.text = "\(movieLength) minutes"
-        }
+        let movieLength = model.movieLength
+        minutes.text = "\(movieLength) minutes"
 
-        if let genre = model.genres?.first?.name, let type = model.type {
+        if let genre = model.genres?.first?.name {
+            let type = model.type
             self.genre.text = "\(genre) | \(type)"
         }
 
-        if let pg = model.ageRating {
-            self.pg.text = "PG - \(pg)"
-        }
-        if let rait = model.rating?.kp {
-            raiting.text = String(format: "%.1f", rait)
-        }
+        let pg = model.ageRating
+        self.pg.text = "PG - \(pg)"
+        
+        let rait = model.rating?.kp
+        raiting.text = String(format: "%.1f", rait ?? "ssssss")
 
         guard  let image = model.poster?.url else {return}
         imageView.sd_setImage(with: URL(string: image))
