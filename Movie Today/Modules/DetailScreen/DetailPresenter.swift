@@ -15,7 +15,7 @@ protocol DetailScreenViewProtocol: AnyObject {
 protocol DetailPresenterProtocol: AnyObject {
     var movie: Doc { get set }
     var favoriteButtonState: Bool {get set}
- 	func configureScreen()
+     func configureScreen()
     func saveToFavorit()
     init(view: DetailScreenViewProtocol, model: Doc)
 }

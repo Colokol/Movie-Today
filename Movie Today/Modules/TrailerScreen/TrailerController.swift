@@ -219,10 +219,3 @@ extension TrailerController: UICollectionViewDelegateFlowLayout {
     
     
 }
-
-
-
-
-
-
-

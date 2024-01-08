@@ -9,11 +9,11 @@ import Foundation
 import CoreData
 
 final class CoreDataManager {
-
+    
     static let shared = CoreDataManager()
-
+    
     let dataLoader = DataLoader.shared
-
+    
     private let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "FavoriteMovies")
         container.loadPersistentStores { (storeDescription, error) in
@@ -23,43 +23,43 @@ final class CoreDataManager {
         }
         return container
     }()
-
+    
     private lazy var mainContext: NSManagedObjectContext = {
         return persistentContainer.viewContext
     }()
-
+    
     private init() {}
-
-        // MARK: - Core Data stack
-
+    
+    // MARK: - Core Data stack
+    
     func saveContext() {
         if mainContext.hasChanges {
             do {
                 try mainContext.save()
             } catch {
                 print("Failed to save context: \(error)")
-
+                
             }
         }
     }
-
+    
     func saveToFavorites(from model: Doc) {
         let movie = FavoriteMovies(context: mainContext)
         configureFavoriteMovie(movie, with: model)
         saveContext()
     }
-
+    
     private func configureFavoriteMovie(_ movie: FavoriteMovies, with model: Doc) {
         movie.name = model.name
         movie.type = model.type
         movie.poster = model.poster?.url
         movie.rating = model.rating?.kp ?? 0
-
+        
         if let firstGenre = model.genres?.first {
             movie.genre = firstGenre.name
         }
         guard let url =  model.poster?.url else {return}
-
+        
         dataLoader.loadData(fromURL: url) { imageData in
             if let imageData = imageData {
                 movie.image = imageData
@@ -69,15 +69,15 @@ final class CoreDataManager {
             }
         }
     }
-
+    
     func deleteFromFavorites(_ movie: FavoriteMovies) {
         mainContext.delete(movie)
         saveContext()
     }
-
+    
     func loadFavoriteMovies(completion: (Result<[FavoriteMovies], Error>) -> Void){
         let request: NSFetchRequest<FavoriteMovies> = FavoriteMovies.fetchRequest()
-
+        
         do {
             let movies = try mainContext.fetch(request)
             completion(.success(movies))
@@ -85,12 +85,12 @@ final class CoreDataManager {
             completion(.failure(error))
         }
     }
-
+    
     func removeFromFavorites(model: Doc) {
         guard let name = model.name else {return}
         let fetchRequest = FavoriteMovies.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "name == %@", name)
-
+        
         do {
             let results = try mainContext.fetch(fetchRequest)
             if let objectToDelete = results.first {
@@ -101,10 +101,10 @@ final class CoreDataManager {
             print("Failed to delete from favorites: \(error)")
         }
     }
-
+    
     func deleteAllLikes() {
         let fetchRequest = FavoriteMovies.fetchRequest()
-
+        
         do {
             let allMoviesData = try mainContext.fetch(fetchRequest)
             for data in allMoviesData {
@@ -115,5 +115,14 @@ final class CoreDataManager {
             print("Ошибка при удалении всех данных: \(error)")
         }
     }
-
+    
+    func saveUser(username: String, email: String, password: String, image: Data?) {
+        let authorization = User(context: mainContext)
+        authorization.userimage = image
+        authorization.username = username
+        authorization.password = password
+        authorization.email = email
+        
+        saveContext()
+    }
 }
