@@ -8,7 +8,7 @@
 import Foundation
 
 struct FilmPersonnelModel: Codable {
-    let docs: [PersonModel]
+    let docs: [Person]
     let total: Int
     let limit: Int
     let page: Int
@@ -16,7 +16,7 @@ struct FilmPersonnelModel: Codable {
 
 }
 
-struct PersonModel: Codable, Hashable {
+struct PersonModel: Codable {
     let id: Int
     let age: Int?
     let countAwards: Int?
@@ -31,7 +31,7 @@ struct PersonModel: Codable, Hashable {
 }
 
     // MARK: - Movie
-struct Movie: Codable, Hashable {
+struct Movie: Codable {
     let id: Int
     let name: String?
     let general: Bool?
