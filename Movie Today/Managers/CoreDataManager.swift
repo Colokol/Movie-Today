@@ -125,4 +125,53 @@ final class CoreDataManager {
         
         saveContext()
     }
+    
+    //MARK: - RecentMovies
+    
+    func saveToRecent(from model: Doc) {
+        configRecentMovie(with: model)
+        saveContext()
+    }
+    
+    private func configRecentMovie(with model: Doc) {
+        guard let id = model.id else { return }
+        let request: NSFetchRequest<RecentMovie> = RecentMovie.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %d", id)
+        do {
+            let existingMovies = try mainContext.fetch(request)
+            let movie = existingMovies.first ?? RecentMovie(context: mainContext)
+            movie.id = Int64(id)
+            movie.name = model.name
+            movie.genre = model.genres?.first?.name
+            movie.poster = model.poster?.url
+            guard let raiting = model.rating?.kp else { return }
+            movie.raiting = raiting
+            guard let url =  model.poster?.url else { return }
+            
+            dataLoader.loadData(fromURL: url) { imageData in
+                if let imageData = imageData {
+                    movie.image = imageData
+                    self.saveContext()
+                } else {
+                    print("Failed to load image data for \(String(describing: model.name))")
+                }
+            }
+        } catch {
+            print("Error fetching movie from Core Data: \(error)")
+        }
+
+     
+    }
+    
+    func loadRecentMovies(complition: (Result<[RecentMovie], Error>) -> Void) {
+        let request: NSFetchRequest<RecentMovie> = RecentMovie.fetchRequest()
+        
+        do {
+            let movies = try mainContext.fetch(request)
+            complition(.success(movies))
+        } catch {
+            complition(.failure(error))
+        }
+    }
+
 }

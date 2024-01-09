@@ -23,37 +23,42 @@ protocol SearchPresentorProtocol: AnyObject {
     var moviesTwo: [Doc]? { get set }
     var categories: [Categories] { get set }
     var actors: [PersonModel]? { get set }
+    var recentMovies: [RecentMovie] { get set }
     func getUpcomingMovie()
     func getFilms(with text: String)
-//    func getActors(with: [Person])
     func getActorsWithName(_ name: String)
     func getMovieForActordID(with id: Int)
     func didSelectItem(at: IndexPath)
+    func loadRecenMovie()
+    func saveToCoreData(model: Doc)
+    func getFilm(with id: Int, completion: @escaping (Doc?) -> Void)
 }
 
 final class SearchPresentor: SearchPresentorProtocol {
-
-    
-    
+    //MARK: - Properties
     weak var view: SearchViewProtocol?
+    let coreData = CoreDataManager.shared
     let networkManager = NetworkManager()
     var searchMovies: [Doc]?
     var movies: [Doc]?
     var moviesTwo: [Doc]?
+    var recentMovies: [RecentMovie] = []
     var categories = [Categories(name: "Ужасы", isSelected: true),
-                          Categories(name: "Комедия", isSelected: false),
-                          Categories(name: "Криминал", isSelected: false),
-                          Categories(name: "Драма", isSelected: false),
-                          Categories(name: "Фантастика", isSelected: false),
-                          Categories(name: "Мультфильм", isSelected: false),
-                          Categories(name: "Документальный", isSelected: false)]
+                      Categories(name: "Комедия", isSelected: false),
+                      Categories(name: "Криминал", isSelected: false),
+                      Categories(name: "Драма", isSelected: false),
+                      Categories(name: "Фантастика", isSelected: false),
+                      Categories(name: "Мультфильм", isSelected: false),
+                      Categories(name: "Документальный", isSelected: false)]
     var actors: [PersonModel]?
     
     
+    //MARK: - Init
     init(view: SearchViewProtocol) {
         self.view = view
+        loadRecenMovie()
     }
-    
+    //MARK: - UpcomingMovie
     func getUpcomingMovie() {
         networkManager.getMoviesFromCollection(collectionName: .popular) { result in
             switch result {
@@ -71,7 +76,7 @@ final class SearchPresentor: SearchPresentorProtocol {
             }
         }
     }
-    
+    //MARK: - SearchBar method for movies
     func getFilms(with text: String) {
         networkManager.searchMovie(searchText: text) { [weak self] result in
             switch result {
@@ -85,19 +90,13 @@ final class SearchPresentor: SearchPresentorProtocol {
                     self?.view?.updateSearchResults(filteredMovies, hideError: false)
                 } else {
                     self?.view?.updateSearchResults(filteredMovies, hideError: true)
-//                    for person in filteredMovies {
-//                        guard let actors = person.persons else { return }
-//                        print(actors)
-//                        self?.getActors(with: actors)
-//                    }
-
                 }
             case .failure(let error):
                 print(error.localizedDescription, "Данных нет")
             }
         }
     }
-    
+    //MARK: - SearchBar method for actors
     func getActorsWithName(_ name: String) {
         networkManager.searchPerson(searchText: name) { result in
             switch result {
@@ -108,16 +107,15 @@ final class SearchPresentor: SearchPresentorProtocol {
                 let filteredActors = Array(actors.docs.filter { $0.photo?.isEmpty == false }.prefix(3))
                 print(filteredActors)
                 self.actors = filteredActors
-                let actors = filteredActors
                 self.view?.updateActors(filteredActors)
-                self.getMovieForActordID(with: filteredActors[0].id ?? 0)
-
+                self.getMovieForActordID(with: filteredActors[0].id)
+                
             case .failure(let error):
                 print(error.localizedDescription, "Ошибка в getActorsWithName")
             }
         }
     }
-    
+    //MARK: - SearchBar method for search films with actor id
     func getMovieForActordID(with id: Int) {
         networkManager.getMovieFor(personId: id) { result in
             switch result {
@@ -135,20 +133,7 @@ final class SearchPresentor: SearchPresentorProtocol {
             }
         }
     }
-//
-//    func getActors(with: [Person]) {
-//        let actor = with
-//        if self.actors == nil {
-//            self.actors = [Person]()
-//        }
-//        self.actors = actor
-//        print("актеры получены")
-//        guard let actors = self.actors else { return }
-//        self.view?.updateActors(actors)
-//        print("актеры отданы")
-//
-//    }
-    
+    //MARK: - Switch genre method
     func getGenre(genre: MovieGenres) {
         self.view?.animate(true)
         networkManager.getMoviesGenre(genre: genre) { result in
@@ -170,15 +155,13 @@ final class SearchPresentor: SearchPresentorProtocol {
             }
         }
     }
-    
+    //MARK: - CollectionView Delegate
     func didSelectItem(at indexPath: IndexPath) {
         for i in 0..<categories.count {
             categories[i].isSelected = false
         }
         categories[indexPath.row].isSelected = !categories[indexPath.row].isSelected
-            self.view?.updateData()
-            
-        
+        self.view?.updateData()
         
         let selectedModel = categories[indexPath.row]
         switch selectedModel.name {
@@ -200,6 +183,34 @@ final class SearchPresentor: SearchPresentorProtocol {
             break
         }
     }
-
-
+    //MARK: - CoreData Methods
+    func loadRecenMovie() {
+        coreData.loadRecentMovies { result in
+            switch result {
+            case .success(let movie):
+                self.recentMovies = movie
+                self.recentMovies = self.recentMovies.reversed()
+            case .failure(let error):
+                print(error.localizedDescription, "Error in loadRecenMovie")
+            }
+        }
+    }
+    func saveToCoreData(model: Doc) {
+        coreData.saveToRecent(from: model)
+    }
+    
+    //MARK: - DetailScreen Methods
+    func getFilm(with id: Int, completion: @escaping (Doc?) -> Void) {
+        networkManager.searchMovieFor(id: id) { result in
+            switch result {
+            case .success(let movie):
+                completion(movie)
+            case .failure(let error):
+                print(error.localizedDescription, "Ошибка в searchresultpresenter getFilmID")
+                completion(nil)
+            }
+        }
+    }
+    
+    
 }

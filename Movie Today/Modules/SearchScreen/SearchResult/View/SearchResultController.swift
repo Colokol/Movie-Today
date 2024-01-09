@@ -13,6 +13,7 @@ final class SearchResultController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<SearchSections, Item>?
     private let errorView = NotFoundView()
     var presenter: SearchResultPresenterProtocol!
+    weak var delegate: SearchResultDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,7 @@ final class SearchResultController: UIViewController {
                 
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(105))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+                
                 
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
@@ -99,16 +100,13 @@ final class SearchResultController: UIViewController {
     //MARK: - Настройка dataSource
     
     func configureDataSource() {
-        //Регистрация ячеек
         let actors = actorCellRegister()
         let related = relatedCellRegister()
         dataSource = UICollectionViewDiffableDataSource<SearchSections, Item>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
             switch SearchSections(rawValue: indexPath.section)! {
             case .actors:
-                print("ячейка актеров создана")
                 return collectionView.dequeueConfiguredReusableCell(using: actors, for: indexPath, item: item.actors)
             case .related:
-                print("ячейка фильмов создана")
                 return collectionView.dequeueConfiguredReusableCell(using: related, for: indexPath, item: item.movieModel)
             }
         })
@@ -121,22 +119,34 @@ final class SearchResultController: UIViewController {
         snapshot.appendSections([.actors, .related])
         if let actors = presenter.actors?.compactMap({ Item(actors: $0)}) {
             snapshot.appendItems(actors, toSection: .actors)
-            print("в снэпшот добавлены актеры")
         }
         if let related = presenter.movies?.compactMap({ Item(movieModel: $0)}) {
             snapshot.appendItems(related, toSection: .related)
-            print("в снэпшот добавлены фильмы")
         }
         
         
         dataSource?.apply(snapshot, animatingDifferences: true)
         
     }
-
+    
 }
 
 extension SearchResultController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            guard let filmID = presenter.movies?[indexPath.row].id else { return print("Nil")}
+            presenter.getFilm(with: filmID) { [weak self] model in
+                guard let model = model else { return }
+                DispatchQueue.main.async {
+                    self?.presenter.saveToCoreData(model: model)
+                    self?.delegate?.openDetailWithModel(model)
+                }
+            }
+            
+        } else {
+            return
+        }
+    }
 }
 
 extension SearchResultController: UISearchResultsUpdating {

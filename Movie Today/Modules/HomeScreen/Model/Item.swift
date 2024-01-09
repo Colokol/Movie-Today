@@ -12,5 +12,6 @@ struct Item: Hashable {
     var actors: PersonModel?
     var collectionMovie: Collection?
     var categories: Categories?
+    var recent: RecentMovie?
     let identifier = UUID()
 }

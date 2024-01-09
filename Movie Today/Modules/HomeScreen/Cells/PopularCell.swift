@@ -111,4 +111,15 @@ final class PopularCell: UICollectionViewCell {
         guard let image = model.poster?.url else {return}
         imageView.sd_setImage(with: URL(string: image))
     }
+    
+    func configRecent(with model: RecentMovie) {
+        title.text = model.name
+        genre.text = model.genre
+        raiting.text = String(format: "%.1f", model.raiting)
+        if let imageData = model.image {
+            imageView.image = UIImage(data: imageData)
+        } else {
+            imageView.image = UIImage(named: "film")
+        }
+    }
 }
