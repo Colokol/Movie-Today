@@ -17,12 +17,14 @@ protocol SearchResultPresenterProtocol: AnyObject {
     init(view: SearchResultViewProtocol, actors: [PersonModel]?, movies: [Doc]?)
     var actors: [PersonModel]? { get set }
     var movies: [Doc]? { get set }
+    var recentMovies: [Doc]? { get set }
     var personInfo: [PersonModel]? { get set }
     var movie: Doc? { get set }
     func updateModels()
     func reloadData()
     func showError(_ show: Bool)
     func getFilm(with id: Int, completion: @escaping (Doc?) -> Void)
+    func saveToCoreData(model: Doc)
 }
 
 final class SearchResultPresenter: SearchResultPresenterProtocol {
@@ -31,9 +33,11 @@ final class SearchResultPresenter: SearchResultPresenterProtocol {
     weak var view: SearchResultViewProtocol?
     var actors: [PersonModel]?
     var movies: [Doc]?
+    var recentMovies: [Doc]?
     var personInfo: [PersonModel]?
     var movie: Doc?
     let networkManager = NetworkManager()
+    let coreData = CoreDataManager.shared
     
     //MARK: - Methods
     func updateModels() {
@@ -46,10 +50,10 @@ final class SearchResultPresenter: SearchResultPresenterProtocol {
         self.view?.showError(show)
     }
  
-    func getFilmsFromActor(with id: Int) {
-        //MARK: - ТУТ ПОИСК ФИЛЬМА ПО ID
-        
+    func saveToCoreData(model: Doc) {
+        coreData.saveToRecent(from: model)
     }
+    
     
     func getFilm(with id: Int, completion: @escaping (Doc?) -> Void) {
         networkManager.searchMovieFor(id: id) { result in

@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-    
+
     private var searchController = UISearchController()
     private var collectionView: UICollectionView!
     private var searchResultController = Builder.createSearchResultController(person: nil, movie: nil)
@@ -19,8 +19,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+
         // Call function's
         configureActivityIndicator()
         setupNavBar()
@@ -33,7 +32,6 @@ class SearchViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.backgroundColor = .background
         collectionView.delegate = self
-        searchResultController.delegate = self
         configureDataSource()
         view.backgroundColor = .background
         view.addSubviews(collectionView)
@@ -64,6 +62,7 @@ class SearchViewController: UIViewController {
         searchController = UISearchController(searchResultsController: searchResultController)
         searchController.searchResultsUpdater = searchResultController
         searchController.delegate = self
+        searchResultController.delegate = self
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Type title, categories, years, etc"
         navigationItem.searchController = searchController
@@ -128,7 +127,7 @@ class SearchViewController: UIViewController {
                 header.pinToVisibleBounds = false
                 header.zIndex = 2
                 section.boundarySupplementaryItems = [header]
-                
+
                 return section
                 
             case .mostPopular:
@@ -165,9 +164,9 @@ class SearchViewController: UIViewController {
         }
     }
     
-    private func registerCellRecentMoview() -> UICollectionView.CellRegistration<PopularCell, Doc> {
-        return UICollectionView.CellRegistration<PopularCell, Doc> { (cell, indexPath, item) in
-            cell.config(with: item)
+    private func registerCellRecentMoview() -> UICollectionView.CellRegistration<PopularCell, RecentMovie> {
+        return UICollectionView.CellRegistration<PopularCell, RecentMovie> { (cell, indexPath, item) in
+            cell.configRecent(with: item)
         }
     }
     
@@ -176,9 +175,7 @@ class SearchViewController: UIViewController {
             header.titleLabel.text = "Upcoming Movie"
             header.titleLabel.textColor = .white
             header.titleLabel.font = .montserratSemiBold(ofSize: 16)
-            header.button.setTitleColor(.blueAccent, for: .normal)
-            header.button.tag = indexPath.section
-            header.isUserInteractionEnabled = true
+            header.hideButton(true)
         }
     }
     
@@ -188,6 +185,7 @@ class SearchViewController: UIViewController {
             header.titleLabel.textColor = .white
             header.titleLabel.font = .montserratSemiBold(ofSize: 16)
             header.button.setTitleColor(.blueAccent, for: .normal)
+            header.hideButton(false)
             header.button.tag = indexPath.section
             header.isUserInteractionEnabled = true
         }
@@ -202,11 +200,11 @@ class SearchViewController: UIViewController {
         dataSource = UICollectionViewDiffableDataSource<SectionsSearch, Item>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             
             switch SectionsSearch(rawValue: indexPath.section)! {
-                
+
             case .compilation:
                 return collectionView.dequeueConfiguredReusableCell(using: upcomingMovie, for: indexPath, item: item.movieModel)
             case .mostPopular:
-                return collectionView.dequeueConfiguredReusableCell(using: recentMovies, for: indexPath, item: item.movieModel) // Забрать из кордаты модель просмотренных фильмов
+                return collectionView.dequeueConfiguredReusableCell(using: recentMovies, for: indexPath, item: item.recent)
             case .categories:
                 return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item.categories)
             }
@@ -235,14 +233,13 @@ class SearchViewController: UIViewController {
         snapShot.appendSections([.categories, .compilation, .mostPopular])
         
         let categories = presenter.categories.compactMap({ Item(categories: $0) })
-        snapShot.appendItems(categories, toSection: .categories)
+            snapShot.appendItems(categories, toSection: .categories)
         
         if let upcomingMovie = presenter.movies?.compactMap({ Item(movieModel: $0) }) {
             snapShot.appendItems(upcomingMovie, toSection: .compilation)
         }
-        if let upcomingMovie = presenter.moviesTwo?.compactMap({ Item(movieModel: $0) }) {
-            snapShot.appendItems(upcomingMovie, toSection: .mostPopular)
-        }
+        let recentMovies = presenter.recentMovies.compactMap { Item(recent: $0)}
+        snapShot.appendItems(recentMovies, toSection: .mostPopular)
         
         dataSource?.apply(snapShot, animatingDifferences: true)
     }
@@ -257,11 +254,9 @@ extension SearchViewController: SearchViewProtocol {
     }
     
     func updateActors(_ actors: [PersonModel]) {
-        print("СерчРезалт обновлен с актерами")
         searchResultController.presenter.actors = actors
         searchResultController.presenter.updateModels()
         searchResultController.presenter.reloadData()
-        //        searchResultController.presenter.reloadData()
     }
     
     func hideError(hide: Bool) {
@@ -279,29 +274,16 @@ extension SearchViewController: SearchViewProtocol {
     
     func updateSearchResults(_ movies: [Doc], hideError: Bool) {
         searchResultController.presenter.movies = movies
-        searchResultController.presenter.updateModels()
+            searchResultController.presenter.updateModels()
         searchResultController.presenter.reloadData()
-        //        if hideError {
-        //            searchResultController.presenter.movies = movies
-        //            searchResultController.presenter.updateModels()
-        ////            searchResultController.presenter.reloadData()
-        //            print("СерчРезалт обновлен с фильмами")
-        //        } else {
-        //            searchResultController.presenter.movies = movies
-        //            searchResultController.presenter.updateModels()
-        ////            searchResultController.presenter.reloadData()
-        //            print("СерчРезалт обновлен с фильмами")
-        //        }
-        
     }
-    
+
 }
 
 extension SearchViewController: UISearchBarDelegate {
-    
+ 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
-        //        presenter.getFilms(with: searchText)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -331,7 +313,7 @@ extension SearchViewController: UISearchBarDelegate {
             presenter.getActorsWithName(searchText)
             
         default: break
-            
+
         }
     }
     
@@ -356,10 +338,14 @@ extension SearchViewController: UISearchControllerDelegate {
     
     func willDismissSearchController(_ searchController: UISearchController) {
         if let searchResultController = searchController.searchResultsController as? SearchResultController {
-            searchResultController.presenter.movies?.removeAll()
-            searchResultController.presenter.actors?.removeAll()
-            searchResultController.presenter.updateModels()
-        }
+              searchResultController.presenter.movies?.removeAll()
+              searchResultController.presenter.actors?.removeAll()
+              searchResultController.presenter.updateModels()
+          }
+        presenter.loadRecenMovie()
+        applySnapshot()
+        collectionView.reloadData()
+        
     }
 }
 
@@ -371,6 +357,13 @@ extension SearchViewController: UICollectionViewDelegate {
             guard let model = presenter.movies else { return }
             let vc = Builder.createDetailVC(model: model[indexPath.row])
             navigationController?.pushViewController(vc, animated: true)
+        } else if indexPath.section == 2 {
+            let id = Int(presenter.recentMovies[indexPath.row].id)
+            presenter.getFilm(with: id) { [weak self] result in
+                guard let result = result else { return }
+                let vc = Builder.createDetailVC(model: result)
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
 }
