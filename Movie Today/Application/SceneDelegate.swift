@@ -17,20 +17,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = TabBarController()
-        window?.makeKeyAndVisible()
         
-        if onboardingCompleted() {
-            let tabBarController = TabBarController()
-            let navigationController = UINavigationController(rootViewController: tabBarController)
-            window?.rootViewController = navigationController
-            navigationController.navigationBar.isHidden = true
+        if onboardingCompleted() { 
+            window?.rootViewController = Builder.createTabBarViewController()
         } else {
-            let tabBarController = OnboardingViewController()
-            let navigationController = UINavigationController(rootViewController: tabBarController)
-            window?.rootViewController = navigationController
-            navigationController.navigationBar.isHidden = true
+            window?.rootViewController = Builder.createOnboardingViewController()
         }
+        
         window?.makeKeyAndVisible()
     }
     
