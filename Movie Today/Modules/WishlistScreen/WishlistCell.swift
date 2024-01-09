@@ -35,16 +35,16 @@ class WishlistCell: UICollectionViewCell {
     
     private lazy var genreLabel = UILabel(text: "Action", font: .montserratMedium(ofSize: 12), textColor: .whiteGray, textAlignment: .left, numberOfLines: 1)
     
-    private lazy var  nameLabel = UILabel(text: "Spider-Man No Way Home", font: .montserratMedium(ofSize: 14), textColor: .white, textAlignment: .left, numberOfLines: 0)
+    private lazy var  nameLabel = UILabel(text: "Spider-Man No Way Home", font: .montserratSemiBold(ofSize: 14), textColor: .white, textAlignment: .left, numberOfLines: 0)
     
     private lazy var  typeLabel = UILabel(text: "Movie", font: .montserratMedium(ofSize: 12), textColor: .gray, textAlignment: .left, numberOfLines: 1)
     
-    private lazy var  ratingLabel = UILabel(text: "4.5", font: .montserratSemiBold(ofSize: 12), textColor: .yellow, textAlignment: .left, numberOfLines: 1)
+    private lazy var  ratingLabel = UILabel(text: "4.5", font: .montserratSemiBold(ofSize: 12), textColor: .customOrange, textAlignment: .left, numberOfLines: 1)
     
     private lazy var ratingImage = {
         let image =  UIImageView()
         image.image = UIImage(systemName: "star.fill")
-        image.tintColor = .yellow
+        image.tintColor = .customOrange
         return image
     }()
     
@@ -67,9 +67,9 @@ class WishlistCell: UICollectionViewCell {
     
     func configure(with model: FavoriteMovies) {
         nameLabel.text = model.name
-        typeLabel.text = model.type
-        genreLabel.text = model.genre
-        ratingLabel.text = String(model.rating)
+        typeLabel.text = model.type?.capitalized
+        genreLabel.text = model.genre?.capitalized
+        ratingLabel.text = String(format: "%.1f", model.rating)
         
         if let imageData = model.image {
             movieImage.image = UIImage(data: imageData)
@@ -88,6 +88,7 @@ class WishlistCell: UICollectionViewCell {
         nameLabel.text = nil
         typeLabel.text = nil
         ratingLabel.text = nil
+        isInWishlist =  true
     }
     
     func setLikeButtonImage(isInWishlist: Bool) {
@@ -124,15 +125,15 @@ class WishlistCell: UICollectionViewCell {
             nameLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 6),
             
             typeLabel.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: labelOffset),
-            typeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 6),
+            typeLabel.bottomAnchor.constraint(equalTo: likeButton.bottomAnchor, constant: -5),
             
             ratingImage.leadingAnchor.constraint(equalTo: typeLabel.trailingAnchor, constant: 8),
-            ratingImage.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 6),
+            ratingImage.bottomAnchor.constraint(equalTo: likeButton.bottomAnchor, constant: -5),
             ratingImage.heightAnchor.constraint(equalToConstant: labelOffset),
             ratingImage.widthAnchor.constraint(equalToConstant: labelOffset),
             
             ratingLabel.leadingAnchor.constraint(equalTo: ratingImage.trailingAnchor, constant: 4),
-            ratingLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 6),
+            ratingLabel.bottomAnchor.constraint(equalTo: likeButton.bottomAnchor, constant: -5),
             
             likeButton.heightAnchor.constraint(equalToConstant: 32),
             likeButton.widthAnchor.constraint(equalToConstant: 32),

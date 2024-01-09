@@ -10,7 +10,8 @@ import UIKit
 class WishListVC: UIViewController {
     
     var presenter: WishListPresenterProtocol!
-
+    let navigationBarHelper = NavigationBarHelper()
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -24,7 +25,8 @@ class WishListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
-        title = "Wishlist"
+        navigationBarHelper.backButtonDelegate = self
+        navigationBarHelper.setupNavigationBar(for: self, title: "Wishlist")
         setupUI()
     }
     
@@ -41,7 +43,10 @@ class WishListVC: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
-
+    func backButton() {
+        navigationController?.popViewController(animated: true)
+    }
+    
 }
 
 //MARK: Extensions CollectionView
@@ -65,7 +70,7 @@ extension WishListVC: UICollectionViewDataSource {
             guard let self = self else { return }
             cell.isInWishlist = false
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
                 self.presenter.likePressed(favoriteMovie)
             }
         }
@@ -97,9 +102,11 @@ extension WishListVC: WishListViewProtocol {
     func update() {
         collectionView.reloadData()
     }
-
-    func changeHeartColor() {
-
+}
+// MARK: - NavigationBar
+extension WishListVC: BackButtonDelegate  {
+    func backButtonPressed() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
