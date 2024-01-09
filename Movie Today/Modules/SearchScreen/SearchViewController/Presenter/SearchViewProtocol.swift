@@ -30,6 +30,7 @@ protocol SearchPresentorProtocol: AnyObject {
     func getMovieForActordID(with id: Int)
     func didSelectItem(at: IndexPath)
     func loadRecenMovie()
+    func saveToCoreData(model: Doc)
     func getFilm(with id: Int, completion: @escaping (Doc?) -> Void)
 }
 
@@ -193,6 +194,9 @@ final class SearchPresentor: SearchPresentorProtocol {
                 print(error.localizedDescription, "Error in loadRecenMovie")
             }
         }
+    }
+    func saveToCoreData(model: Doc) {
+        coreData.saveToRecent(from: model)
     }
     
     //MARK: - DetailScreen Methods

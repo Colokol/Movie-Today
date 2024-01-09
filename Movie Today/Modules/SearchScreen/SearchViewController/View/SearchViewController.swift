@@ -355,6 +355,10 @@ extension SearchViewController: UICollectionViewDelegate {
             presenter.didSelectItem(at: indexPath)
         } else if indexPath.section == 1 {
             guard let model = presenter.movies else { return }
+            presenter.saveToCoreData(model: model[indexPath.row])
+            presenter.loadRecenMovie()
+            applySnapshot()
+            collectionView.reloadData()
             let vc = Builder.createDetailVC(model: model[indexPath.row])
             navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 2 {
