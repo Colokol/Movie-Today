@@ -66,5 +66,12 @@ final class Builder {
         view.presenter = presenter
         return view
     }
+    
+    static func createRecentController() -> UIViewController {
+        let view = RecentMovieController()
+        let presenter = RecentMoviePresenter(view: view)
+        view.presenter = presenter
+        return view
+    }
 
 }

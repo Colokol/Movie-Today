@@ -185,10 +185,21 @@ class SearchViewController: UIViewController {
             header.titleLabel.textColor = .white
             header.titleLabel.font = .montserratSemiBold(ofSize: 16)
             header.button.setTitleColor(.blueAccent, for: .normal)
-            header.hideButton(false)
+//            header.hideButton(false)
+            if self.presenter.recentMovies.count == 0 {
+                header.hideButton(true)
+            } else {
+                header.hideButton(false)
+            }
+
             header.button.tag = indexPath.section
+            header.button.addTarget(self, action: #selector(self.seeAllAction), for: .touchUpInside)
             header.isUserInteractionEnabled = true
         }
+    }
+    @objc private func seeAllAction() {
+        let vc = Builder.createRecentController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func configureDataSource() {
