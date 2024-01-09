@@ -11,6 +11,7 @@ import Foundation
 protocol PopularMovieView: AnyObject {
     func update()
     func animate(_ start: Bool)
+    func showError(_ hide: Bool)
 }
 
 protocol PopularMoviePresenterProtocol: AnyObject {
@@ -41,6 +42,11 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
                 }
                 self.array?.append(contentsOf: movie.docs)
                 DispatchQueue.main.async {
+                    if movie.docs.count == 0 {
+                        self.view?.showError(true)
+                    } else {
+                        self.view?.showError(false)
+                    }
                     self.view?.animate(false)
                     self.view?.update()
                 }
@@ -59,6 +65,11 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
                 let filteredMovie = movie.docs.filter { $0.poster != nil }
                 self.array?.append(contentsOf: movie.docs)
                     DispatchQueue.main.async {
+                        if movie.docs.count == 0 {
+                            self.view?.showError(true)
+                        } else {
+                            self.view?.showError(false)
+                        }
                         self.view?.animate(false)
                         self.view?.update()
                     }

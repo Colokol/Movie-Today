@@ -100,7 +100,7 @@ final class FilmCell: UICollectionViewCell {
     private let secondStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .leading
-//        stack.distribution = .equalSpacing
+        //        stack.distribution = .equalSpacing
         stack.axis = .horizontal
         stack.spacing = 5
         return stack
@@ -116,7 +116,7 @@ final class FilmCell: UICollectionViewCell {
     private let fourStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .leading
-//        stack.distribution = .equalSpacing
+        //        stack.distribution = .equalSpacing
         stack.axis = .horizontal
         stack.spacing = 5
         return stack
@@ -124,7 +124,7 @@ final class FilmCell: UICollectionViewCell {
     private let fifthStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .leading
-//        stack.distribution = .equalSpacing
+        //        stack.distribution = .equalSpacing
         stack.axis = .vertical
         stack.spacing = 15
         return stack
@@ -133,7 +133,7 @@ final class FilmCell: UICollectionViewCell {
     private let startStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .center
-//        stack.distribution = .fillEqually
+        //        stack.distribution = .fillEqually
         stack.axis = .horizontal
         stack.spacing = 5
         stack.backgroundColor = .background
@@ -192,7 +192,7 @@ final class FilmCell: UICollectionViewCell {
             startStack.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 8),
             startStack.trailingAnchor.constraint(lessThanOrEqualTo: imageView.trailingAnchor, constant: -40)
         ])
-       
+        
     }
     
     func config(with model: Doc) {
@@ -202,22 +202,22 @@ final class FilmCell: UICollectionViewCell {
         if let year = model.year {
             self.year.text = String(year)
         }
-
+        
         if let movieLength = model.movieLength {
             self.minutes.text = "\(movieLength) minutes"
         }
-
+        
         if let genre = model.genres?.first?.name, let type = model.type {
             self.genre.text = "\(genre) | \(type)"
         }
-
+        
         if let pg = model.ageRating {
             self.pg.text = "PG - \(pg)"
         }
         if let rait = model.rating?.kp {
             raiting.text = String(format: "%.1f", rait)
         }
-
+        
         guard  let image = model.poster?.url else {return}
         imageView.sd_setImage(with: URL(string: image))
     }
@@ -243,6 +243,30 @@ final class FilmCell: UICollectionViewCell {
         }
         if let image = model.poster?.url {
             imageView.sd_setImage(with: URL(string: image))
+        }
+    }
+    
+    func configRecent(with model: RecentMovie) {
+        if let name = model.name {
+            title.text = name
+        }
+        let year = Int(model.year)
+        self.year.text = String(year)
+        
+        let movieLength = Int(model.lenght)
+        minutes.text = "\(movieLength) minutes"
+        guard let genre = model.genre else { return }
+        let type = model.type
+        self.genre.text = "\(String(describing: genre)) | \(String(describing: type ?? "movie"))"
+        let pg = model.raitPG
+        self.pg.text = "PG - \(pg)"
+        
+        let rait = model.raiting
+        raiting.text = String(format: "%.1f", rait)
+        if let imageData = model.image {
+            imageView.image = UIImage(data: imageData)
+        } else {
+            imageView.image = UIImage(named: "film")
         }
     }
 }

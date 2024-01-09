@@ -65,6 +65,8 @@ extension SearchResult: UICollectionViewDataSource {
 extension SearchResult: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
+        let vc = Builder.createDetailVC(model: results[indexPath.row])
+        navigationController?.pushViewController(vc, animated: true)
 
     }
 }

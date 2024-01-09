@@ -80,7 +80,8 @@ final class MovieListController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
         ])
     }
     
@@ -152,6 +153,7 @@ final class MovieListController: UIViewController {
 }
 //MARK: - MovieViewProtocol
 extension MovieListController: MovieViewProtocol {
+    
     func animate(_ start: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
