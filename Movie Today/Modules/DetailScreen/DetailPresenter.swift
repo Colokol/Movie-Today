@@ -8,27 +8,50 @@
 import Foundation
 
 protocol DetailScreenViewProtocol: AnyObject {
-    func update(model:Doc)
-    func favoriteButtonTap()
+    func update(model: Doc)
+    func updateActors()
 }
 
 protocol DetailPresenterProtocol: AnyObject {
     var movie: Doc { get set }
-    var favoriteButtonState: Bool {get set}
-     func configureScreen()
+    var favoriteButtonState: Bool { get set }
+    var filmPersons: [Person]? { get set }
+    
+    func configureScreen()
     func saveToFavorit()
+    func getActors()
     init(view: DetailScreenViewProtocol, model: Doc)
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
-
     var favoriteButtonState: Bool = false
     var movie: Doc
+    var filmPersons: [Person]?
     let storageManager = CoreDataManager.shared
     weak var view: DetailScreenViewProtocol!
 
     func configureScreen(){
-        self.view?.update(model: self.movie )
+        self.view?.update(model: self.movie)
+    }
+
+    func saveToFavorit() {
+        favoriteButtonState.toggle()
+
+        if favoriteButtonState {
+            storageManager.saveToFavorites(from: movie)
+        } else {
+            storageManager.removeFromFavorites(model: movie)
+        }
+    }
+
+    func getActors() {
+        if filmPersons == nil {
+            filmPersons = [Person]()
+        }
+        guard let persons = movie.persons else { return }
+        for i in 0..<15 {
+            self.filmPersons?.append(persons[i])
+        }
     }
 
     init(view: DetailScreenViewProtocol, model: Doc) {
@@ -44,22 +67,5 @@ final class DetailPresenter: DetailPresenterProtocol {
                 }
             }
         }
-
     }
-
-    func saveToFavorit() {
-        favoriteButtonState.toggle()
-        
-        if favoriteButtonState {
-            storageManager.saveToFavorites(from: movie)
-            view?.favoriteButtonTap()
-        } else {
-            storageManager.removeFromFavorites(model: movie)
-            view?.favoriteButtonTap()
-
-        }
-    }
-
-
-
 }
