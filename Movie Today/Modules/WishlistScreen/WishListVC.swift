@@ -16,9 +16,11 @@ class WishListVC: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(WishlistCell.self, forCellWithReuseIdentifier: WishlistCell.identifier)
+        collectionView.register(EmptyWishlistCell.self, forCellWithReuseIdentifier: EmptyWishlistCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     
@@ -53,7 +55,7 @@ class WishListVC: UIViewController {
 
 extension WishListVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return presenter.favoriteMovies.count
+        return presenter.favoriteMovies.isEmpty ? 1 : presenter.favoriteMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -61,20 +63,26 @@ extension WishListVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WishlistCell.identifier, for: indexPath) as! WishlistCell
-        
-        let favoriteMovie = presenter.favoriteMovies[indexPath.section]
-        cell.configure(with: favoriteMovie)
-        
-        cell.likeButtonPressedHandler = { [weak self] in
-            guard let self = self else { return }
-            cell.isInWishlist = false
+        switch presenter.favoriteMovies.isEmpty {
+        case true:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmptyWishlistCell", for: indexPath) as! EmptyWishlistCell
+            return cell
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
-                self.presenter.likePressed(favoriteMovie)
+        case false:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WishlistCell.identifier, for: indexPath) as! WishlistCell
+            let favoriteMovie = presenter.favoriteMovies[indexPath.section]
+            cell.configure(with: favoriteMovie)
+            
+            cell.likeButtonPressedHandler = { [weak self] in
+                guard let self = self else { return }
+                cell.isInWishlist = false
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+                    self.presenter.likePressed(favoriteMovie)
+                }
             }
+            return cell
         }
-        return cell
     }
 }
 
@@ -85,10 +93,19 @@ extension WishListVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellWidth = (collectionView.frame.width)
-        let cellHeight: CGFloat = 107
+        switch presenter.favoriteMovies.isEmpty {
+        case true:
+            let cellWidth = (collectionView.frame.width)
+            let cellHeight = (collectionView.frame.height / 2)
+    
+            return CGSize(width: cellWidth, height: cellHeight)
+        case false:
+                    let cellWidth = (collectionView.frame.width)
+                    let cellHeight: CGFloat = 107
+            
+                    return CGSize(width: cellWidth, height: cellHeight)
+        }
         
-        return CGSize(width: cellWidth, height: cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

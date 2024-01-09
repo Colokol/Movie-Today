@@ -15,6 +15,7 @@
 		792A568D2B472E9600617440 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A568C2B472E9600617440 /* CoreDataManager.swift */; };
 		796E254C2B4873CB00D6D28B /* FavoriteMovies.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 796E254A2B4873CB00D6D28B /* FavoriteMovies.xcdatamodeld */; };
 		796E254E2B4DD56300D6D28B /* NavigationBarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E254D2B4DD56300D6D28B /* NavigationBarHelper.swift */; };
+		796E25502B4DE3F800D6D28B /* EmptyWishlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E254F2B4DE3F800D6D28B /* EmptyWishlistCell.swift */; };
 		7BAA797C2B3DA44C002FA5F5 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA797B2B3DA44C002FA5F5 /* UIImageView + Extension.swift */; };
 		7BAA797E2B3DA46F002FA5F5 /* UIButton + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA797D2B3DA46F002FA5F5 /* UIButton + Extension.swift */; };
 		7BAA79802B3DA5C3002FA5F5 /* ConstraintsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA797F2B3DA5C3002FA5F5 /* ConstraintsEnum.swift */; };
@@ -96,6 +97,7 @@
 		792A568C2B472E9600617440 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		796E254B2B4873CB00D6D28B /* FavoriteMovies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoriteMovies.xcdatamodel; sourceTree = "<group>"; };
 		796E254D2B4DD56300D6D28B /* NavigationBarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarHelper.swift; sourceTree = "<group>"; };
+		796E254F2B4DE3F800D6D28B /* EmptyWishlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyWishlistCell.swift; sourceTree = "<group>"; };
 		7BAA797B2B3DA44C002FA5F5 /* UIImageView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extension.swift"; sourceTree = "<group>"; };
 		7BAA797D2B3DA46F002FA5F5 /* UIButton + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extension.swift"; sourceTree = "<group>"; };
 		7BAA797F2B3DA5C3002FA5F5 /* ConstraintsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintsEnum.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				792A567F2B3CF96000617440 /* WishlistCell.swift */,
+				796E254F2B4DE3F800D6D28B /* EmptyWishlistCell.swift */,
 				792A56812B3CF98200617440 /* WishListVC.swift */,
 				CE96EB862B49758E001184C4 /* WishListPresenter.swift */,
 			);
@@ -693,6 +696,7 @@
 				FAA9CF482B4C8AEA00E7507B /* SearchResultDelegate.swift in Sources */,
 				CED4D23D2B3A043F005138A9 /* HTTPTask.swift in Sources */,
 				792A568D2B472E9600617440 /* CoreDataManager.swift in Sources */,
+				796E25502B4DE3F800D6D28B /* EmptyWishlistCell.swift in Sources */,
 				CE621C0C2B3F611D00F75743 /* GeneralAndMore.swift in Sources */,
 				CE621C152B3F622D00F75743 /* DetailPresenter.swift in Sources */,
 				CED4D2332B38A87F005138A9 /* DetailViewController.swift in Sources */,

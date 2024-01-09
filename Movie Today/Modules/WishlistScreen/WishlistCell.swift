@@ -33,13 +33,29 @@ class WishlistCell: UICollectionViewCell {
         return image
     }()
     
-    private lazy var genreLabel = UILabel(text: "Action", font: .montserratMedium(ofSize: 12), textColor: .whiteGray, textAlignment: .left, numberOfLines: 1)
+    private lazy var genreLabel = UILabel(text: "Action",
+                                          font: .montserratMedium(ofSize: 12),
+                                          textColor: .whiteGray,
+                                          textAlignment: .left,
+                                          numberOfLines: 1)
     
-    private lazy var  nameLabel = UILabel(text: "Spider-Man No Way Home", font: .montserratSemiBold(ofSize: 14), textColor: .white, textAlignment: .left, numberOfLines: 0)
+    private lazy var  nameLabel = UILabel(text: "Spider-Man No Way Home",
+                                          font: .montserratSemiBold(ofSize: 14),
+                                          textColor: .white,
+                                          textAlignment: .left,
+                                          numberOfLines: 0)
     
-    private lazy var  typeLabel = UILabel(text: "Movie", font: .montserratMedium(ofSize: 12), textColor: .gray, textAlignment: .left, numberOfLines: 1)
+    private lazy var  typeLabel = UILabel(text: "Movie",
+                                          font: .montserratMedium(ofSize: 12),
+                                          textColor: .gray,
+                                          textAlignment: .left,
+                                          numberOfLines: 1)
     
-    private lazy var  ratingLabel = UILabel(text: "4.5", font: .montserratSemiBold(ofSize: 12), textColor: .customOrange, textAlignment: .left, numberOfLines: 1)
+    private lazy var  ratingLabel = UILabel(text: "4.5",
+                                            font: .montserratSemiBold(ofSize: 12),
+                                            textColor: .customOrange,
+                                            textAlignment: .left,
+                                            numberOfLines: 1)
     
     private lazy var ratingImage = {
         let image =  UIImageView()
