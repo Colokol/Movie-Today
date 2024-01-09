@@ -11,7 +11,7 @@ class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     
     //MARK: - Properties
     
-    var presenter: OnboardingViewPresenterProtocol! = nil
+    var presenter: OnboardingViewPresenterProtocol!
     
     //MARK: - UI Elements
     

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol OnboardingViewProtocol {
+protocol OnboardingViewProtocol: AnyObject {
 
 }
 
@@ -19,7 +19,7 @@ protocol OnboardingViewPresenterProtocol {
 
 class OnboardingPresenter: OnboardingViewPresenterProtocol {
 
-    var view: OnboardingViewProtocol?
+    unowned let view: OnboardingViewProtocol
 
     var slides: [OnboardingView] = []
 
