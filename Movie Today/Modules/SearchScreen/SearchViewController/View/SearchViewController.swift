@@ -185,7 +185,6 @@ class SearchViewController: UIViewController {
             header.titleLabel.textColor = .white
             header.titleLabel.font = .montserratSemiBold(ofSize: 16)
             header.button.setTitleColor(.blueAccent, for: .normal)
-//            header.hideButton(false)
             if self.presenter.recentMovies.count == 0 {
                 header.hideButton(true)
             } else {
@@ -287,6 +286,7 @@ extension SearchViewController: SearchViewProtocol {
         searchResultController.presenter.movies = movies
             searchResultController.presenter.updateModels()
         searchResultController.presenter.reloadData()
+        
     }
 
 }
