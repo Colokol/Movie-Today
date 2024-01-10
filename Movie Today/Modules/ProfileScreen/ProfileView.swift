@@ -18,6 +18,15 @@ final class ProfileView: UIView {
         scroll.frame = self.bounds
         return scroll
     }()
+    private let exitButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Exit", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .customGray
+        button.layer.cornerRadius = 15
+        return button
+    }()
+    var exitAction: (() -> Void)?
     let contentView = UIView()
     let userView = UserView()
     let generalView = GeneralAndMore(labelText: "General", firstButtonTitle: "Notification", firstImage: "notif", secondButtonTitle: "Language", secondImage: "lang")
@@ -44,7 +53,7 @@ final class ProfileView: UIView {
         self.backgroundColor = .background
         self.addSubviews(scrollView)
         scrollView.addSubviews(contentView)
-        contentView.addSubviews(userView, generalView, moreView)
+        contentView.addSubviews(userView, generalView, moreView, exitButton)
         
         // Setup user view
         userView.layer.borderWidth = 1
@@ -60,6 +69,12 @@ final class ProfileView: UIView {
         moreView.layer.borderWidth = 1
         moreView.layer.borderColor = UIColor.whiteGray.cgColor
         moreView.layer.cornerRadius = 15
+        
+        exitButton.addTarget(self, action: #selector(exitButtonAction), for: .touchUpInside)
+    }
+    
+    @objc private func exitButtonAction() {
+        exitAction?()
     }
 }
 
@@ -111,6 +126,11 @@ private extension ProfileView {
             moreView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constans.sideMargin),
             moreView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constans.sideMargin),
             moreView.heightAnchor.constraint(equalToConstant: Constans.twoHundredPoints),
+            
+            exitButton.topAnchor.constraint(equalTo: moreView.bottomAnchor, constant: 30),
+            exitButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constans.sideMargin),
+            exitButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constans.sideMargin),
+            exitButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints)
         ])
     }
 }

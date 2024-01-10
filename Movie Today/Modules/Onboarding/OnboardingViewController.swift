@@ -94,9 +94,8 @@ class OnboardingViewController: UIViewController {
     
     private func goToHomeScreen() {
         UserDefaults.standard.set(true, forKey: "onboardingCompleted")
-        let viewController = TabBarController()
-        navigationController?.setViewControllers([viewController], animated: true)
-        navigationController?.navigationBar.isHidden = true
+        let viewController = AuthViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
  
     //MARK: - Actions
