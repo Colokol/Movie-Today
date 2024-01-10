@@ -80,4 +80,10 @@ final class Builder {
         return navigationController
     }
 
+    static func createRecentController() -> UIViewController {
+        let view = RecentMovieController()
+        let presenter = RecentMoviePresenter(view: view)
+        view.presenter = presenter
+        return view
+    }
 }
