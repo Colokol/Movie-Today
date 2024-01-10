@@ -13,8 +13,7 @@ class NotificationViewController: UIViewController {
     //MARK: - UI Elements
     
     private let messagesNotificationsLabel: UILabel = {
-        UILabel.createMetadataLabel(text: "Messages Notifications")
-    }()
+        UILabel(text: "Messages Notifications", font: .systemFont(ofSize: 14), textColor: .gray) }()
     
     private let showNotificationsLabel: UILabel = {
         UILabel(text: "Show Notifications", font: .systemFont(ofSize: 20), textColor: .white)
