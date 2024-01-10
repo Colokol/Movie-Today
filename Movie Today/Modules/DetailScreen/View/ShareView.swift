@@ -88,5 +88,4 @@ final class ShareView: UIView {
     @objc private func closeButtonTapped() {
         closeButtonAction?()
     }
-    
 }
