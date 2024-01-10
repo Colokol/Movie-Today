@@ -49,9 +49,10 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func notificationButtonTapped() {
-        print("Notification")
+        let notificationVC = NotificationViewController()
+        navigationController?.show(notificationVC, sender: self)
     }
-    
+
     @objc func languageButtonTapped() {
         print("Language")
     }

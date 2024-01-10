@@ -66,7 +66,11 @@ final class Builder {
         view.presenter = presenter
         return view
     }
-    
+
+    static func createTabBarViewController() -> UIViewController {
+        return TabBarController()
+    }
+
     static func createRecentController() -> UIViewController {
         let view = RecentMovieController()
         let presenter = RecentMoviePresenter(view: view)
@@ -74,4 +78,19 @@ final class Builder {
         return view
     }
 
+    static func createOnboardingViewController() -> UIViewController {
+        let vc = OnboardingViewController()
+        let presenter = OnboardingPresenter(view: vc)
+        vc.presenter = presenter
+        let navigationController = UINavigationController(rootViewController: vc)
+        navigationController.navigationBar.isHidden = true
+        return navigationController
+    }
+
+    static func createRecentController() -> UIViewController {
+        let view = RecentMovieController()
+        let presenter = RecentMoviePresenter(view: view)
+        view.presenter = presenter
+        return view
+    }
 }
