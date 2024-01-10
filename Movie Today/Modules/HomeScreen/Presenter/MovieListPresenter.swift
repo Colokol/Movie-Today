@@ -19,6 +19,7 @@ protocol MovieListPresenterProtocol: AnyObject {
     func didSelectItem(at indexPath: IndexPath)
     func getGenre(genre: MovieGenres)
     func updateController()
+    func saveToCoreData(model: Doc)
     init(view: MovieViewProtocol)
 }
 
@@ -36,6 +37,7 @@ final class MovieListPresenter: MovieListPresenterProtocol {
                       Categories(name: "Документальный", isSelected: false)]   
     
     let networkManager = NetworkManager()
+    let coreData = CoreDataManager.shared
 
     func updateController() {
         getGenre(genre: .horror)
@@ -93,6 +95,11 @@ final class MovieListPresenter: MovieListPresenterProtocol {
         break
     }
 }
+    
+    func saveToCoreData(model: Doc) {
+        coreData.saveToRecent(from: model)
+    }
+    
     init(view: MovieViewProtocol) {
         self.view = view
         self.view?.animate(true)

@@ -49,11 +49,12 @@ final class AuthViewController: UIViewController {
     
     private let name: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Enter your name"
+        let placeholder = "Enter your name"
+        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         textField.borderStyle = .roundedRect
         textField.backgroundColor = .white
         textField.font = .montserratMedium(ofSize: 14)
-        textField.textColor = .customGray
+        textField.textColor = .black
         textField.textContentType = .name
         textField.autocapitalizationType = .words
         return textField
@@ -61,7 +62,8 @@ final class AuthViewController: UIViewController {
     
     private let email: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Enter your e-mail"
+        let placeholder = "Enter your e-mail"
+        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         textField.font = .montserratMedium(ofSize: 14)
         textField.borderStyle = .roundedRect
         textField.backgroundColor = .white
@@ -73,7 +75,8 @@ final class AuthViewController: UIViewController {
     
     private let password: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Enter your password"
+        let placeholder = "Enter your password"
+        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         textField.font = .montserratMedium(ofSize: 14)
         textField.borderStyle = .roundedRect
         textField.backgroundColor = .white
@@ -85,7 +88,7 @@ final class AuthViewController: UIViewController {
     
     private let checkButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = .montserratMedium(ofSize: 20)
+        button.titleLabel?.font = .montserratMedium(ofSize: 14)
         button.setTitle("Already have an account?", for: .normal)
         button.setTitleColor(.blue, for: .normal)
         button.addTarget(self, action: #selector(checkButtonAction(_:)), for: .touchUpInside)
@@ -95,8 +98,10 @@ final class AuthViewController: UIViewController {
     private let authButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .montserratMedium(ofSize: 20)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.setTitle("Register", for: .normal)
+        button.backgroundColor = .customDarkGray
+        button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(authButtonAction), for: .touchUpInside)
         return button
     }()
@@ -150,8 +155,9 @@ final class AuthViewController: UIViewController {
             email.widthAnchor.constraint(equalToConstant: 300),
             password.heightAnchor.constraint(equalToConstant: 42),
             password.widthAnchor.constraint(equalToConstant: 300),
-            checkButton.heightAnchor.constraint(equalToConstant: 32),
-            authButton.heightAnchor.constraint(equalToConstant: 32)
+            checkButton.heightAnchor.constraint(equalToConstant: 16),
+            authButton.heightAnchor.constraint(equalToConstant: 40),
+            authButton.widthAnchor.constraint(equalToConstant: 200)
         ])
     }
     

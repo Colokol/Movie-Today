@@ -29,16 +29,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     private func determineRootViewController() {
         if onboardingCompleted() {
-            // Если онбординг завершен
             if Auth.auth().currentUser == nil {
-                // Если пользователь не авторизован, показываем экран авторизации
                 setAuthInterface()
             } else {
-                // Пользователь авторизован, показываем основной интерфейс
                 setMainInterface()
             }
         } else {
-            // Онбординг не завершен, показываем его
             setOnboardingInterface()
         }
     }
@@ -56,7 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func setOnboardingInterface() {
-        let onboardingViewController = OnboardingViewController()
+        let onboardingViewController = Builder.createOnboardingViewController()
         let navigationController = UINavigationController(rootViewController: onboardingViewController)
         navigationController.navigationBar.isHidden = true
         window?.rootViewController = navigationController

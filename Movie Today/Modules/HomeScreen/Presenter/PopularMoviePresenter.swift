@@ -20,6 +20,7 @@ protocol PopularMoviePresenterProtocol: AnyObject {
     func getMovie(with indexPath: IndexPath)
     func getPopular()
     func checkSlug()
+    func saveToCoreData(model: Doc)
     init(view: PopularMovieView, slug: String?)
 }
 
@@ -27,6 +28,7 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
     weak var view: PopularMovieView?
     var slug: String?
     let networkManager = NetworkManager()
+    let coreData = CoreDataManager.shared
     var array: [Doc]?
     
     func getMovie(with indexPath: IndexPath) {
@@ -87,6 +89,10 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
             getPopular()
         }
         
+    }
+    
+    func saveToCoreData(model: Doc) {
+        coreData.saveToRecent(from: model)
     }
     
     init(view: PopularMovieView, slug: String?) {
