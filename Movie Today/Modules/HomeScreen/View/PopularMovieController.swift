@@ -141,6 +141,7 @@ extension PopularMovieController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
         guard let model = presenter.array?[indexPath.row] else { return }
+        presenter.saveToCoreData(model: model)
         let vc = Builder.createDetailVC(model: model)
         navigationController?.pushViewController(vc, animated: true)
     }

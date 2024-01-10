@@ -32,6 +32,8 @@ protocol SearchPresentorProtocol: AnyObject {
     func loadRecenMovie()
     func saveToCoreData(model: Doc)
     func getFilm(with id: Int, completion: @escaping (Doc?) -> Void)
+    func updateData()
+    func reloadData()
 }
 
 final class SearchPresentor: SearchPresentorProtocol {
@@ -57,6 +59,13 @@ final class SearchPresentor: SearchPresentorProtocol {
     init(view: SearchViewProtocol) {
         self.view = view
         loadRecenMovie()
+    }
+    
+    func updateData() {
+        self.view?.updateData()
+    }
+    func reloadData() {
+        self.view?.reloadData()
     }
     //MARK: - UpcomingMovie
     func getUpcomingMovie() {
