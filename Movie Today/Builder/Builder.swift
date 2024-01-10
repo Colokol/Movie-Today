@@ -58,6 +58,13 @@ final class Builder {
         view.presenter = presenter
         return view
     }
+    
+    static func createHomeSearchResultVC(model: [Doc]?) -> SearchResult {
+        let view = SearchResult()
+        let presenter = ResultPresenter(view: view, model: model)
+        view.presenter = presenter
+        return view
+    }
  
 
     static func createWishListVC() -> UIViewController {

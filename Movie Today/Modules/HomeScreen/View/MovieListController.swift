@@ -193,6 +193,7 @@ extension MovieListController: UICollectionViewDelegate {
         } else if indexPath.section == 1 {
             //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
             guard let model = presenter.movies?[indexPath.row] else { return }
+            presenter.saveToCoreData(model: model)
             let vc = Builder.createDetailVC(model: model)
             navigationController?.pushViewController(vc, animated: true)
         }

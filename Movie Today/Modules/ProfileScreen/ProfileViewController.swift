@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ProfileViewController: UIViewController {
     
@@ -23,6 +24,7 @@ class ProfileViewController: UIViewController {
         // Call function's
         setupView()
         setupConstraints()
+        exitAction()
     }
     
     //MARK: - Private methods
@@ -38,6 +40,28 @@ class ProfileViewController: UIViewController {
         profileView.generalView.secondButton.addTarget(self, action: #selector(languageButtonTapped), for: .touchUpInside)
         profileView.moreView.firstButton.addTarget(self, action: #selector(policiesButtonTapped), for: .touchUpInside)
         profileView.moreView.secondButton.addTarget(self, action: #selector(aboutButtonTapped), for: .touchUpInside)
+    }
+    
+    private func exitAction() {
+        profileView.exitAction = {
+            do {
+                try Auth.auth().signOut()
+                let vc = AuthViewController()
+               // набор всех сцен, которые в данный момент подключены к приложению
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                   //забираем первое окно из массива
+                    let window = windowScene.windows.first {
+                    //делаем его корневым и видимым
+                    window.rootViewController = vc
+                    window.makeKeyAndVisible()
+                    //переход к окну
+                    UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
+                }
+                print("Exit-----------------")
+            } catch {
+                print("Error exit")
+            }
+        }
     }
     
     //MARK: - Objective-C methods
@@ -78,6 +102,7 @@ private extension ProfileViewController {
             profileView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             profileView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             profileView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
         ])
     }
 }
