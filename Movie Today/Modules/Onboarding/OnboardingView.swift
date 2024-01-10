@@ -85,11 +85,11 @@ class OnboardingView: UIView {
             
             onboardingFirstLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             onboardingFirstLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            onboardingFirstLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 130),
+            onboardingFirstLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 110),
             
             onboardingSecondLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             onboardingSecondLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            onboardingSecondLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 200)
+            onboardingSecondLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 180)
         ])
     }
     
