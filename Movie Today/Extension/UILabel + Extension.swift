@@ -14,14 +14,6 @@ extension UILabel {
         self.font = font
         self.textColor = textColor
     }
-    
-    static func createMetadataLabel(text: String, textColor: UIColor = .gray, fontSize: CGFloat = 16) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.textColor = textColor
-        label.font = UIFont.systemFont(ofSize: fontSize)
-        return label
-    }
 }
 
 extension UILabel {
