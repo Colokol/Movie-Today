@@ -12,8 +12,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     private var storageManager = CoreDataManager.shared
-    
-    
+
+
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -22,11 +22,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         NotificationCenter.default.addObserver(self, selector: #selector(userDidAuthenticate), name: NSNotification.Name("UserDidAuthenticate"), object: nil)
     }
-    
+
     @objc private func userDidAuthenticate() {
            setMainInterface()
        }
-    
+
     private func determineRootViewController() {
         if onboardingCompleted() {
             // Если онбординг завершен
@@ -42,27 +42,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             setOnboardingInterface()
         }
     }
-    
+
     private func setMainInterface() {
         let tabBarController = TabBarController()
         let navigationController = UINavigationController(rootViewController: tabBarController)
         navigationController.navigationBar.isHidden = true
         window?.rootViewController = navigationController
     }
-    
+
     private func setAuthInterface() {
         let authViewController = AuthViewController()
         window?.rootViewController = authViewController
     }
-    
+
     private func setOnboardingInterface() {
         let onboardingViewController = OnboardingViewController()
         let navigationController = UINavigationController(rootViewController: onboardingViewController)
         navigationController.navigationBar.isHidden = true
         window?.rootViewController = navigationController
     }
-    
-    
+
+
     private func onboardingCompleted() -> Bool {
         UserDefaults.standard.bool(forKey: "onboardingCompleted")
     }
@@ -70,5 +70,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidEnterBackground(_ scene: UIScene) {
         storageManager.saveContext()
     }
-    
+
 }
