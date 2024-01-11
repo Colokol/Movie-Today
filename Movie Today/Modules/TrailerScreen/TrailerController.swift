@@ -51,11 +51,6 @@ final class TrailerController: UIViewController {
         button.layer.cornerRadius = button.bounds.size.width / 2
         return button
     }()
-    private let likeButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "heart"), for: .normal)
-        return button
-    }()
     
     private let header: UILabel = {
         let label = UILabel()
@@ -90,7 +85,7 @@ final class TrailerController: UIViewController {
         stack.addArrangedSubview(descriptionTitle)
         stack.addArrangedSubview(descriptionTextView)
         scrollView.backgroundColor = .clear
-               contentView.backgroundColor = .clear
+        contentView.backgroundColor = .clear
         view.backgroundColor = .background
         webView.backgroundColor = .clear
         webView.layer.cornerRadius = 15
@@ -99,9 +94,7 @@ final class TrailerController: UIViewController {
     
     private func setupNavBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: likeButton)
         button.addTarget(self, action: #selector(backAction), for: .touchUpInside)
-        likeButton.addTarget(self, action: #selector(likeAction), for: .touchUpInside)
     }
     
     private func configView(with model: Doc) {
@@ -162,17 +155,14 @@ final class TrailerController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(ActorCell.self, forCellWithReuseIdentifier: ActorCell.identifier)
-
+        
     }
     
     
     @objc private func backAction() {
         navigationController?.popViewController(animated: true)
     }
-    
-    @objc private func likeAction() {
-        //MARK: - Добавление в вишлист
-    }
+
 }
 
 extension TrailerController: TrailerViewProtocol {

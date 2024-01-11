@@ -14,11 +14,13 @@ protocol WishListViewProtocol {
 protocol WishListPresenterProtocol {
     var favoriteMovies: [FavoriteMovies] {get set}
     func likePressed(_ favoriteMovie: FavoriteMovies)
+    func getMovie(with id: Int, completion: @escaping (Doc?) -> Void)
 }
 
 class WishListPresenter: WishListPresenterProtocol {
     
     let storageManager = CoreDataManager.shared
+    let networkManager = NetworkManager()
 
     var favoriteMovies: [FavoriteMovies] = []
 
@@ -38,6 +40,18 @@ class WishListPresenter: WishListPresenterProtocol {
                     view?.update()
                 case .failure(let error):
                     print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getMovie(with id: Int, completion: @escaping (Doc?) -> Void) {
+        networkManager.searchMovieFor(id: id) { result in
+            switch result {
+            case .success(let movie):
+                completion(movie)
+            case .failure(let error):
+                completion(nil)
+                print(error.localizedDescription)
             }
         }
     }

@@ -54,6 +54,8 @@ final class CoreDataManager {
         movie.type = model.type
         movie.poster = model.poster?.url
         movie.rating = model.rating?.kp ?? 0
+        guard let id = model.id else { return }
+        movie.id = Int64(id)
         
         if let firstGenre = model.genres?.first {
             movie.genre = firstGenre.name
@@ -135,7 +137,7 @@ final class CoreDataManager {
             if let existingMovie = existingMovies.first {
                 // Удаление существующего фильма
                 mainContext.delete(existingMovie)
-                saveContext() // Сохранение контекста после удаления
+                saveContext()
             }
 
             // Создание нового фильма
@@ -157,7 +159,7 @@ final class CoreDataManager {
             dataLoader.loadData(fromURL: url) { imageData in
                 if let imageData = imageData {
                     movie.image = imageData
-                    self.saveContext() // Сохранение контекста после добавления фильма
+                    self.saveContext() 
                 } else {
                     print("Failed to load image data for \(String(describing: model.name))")
                 }
