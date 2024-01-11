@@ -19,6 +19,9 @@
 		923605D42B4DAC4900748E78 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923605D32B4DAC4900748E78 /* NotificationViewController.swift */; };
 		92AA60ED2B4ACE02004CC79A /* OnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AA60EC2B4ACE02004CC79A /* OnboardingPresenter.swift */; };
 		92AA60EF2B4AF762004CC79A /* OnboardingTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AA60EE2B4AF762004CC79A /* OnboardingTexts.swift */; };
+		92F1E5CC2B4FFEA000499851 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F1E5CB2B4FFEA000499851 /* Model.swift */; };
+		92F1E5CE2B4FFEED00499851 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F1E5CD2B4FFEED00499851 /* LanguageCell.swift */; };
+		92F1E5D02B4FFF2000499851 /* LanguageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F1E5CF2B4FFF2000499851 /* LanguageTableViewController.swift */; };
 		CE48A8ED2B3C92EA00244CCF /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EB2B3C92EA00244CCF /* OnboardingViewController.swift */; };
 		CE48A8EE2B3C92EA00244CCF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EC2B3C92EA00244CCF /* OnboardingView.swift */; };
 		CE48A8F02B3D564900244CCF /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EF2B3D564900244CCF /* UIFont + Extension.swift */; };
@@ -165,6 +168,9 @@
 		923605D32B4DAC4900748E78 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		92AA60EC2B4ACE02004CC79A /* OnboardingPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPresenter.swift; sourceTree = "<group>"; };
 		92AA60EE2B4AF762004CC79A /* OnboardingTexts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingTexts.swift; path = "Movie Today/Modules/HomeScreen/OnboardingTexts.swift"; sourceTree = SOURCE_ROOT; };
+		92F1E5CB2B4FFEA000499851 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		92F1E5CD2B4FFEED00499851 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
+		92F1E5CF2B4FFF2000499851 /* LanguageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageTableViewController.swift; sourceTree = "<group>"; };
 		CE48A8EB2B3C92EA00244CCF /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		CE48A8EC2B3C92EA00244CCF /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		CE48A8EF2B3D564900244CCF /* UIFont + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
@@ -347,6 +353,16 @@
 			path = NotificationScreen;
 			sourceTree = "<group>";
 		};
+		92F1E5C42B4FFDC500499851 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				92F1E5CF2B4FFF2000499851 /* LanguageTableViewController.swift */,
+				92F1E5CD2B4FFEED00499851 /* LanguageCell.swift */,
+				92F1E5CB2B4FFEA000499851 /* Model.swift */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
 		CE48A8EA2B3C92EA00244CCF /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -457,6 +473,7 @@
 				CED4D22D2B389DEA005138A9 /* TabBar */,
 				CED4D2282B387BFD005138A9 /* HomeScreen */,
 				792A568A2B3CFA8100617440 /* WishlistScreen */,
+				92F1E5C42B4FFDC500499851 /* Language */,
 				923605D22B4DABB200748E78 /* NotificationScreen */,
 			);
 			path = Modules;
@@ -935,6 +952,7 @@
 				CE621C0C2B3F611D00F75743 /* GeneralAndMore.swift in Sources */,
 				CE621C152B3F622D00F75743 /* DetailPresenter.swift in Sources */,
 				CED4D2332B38A87F005138A9 /* DetailViewController.swift in Sources */,
+				92F1E5CE2B4FFEED00499851 /* LanguageCell.swift in Sources */,
 				FA6913B02B3D7193000DE262 /* Categories.swift in Sources */,
 				FA1603D42B46C89900655762 /* ActorCell.swift in Sources */,
 				FA6913B22B3D755E000DE262 /* CategoriesCell.swift in Sources */,
@@ -956,6 +974,7 @@
 				FAA71AF22B49ECA4001F361A /* SearchResultController.swift in Sources */,
 				CE5C854A2B452A240083A97C /* FilmPersonnelModel.swift in Sources */,
 				FA24C3622B4EF0E0005EC68C /* ResultPresenter.swift in Sources */,
+				92F1E5CC2B4FFEA000499851 /* Model.swift in Sources */,
 				FA9D9FA92B3B31BD00CD190F /* Item.swift in Sources */,
 				792A56802B3CF96000617440 /* WishlistCell.swift in Sources */,
 				CED4D2272B387BFA005138A9 /* DataLoader.swift in Sources */,
@@ -969,6 +988,7 @@
 				FAF81D1F2B3AF496000E31A4 /* PopularMovieController.swift in Sources */,
 				FAF822AC2B3DB560007E1177 /* SearchResult.swift in Sources */,
 				FAA71AFA2B49ECE9001F361A /* NotFoundView.swift in Sources */,
+				92F1E5D02B4FFF2000499851 /* LanguageTableViewController.swift in Sources */,
 				CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */,
 				CED4D20B2B373B9F005138A9 /* SceneDelegate.swift in Sources */,
 				FAA4B3CB2B4E96CD004CE7AB /* AuthViewController.swift in Sources */,
