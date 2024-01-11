@@ -232,8 +232,12 @@ final class FilmCell: UICollectionViewCell {
         if let movieLength = model.movieLength {
             minutes.text = "\(movieLength) minutes"
         }
+//        if let genre = model.genres?.first {
+//            genreLabel.text = genre.name
+//        }
         if let genre = model.genres?.first, let type = model.type {
-            self.genre.text = "\(String(describing: genre.name)) | \(String(describing: type))"
+            guard let name = genre.name else { return }
+            self.genre.text = name + " | " + type
         }
         if let pg = model.ageRating {
             self.pg.text = "PG - \(pg)"
