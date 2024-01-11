@@ -82,15 +82,15 @@ final class HomeViewController: UIViewController {
         if #available(iOS 15.0, *) {
             tabBarController?.tabBar.scrollEdgeAppearance = tabBarAppearance
         }
-
+        
         likeButton.addTarget(self, action: #selector(wishListTap), for: .touchUpInside)
     }
-
+    
     @objc func wishListTap() {
         let wishListViewController = Builder.createWishListVC()
         navigationController?.pushViewController(wishListViewController, animated: true)
     }
-
+    
     //MARK: - CollectionViewSetup
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -167,7 +167,6 @@ final class HomeViewController: UIViewController {
     }
     
     //MARK: - Register Cells&Headers Methods
-    
     private func compilationRegister() -> UICollectionView.CellRegistration<CollectionMovieCell, Collection> {
         return UICollectionView.CellRegistration<CollectionMovieCell, Collection> { (cell, indexPath, item) in
             cell.config(with: item)
@@ -324,7 +323,7 @@ extension HomeViewController: UICollectionViewDelegate {
         
     }
 }
-
+//MARK: - SearchBarDelegate
 extension HomeViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

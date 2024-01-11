@@ -224,31 +224,3 @@ extension AuthViewController: UITextFieldDelegate {
         present(alert, animated: true)
     }
 }
-
-
-//MARK: - SwiftUI
-import SwiftUI
-struct Provider_AuthViewController : PreviewProvider {
-    static var previews: some View {
-        ContainterView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainterView: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> UIViewController {
-            return AuthViewController()
-        }
-        
-        typealias UIViewControllerType = UIViewController
-        
-        
-        let viewController = AuthViewController()
-        func makeUIViewController(context: UIViewControllerRepresentableContext<Provider_AuthViewController.ContainterView>) -> AuthViewController {
-            return viewController
-        }
-        
-        func updateUIViewController(_ uiViewController: Provider_AuthViewController.ContainterView.UIViewControllerType, context: UIViewControllerRepresentableContext<Provider_AuthViewController.ContainterView>) {
-            
-        }
-    }
-    
-}

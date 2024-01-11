@@ -45,7 +45,7 @@ final class SearchResult: UIViewController {
             errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
-
+    
     
 }
 //MARK: - DelegateFlowLayout
@@ -64,7 +64,7 @@ extension SearchResult: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilmCell.identifier, for: indexPath) as? FilmCell else { return UICollectionViewCell() }
         if let model = presenter.results?[indexPath.row] {
             cell.configSearch(with: model)
-
+            
         }
         return cell
     }

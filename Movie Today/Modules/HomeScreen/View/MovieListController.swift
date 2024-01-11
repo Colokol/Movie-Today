@@ -43,9 +43,9 @@ final class MovieListController: UIViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-
+        
         appearance.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
-
+        
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
         
@@ -55,7 +55,7 @@ final class MovieListController: UIViewController {
     @objc func backButton() {
         navigationController?.popViewController(animated: true)
     }
-
+    
     //MARK: - Configure ActivityIndicator
     private func configureActivityIndicator() {
         view.addSubviews(activityIndicator)
@@ -102,8 +102,8 @@ final class MovieListController: UIViewController {
                 
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
-            
-
+                
+                
                 return section
                 
             case .popular:
@@ -115,7 +115,7 @@ final class MovieListController: UIViewController {
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
-
+                
                 return section
             }
         }
@@ -140,7 +140,7 @@ final class MovieListController: UIViewController {
         let mostPopular = MostPopularRegister()
         dataSource = UICollectionViewDiffableDataSource<MovieListSections, Item>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             switch MovieListSections(rawValue: indexPath.section)! {
-
+                
             case .categories:
                 return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item.categories)
             case .popular:
@@ -189,9 +189,8 @@ extension MovieListController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             presenter.didSelectItem(at: indexPath)
-
+            
         } else if indexPath.section == 1 {
-            //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
             guard let model = presenter.movies?[indexPath.row] else { return }
             presenter.saveToCoreData(model: model)
             let vc = Builder.createDetailVC(model: model)
