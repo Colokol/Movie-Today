@@ -116,16 +116,6 @@ final class CoreDataManager {
         }
     }
     
-    func saveUser(username: String, email: String, password: String, image: Data?) {
-        let authorization = User(context: mainContext)
-        authorization.userimage = image
-        authorization.username = username
-        authorization.password = password
-        authorization.email = email
-        
-        saveContext()
-    }
-    
     //MARK: - RecentMovies
     
     func saveToRecent(from model: Doc) {
