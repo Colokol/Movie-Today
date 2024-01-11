@@ -58,6 +58,13 @@ final class Builder {
         view.presenter = presenter
         return view
     }
+    
+    static func createHomeSearchResultVC(model: [Doc]?) -> SearchResult {
+        let view = SearchResult()
+        let presenter = ResultPresenter(view: view, model: model)
+        view.presenter = presenter
+        return view
+    }
  
 
     static func createWishListVC() -> UIViewController {
@@ -66,5 +73,22 @@ final class Builder {
         view.presenter = presenter
         return view
     }
+    
+    static func createTabBarViewController() -> UIViewController {
+        return TabBarController()
+    }
 
+    static func createOnboardingViewController() -> UIViewController {
+        let vc = OnboardingViewController()
+        let presenter = OnboardingPresenter(view: vc)
+        vc.presenter = presenter
+        return vc
+    }
+
+    static func createRecentController() -> UIViewController {
+        let view = RecentMovieController()
+        let presenter = RecentMoviePresenter(view: view)
+        view.presenter = presenter
+        return view
+    }
 }

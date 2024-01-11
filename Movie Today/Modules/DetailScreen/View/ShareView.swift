@@ -18,10 +18,18 @@ final class ShareView: UIView {
     
     private let shareButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Copy Link", for: .normal)
+        
+        var config = UIButton.Configuration.filled()
+        config.title = "Copy Link"
+        let image = UIImage(systemName: "link")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        config.image = image
+        config.imagePlacement = .top
+        config.imagePadding = 10
+        config.baseBackgroundColor = .customDarkGray
+        button.configuration = config
+        
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .montserratMedium(ofSize: 14)
-        button.backgroundColor = .customDarkGray
         button.layer.cornerRadius = 5
         return button
     }()
@@ -62,8 +70,7 @@ final class ShareView: UIView {
             
             shareButton.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 60),
             shareButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            shareButton.widthAnchor.constraint(equalToConstant: 80),
-            shareButton.heightAnchor.constraint(equalToConstant: 30),
+            shareButton.widthAnchor.constraint(equalToConstant: 180),
             shareButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
             
             closeButton.topAnchor.constraint(equalTo: topAnchor, constant: 15),
@@ -81,5 +88,4 @@ final class ShareView: UIView {
     @objc private func closeButtonTapped() {
         closeButtonAction?()
     }
-    
 }

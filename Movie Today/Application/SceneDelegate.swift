@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -17,23 +18,47 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = TabBarController()
+        determineRootViewController()
         window?.makeKeyAndVisible()
-        
-        if onboardingCompleted() {
-            let tabBarController = TabBarController()
-            let navigationController = UINavigationController(rootViewController: tabBarController)
-            window?.rootViewController = navigationController
-            navigationController.navigationBar.isHidden = true
-        } else {
-            let tabBarController = OnboardingViewController()
-            let navigationController = UINavigationController(rootViewController: tabBarController)
-            window?.rootViewController = navigationController
-            navigationController.navigationBar.isHidden = true
-        }
-        window?.makeKeyAndVisible()
+        NotificationCenter.default.addObserver(self, selector: #selector(userDidAuthenticate), name: NSNotification.Name("UserDidAuthenticate"), object: nil)
     }
-    
+
+    @objc private func userDidAuthenticate() {
+           setMainInterface()
+       }
+
+    private func determineRootViewController() {
+        if onboardingCompleted() {
+            if Auth.auth().currentUser == nil {
+                setAuthInterface()
+            } else {
+                setMainInterface()
+            }
+        } else {
+            setOnboardingInterface()
+        }
+    }
+
+    private func setMainInterface() {
+        let tabBarController = TabBarController()
+        let navigationController = UINavigationController(rootViewController: tabBarController)
+        navigationController.navigationBar.isHidden = true
+        window?.rootViewController = navigationController
+    }
+
+    private func setAuthInterface() {
+        let authViewController = AuthViewController()
+        window?.rootViewController = authViewController
+    }
+
+    private func setOnboardingInterface() {
+        let onboardingViewController = Builder.createOnboardingViewController()
+        let navigationController = UINavigationController(rootViewController: onboardingViewController)
+        navigationController.navigationBar.isHidden = true
+        window?.rootViewController = navigationController
+    }
+
+
     private func onboardingCompleted() -> Bool {
         UserDefaults.standard.bool(forKey: "onboardingCompleted")
     }
@@ -43,4 +68,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
 }
-

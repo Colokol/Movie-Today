@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 final class EditProfileView: UIView {
 
@@ -104,6 +105,7 @@ final class EditProfileView: UIView {
         // Call function's
         setupView()
         setupConstraints()
+        fetchUserData()
     }
     
     required init?(coder: NSCoder) {
@@ -111,6 +113,22 @@ final class EditProfileView: UIView {
     }
     
     //MARK: - Methods
+    
+    func fetchUserData() {
+        guard let id = Auth.auth().currentUser?.uid else {
+            print("User not logged in")
+            return
+        }
+        let ref = Database.database().reference().child("users").child(id)
+           ref.observeSingleEvent(of: .value) { snapshot in
+               if let userData = snapshot.value as? [String: AnyObject] {
+                   let name = userData["name"] as? String ?? "No Name"
+                   let email = userData["email"] as? String ?? "No Email"
+                   self.nameLabel.text = name
+                   self.userEmail.text = email
+               }
+           }
+    }
     
     func signatureTextFieldDelegate() {
         nameTextField.delegate = self

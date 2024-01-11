@@ -24,6 +24,7 @@ protocol HomePresenterProtocol: AnyObject {
     func updateController()
     func getFilms(with text: String)
     func didSelectItem(at indexPath: IndexPath)
+    func saveToCoreData(model: Doc)
     init(view: HomeScreenViewProtocol)
 }
 
@@ -31,6 +32,7 @@ final class HomePresenter: HomePresenterProtocol {
     
     weak var view: HomeScreenViewProtocol?
     let networkManager = NetworkManager()
+    let coreData = CoreDataManager.shared
     
     var movies: [Doc]?
     var collectionMovies: [Collection]?
@@ -161,6 +163,10 @@ final class HomePresenter: HomePresenterProtocol {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func saveToCoreData(model: Doc) {
+        coreData.saveToRecent(from: model)
     }
     
     init(view: HomeScreenViewProtocol) {

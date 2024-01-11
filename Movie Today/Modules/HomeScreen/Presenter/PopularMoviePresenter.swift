@@ -11,6 +11,7 @@ import Foundation
 protocol PopularMovieView: AnyObject {
     func update()
     func animate(_ start: Bool)
+    func showError(_ hide: Bool)
 }
 
 protocol PopularMoviePresenterProtocol: AnyObject {
@@ -19,6 +20,7 @@ protocol PopularMoviePresenterProtocol: AnyObject {
     func getMovie(with indexPath: IndexPath)
     func getPopular()
     func checkSlug()
+    func saveToCoreData(model: Doc)
     init(view: PopularMovieView, slug: String?)
 }
 
@@ -26,6 +28,7 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
     weak var view: PopularMovieView?
     var slug: String?
     let networkManager = NetworkManager()
+    let coreData = CoreDataManager.shared
     var array: [Doc]?
     
     func getMovie(with indexPath: IndexPath) {
@@ -41,6 +44,11 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
                 }
                 self.array?.append(contentsOf: movie.docs)
                 DispatchQueue.main.async {
+                    if movie.docs.count == 0 {
+                        self.view?.showError(true)
+                    } else {
+                        self.view?.showError(false)
+                    }
                     self.view?.animate(false)
                     self.view?.update()
                 }
@@ -59,6 +67,11 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
                 let filteredMovie = movie.docs.filter { $0.poster != nil }
                 self.array?.append(contentsOf: movie.docs)
                     DispatchQueue.main.async {
+                        if movie.docs.count == 0 {
+                            self.view?.showError(true)
+                        } else {
+                            self.view?.showError(false)
+                        }
                         self.view?.animate(false)
                         self.view?.update()
                     }
@@ -76,6 +89,10 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
             getPopular()
         }
         
+    }
+    
+    func saveToCoreData(model: Doc) {
+        coreData.saveToRecent(from: model)
     }
     
     init(view: PopularMovieView, slug: String?) {

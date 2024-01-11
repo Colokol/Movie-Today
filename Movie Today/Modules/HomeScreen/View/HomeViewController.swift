@@ -13,7 +13,7 @@ final class HomeViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Sections, Item>?
     private var searchController = UISearchController()
-    private var searchResultController: SearchResult!
+    private var searchResultController = Builder.createHomeSearchResultVC(model: nil)
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private let userButton: UIButton = {
         let button = UIButton()
@@ -54,9 +54,9 @@ final class HomeViewController: UIViewController {
     }
     //MARK: - SearchBarSetup
     private func setupSearchResult() {
-        searchResultController = SearchResult()
         searchController = UISearchController(searchResultsController: searchResultController)
         searchController.searchResultsUpdater = searchResultController
+        searchResultController.delegate = self
         searchController.delegate = self
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search a title"
@@ -72,10 +72,16 @@ final class HomeViewController: UIViewController {
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         appearance.configureWithTransparentBackground()
-        appearance.titlePositionAdjustment = UIOffset(horizontal: -100, vertical: 0)
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.backgroundColor = UIColor.background
+        tabBarController?.tabBar.standardAppearance = tabBarAppearance
+        if #available(iOS 15.0, *) {
+            tabBarController?.tabBar.scrollEdgeAppearance = tabBarAppearance
+        }
 
         likeButton.addTarget(self, action: #selector(wishListTap), for: .touchUpInside)
     }
@@ -262,8 +268,8 @@ final class HomeViewController: UIViewController {
 //MARK: - HomeViewProtocol
 extension HomeViewController: HomeScreenViewProtocol {
     func updateSearchResults(_ movies: [Doc]) {
-        searchResultController.results = movies
-        searchResultController.collectionView.reloadData()
+        searchResultController.presenter.results = movies
+        searchResultController.presenter.reloadData()
     }
     
     func animate(_ start: Bool) {
@@ -309,8 +315,8 @@ extension HomeViewController: UICollectionViewDelegate {
             let vc = Builder.createPopularMovieVC(slug: collectionName)
             navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 2 {
-            //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
             guard let movies = presenter.movies else {return}
+            presenter.saveToCoreData(model: movies[indexPath.row])
             let vc = Builder.createDetailVC(model: movies[indexPath.row])
             navigationController?.hidesBottomBarWhenPushed = false
             navigationController?.pushViewController(vc, animated: true)
@@ -330,8 +336,16 @@ extension HomeViewController: UISearchBarDelegate {
 extension HomeViewController: UISearchControllerDelegate {
     func willDismissSearchController(_ searchController: UISearchController) {
         if let searchResultsController = searchController.searchResultsController as? SearchResult {
-            searchResultsController.results.removeAll()
-            searchResultsController.collectionView.reloadData()
+            searchResultsController.presenter.results?.removeAll()
+            searchResultsController.presenter.reloadData()
         }
     }
+}
+extension HomeViewController: SearchResultDelegate {
+    func openDetailWithModel(_ model: Doc) {
+        let vc = Builder.createDetailVC(model: model)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
 }

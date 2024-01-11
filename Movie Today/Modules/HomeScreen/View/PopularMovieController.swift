@@ -12,6 +12,8 @@ final class PopularMovieController: UIViewController {
     private var collectionView: UICollectionView!
     var presenter: PopularMoviePresenterProtocol!
     private let activityIndicator = UIActivityIndicatorView(style: .large)
+    private let errorView = NotFoundView()
+
     
     private let button: UIButton = {
         let button = UIButton()
@@ -25,6 +27,7 @@ final class PopularMovieController: UIViewController {
     //MARK: - Lyfe cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        errorView.isHidden = true
         configureActivityIndicator()
         setupNavBar()
         collectionViewConfigure()
@@ -67,7 +70,7 @@ final class PopularMovieController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(FilmCell.self, forCellWithReuseIdentifier: FilmCell.identifier)
-        view.addSubview(collectionView)
+        view.addSubviews(collectionView, errorView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -75,6 +78,11 @@ final class PopularMovieController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            errorView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            errorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
     
@@ -111,6 +119,10 @@ extension PopularMovieController: UICollectionViewDataSource {
 }
 //MARK: - PopularMovieView
 extension PopularMovieController: PopularMovieView {
+    func showError(_ hide: Bool) {
+        errorView.isHidden = !hide
+    }
+    
     func animate(_ start: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -128,5 +140,9 @@ extension PopularMovieController: PopularMovieView {
 extension PopularMovieController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
+        guard let model = presenter.array?[indexPath.row] else { return }
+        presenter.saveToCoreData(model: model)
+        let vc = Builder.createDetailVC(model: model)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

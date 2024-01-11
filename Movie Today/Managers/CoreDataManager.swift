@@ -123,25 +123,41 @@ final class CoreDataManager {
         saveContext()
     }
     
+            
     private func configRecentMovie(with model: Doc) {
         guard let id = model.id else { return }
+
         let request: NSFetchRequest<RecentMovie> = RecentMovie.fetchRequest()
         request.predicate = NSPredicate(format: "id == %d", id)
+
         do {
             let existingMovies = try mainContext.fetch(request)
-            let movie = existingMovies.first ?? RecentMovie(context: mainContext)
+            if let existingMovie = existingMovies.first {
+                // Удаление существующего фильма
+                mainContext.delete(existingMovie)
+                saveContext() // Сохранение контекста после удаления
+            }
+
+            // Создание нового фильма
+            let movie = RecentMovie(context: mainContext)
             movie.id = Int64(id)
             movie.name = model.name
             movie.genre = model.genres?.first?.name
             movie.poster = model.poster?.url
+            guard let lenght = model.movieLength else { return }
+            movie.lenght = Int64(lenght)
+            guard let rait = model.ageRating else { return }
+            movie.raitPG = Int64(rait)
+            movie.type = model.type
+            guard let year = model.year else { return }
+            movie.year = Int64(year)
             guard let raiting = model.rating?.kp else { return }
             movie.raiting = raiting
             guard let url =  model.poster?.url else { return }
-            
             dataLoader.loadData(fromURL: url) { imageData in
                 if let imageData = imageData {
                     movie.image = imageData
-                    self.saveContext()
+                    self.saveContext() // Сохранение контекста после добавления фильма
                 } else {
                     print("Failed to load image data for \(String(describing: model.name))")
                 }
@@ -149,9 +165,8 @@ final class CoreDataManager {
         } catch {
             print("Error fetching movie from Core Data: \(error)")
         }
-
-     
     }
+
     
     func loadRecentMovies(complition: (Result<[RecentMovie], Error>) -> Void) {
         let request: NSFetchRequest<RecentMovie> = RecentMovie.fetchRequest()

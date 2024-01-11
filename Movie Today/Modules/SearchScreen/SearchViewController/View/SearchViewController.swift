@@ -19,13 +19,18 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Call function's
         configureActivityIndicator()
         setupNavBar()
         setupSearchResult()
         configureCollectionView()
         presenter.getUpcomingMovie()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        presenter.loadRecenMovie()
+        applySnapshot()
+        collectionView.reloadData()
     }
     
     private func configureCollectionView() {
@@ -58,6 +63,7 @@ class SearchViewController: UIViewController {
         activityIndicator.color = .label
     }
     
+    //MARK: - SearchResult
     private func setupSearchResult() {
         searchController = UISearchController(searchResultsController: searchResultController)
         searchController.searchResultsUpdater = searchResultController
@@ -75,6 +81,7 @@ class SearchViewController: UIViewController {
         searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
         searchController.searchBar.showsScopeBar = false
     }
+    //MARK: - NavBar
     private func setupNavBar() {
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -90,7 +97,7 @@ class SearchViewController: UIViewController {
             tabBarController?.tabBar.scrollEdgeAppearance = tabBarAppearance
         }
     }
-    
+    //MARK: - Layout
     private func createLayout() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in
             guard let sectionKind = SectionsSearch(rawValue: sectionIndex) else { return nil }
@@ -185,12 +192,19 @@ class SearchViewController: UIViewController {
             header.titleLabel.textColor = .white
             header.titleLabel.font = .montserratSemiBold(ofSize: 16)
             header.button.setTitleColor(.blueAccent, for: .normal)
-            header.hideButton(false)
+            if self.presenter.recentMovies.count == 0 {
+                header.hideButton(true)
+            } else {
+                header.hideButton(false)
+            }
+
             header.button.tag = indexPath.section
+            header.button.addTarget(self, action: #selector(self.seeAllAction), for: .touchUpInside)
             header.isUserInteractionEnabled = true
         }
     }
-    
+
+    //MARK: - DataSource
     private func configureDataSource() {
         let categories = registerCellCategories()
         let upcomingMovie = registerCellUpcomingMovie()
@@ -276,6 +290,7 @@ extension SearchViewController: SearchViewProtocol {
         searchResultController.presenter.movies = movies
             searchResultController.presenter.updateModels()
         searchResultController.presenter.reloadData()
+        
     }
 
 }
@@ -333,7 +348,7 @@ extension SearchViewController: UISearchBarDelegate {
         
     }
 }
-
+//MARK: - SearchControllerDelegate
 extension SearchViewController: UISearchControllerDelegate {
     
     func willDismissSearchController(_ searchController: UISearchController) {
@@ -348,7 +363,7 @@ extension SearchViewController: UISearchControllerDelegate {
         
     }
 }
-
+//MARK: - CollectionViewDelegate
 extension SearchViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
@@ -371,7 +386,7 @@ extension SearchViewController: UICollectionViewDelegate {
         }
     }
 }
-
+//MARK: - SearchResultDelegate
 extension SearchViewController: SearchResultDelegate {
     func openDetailWithModel(_ model: Doc) {
         let detail = Builder.createDetailVC(model: model)
@@ -379,4 +394,11 @@ extension SearchViewController: SearchResultDelegate {
     }
     
     
+}
+//MARK: - @OBJC METHODS
+extension SearchViewController {
+    @objc private func seeAllAction() {
+        let vc = Builder.createRecentController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
