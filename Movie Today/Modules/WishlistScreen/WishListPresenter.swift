@@ -9,7 +9,6 @@ import Foundation
 
 protocol WishListViewProtocol {
     func update()
-    func changeHeartColor()
 }
 
 protocol WishListPresenterProtocol {
