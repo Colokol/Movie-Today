@@ -13,6 +13,7 @@ class ProfileViewController: UIViewController {
     //MARK: - User interface elements
     
     let profileView = ProfileView()
+    let firebase = Firestore.firestore()
 
     //MARK: - Life cycle
     
@@ -25,6 +26,7 @@ class ProfileViewController: UIViewController {
         // Call function's
         setupView()
         setupConstraints()
+        fetchUserInfo()
         exitAction()
     }
     
@@ -61,6 +63,24 @@ class ProfileViewController: UIViewController {
                 print("Exit-----------------")
             } catch {
                 print("Error exit")
+            }
+        }
+    }
+    
+    //MARK: - Methods
+    
+    func fetchUserInfo() {
+        guard let id = Auth.auth().currentUser?.uid else {
+            print("User not logged in")
+            return
+        }
+        let ref = Database.database().reference().child("users").child(id)
+        ref.observeSingleEvent(of: .value) { snapshot in
+            if let userData = snapshot.value as? [String: AnyObject] {
+                let name = userData["name"] as? String ?? "No name"
+                let email = userData["email"] as? String ?? "No email"
+                self.profileView.userView.nameLabel.text = name
+                self.profileView.userView.emailLabel.text = email
             }
         }
     }
