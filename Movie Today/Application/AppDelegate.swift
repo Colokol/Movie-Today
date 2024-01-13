@@ -7,15 +7,18 @@
 
 import UIKit
 import Firebase
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    let notificationManager = NotificationManager()
         
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        notificationManager.checkAuthorization()
         return true
     }
- 
     
     // MARK: UISceneSession Lifecycle
     
