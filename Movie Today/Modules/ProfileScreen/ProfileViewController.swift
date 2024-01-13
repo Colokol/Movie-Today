@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         navigationController?.navigationBar.barTintColor = .background
+        tabBarController?.tabBar.barTintColor = .background
 
         // Call function's
         setupView()
