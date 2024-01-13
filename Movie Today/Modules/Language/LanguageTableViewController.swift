@@ -24,7 +24,7 @@ class LanguageTableViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)
+            NSAttributedString.Key.font: UIFont.montserratMedium(ofSize: 20) ?? 20
         ]
         navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
@@ -101,7 +101,7 @@ extension LanguageTableViewController: UITableViewDataSource {
         
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor = .darkGray
-        header.textLabel?.font = UIFont.montserratSemiBold(ofSize: 15)
+        header.textLabel?.font = UIFont.montserratMedium(ofSize: 15)
         header.textLabel?.text = header.textLabel?.text?.lowercased()
         
         if let text = header.textLabel?.text {

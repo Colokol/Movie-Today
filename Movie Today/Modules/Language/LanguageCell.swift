@@ -19,14 +19,14 @@ class LanguageCell: UITableViewCell {
     private let languageLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.montserratMedium(ofSize: 20)
         return label
     }()
     
     private let selectedLanguageLabel: UILabel = {
         let label = UILabel()
         label.text = "✓"
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 22)
         label.textColor = .blueAccent
         return label
     }()
