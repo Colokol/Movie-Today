@@ -22,8 +22,9 @@ protocol SearchPresentorProtocol: AnyObject {
     var movies: [Doc]? { get set }
     var categories: [Categories] { get set }
     var actors: [PersonModel]? { get set }
+    var placeHolder: [Doc] { get set }
     var recentMovies: [RecentMovie] { get set }
-    func getUpcomingMovie()
+    func getUpcomingMovie(with genre: MovieGenres)
     func getFilms(with text: String)
     func getActorsWithName(_ name: String)
     func getMovieForActordID(with id: Int)
@@ -42,9 +43,57 @@ final class SearchPresentor: SearchPresentorProtocol {
     let networkManager = NetworkManager()
     var searchMovies: [Doc]?
     var movies: [Doc]?
+    var placeHolder = [Doc(id: nil,
+                           externalId:
+                            nil,
+                           name: nil,
+                           alternativeName: nil,
+                           enName: nil,
+                           names: nil,
+                           type: nil,
+                           typeNumber: nil,
+                           year: nil,
+                           description: nil,
+                           shortDescription: nil,
+                           slogan: nil,
+                           status: nil,
+                           rating: nil,
+                           votes: nil,
+                           movieLength: nil,
+                           ratingMpaa: nil,
+                           ageRating: nil,
+                           logo: nil,
+                           poster: nil,
+                           backdrop: nil,
+                           videos: nil,
+                           genres: nil,
+                           countries: nil,
+                           persons: nil,
+                           reviewInfo: nil,
+                           seasonsInfo: nil,
+                           budget: nil,
+                           fees: nil,
+                           premiere: nil,
+                           similarMovies: nil,
+                           sequelsAndPrequels: nil,
+                           watchability: nil,
+                           releaseYears: nil,
+                           top10: nil,
+                           top250: nil,
+                           ticketsOnSale: nil,
+                           totalSeriesLength: nil,
+                           seriesLength: nil,
+                           isSeries: nil,
+                           audience: nil,
+                           lists: nil,
+                           networks: nil,
+                           updatedAt: nil,
+                           createdAt: nil,
+                           facts: nil,
+                           imagesInfo: nil)]
     var recentMovies: [RecentMovie] = []
     var categories = [Categories(name: "Ужасы", isSelected: false),
-                      Categories(name: "Комедия", isSelected: false),
+                      Categories(name: "Комедия", isSelected: true),
                       Categories(name: "Криминал", isSelected: false),
                       Categories(name: "Драма", isSelected: false),
                       Categories(name: "Фантастика", isSelected: false),
@@ -66,23 +115,31 @@ final class SearchPresentor: SearchPresentorProtocol {
         self.view?.reloadData()
     }
     //MARK: - UpcomingMovie
-    func getUpcomingMovie() {
-        networkManager.getMoviesFromCollection(collectionName: .popular) { result in
+    func getUpcomingMovie(with genre: MovieGenres) {
+        print("Запрос")
+        networkManager.getUpComingMovie(genre: genre) { [weak self] result in
+            guard let self = self else { return }
+
             switch result {
             case .success(let movie):
-                if self.movies == nil {
-                    self.movies = [Doc]()
+                if movie.docs.isEmpty {
+                    self.movies = self.placeHolder
+                } else {
+                    self.movies = movie.docs
                 }
-                self.movies = movie.docs
-                DispatchQueue.main.async {
-                    self.view?.updateData()
-                    self.view?.reloadData()
-                }
+
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error.localizedDescription, "upcoming")
+                self.movies = self.placeHolder
+            }
+
+            DispatchQueue.main.async {
+                self.view?.updateData()
+                self.view?.reloadData()
             }
         }
     }
+
     //MARK: - SearchBar method for movies
     func getFilms(with text: String) {
         networkManager.searchMovie(searchText: text) { [weak self] result in
@@ -170,19 +227,19 @@ final class SearchPresentor: SearchPresentorProtocol {
         let selectedModel = categories[indexPath.row]
         switch selectedModel.name {
         case "Ужасы":
-            getGenre(genre: .horror)
+            getUpcomingMovie(with: .horror)
         case "Комедия":
-            getGenre(genre: .comedy)
+            getUpcomingMovie(with: .comedy)
         case "Криминал":
-            getGenre(genre: .criminal)
+            getUpcomingMovie(with: .criminal)
         case "Драма":
-            getGenre(genre: .drama)
+            getUpcomingMovie(with: .drama)
         case "Фантастика":
-            getGenre(genre: .fantasy)
+            getUpcomingMovie(with: .fantasy)
         case "Мультфильм":
-            getGenre(genre: .carton)
+            getUpcomingMovie(with: .carton)
         case "Документальный":
-            getGenre(genre: .documentary)
+            getUpcomingMovie(with: .documentary)
         default:
             break
         }

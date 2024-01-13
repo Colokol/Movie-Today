@@ -129,7 +129,7 @@ extension MovieApi: EndpointType {
                                                                    "type":"movie",
                                                                    "status":"filming",
                                                                    "year":"2024",
-                                                                   "votes.await":"2000-99999",
+                                                                   "votes.await":"0-99999",
                                                                    "genres.name": genre],
                                                     additionalHeaders: headers)
         }
@@ -148,5 +148,5 @@ extension MovieApi {
     private static let defaultLimit = 10
     private static let selectFields = ["persons","id","name","description","genres","videos","movieLength","poster","year", "type", "rating","ageRating"]
     private static let notNilParameters = ["ageRating", "genres.name", "poster.url", "movieLength", "rating.kp", "type", "persons.name"]
-    private static let upComingNotNilParameters = ["genres.name", "poster.url",  "type", "persons.name"]
+    private static let upComingNotNilParameters = ["genres.name", "poster.url",  "type", "persons.name", "name"]
 }

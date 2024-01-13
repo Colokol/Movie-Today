@@ -11,6 +11,11 @@ import SDWebImage
 final class FilmCell: UICollectionViewCell {
     
     static let identifier = "cell"
+    private let view: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
     private let imageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 15
@@ -178,7 +183,7 @@ final class FilmCell: UICollectionViewCell {
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 115),
-            
+    
             fifthStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             fifthStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
             fifthStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
@@ -191,31 +196,52 @@ final class FilmCell: UICollectionViewCell {
         
     }
     
-    func config(with model: Doc) {
-        if let name = model.name {
-            title.text = name
+    func config(with model: Doc?) {
+        if let name = model?.name {
+            self.title.text = name
+        } else {
+            self.title.text = "Not Found"
         }
-        if let year = model.year {
-            self.year.text = String(year)
-        }
+            if let year = model?.year {
+                self.year.text = String(year)
+            } else {
+                self.year.text = "Not Found"
+            }
+            
+            if let movieLength = model?.movieLength {
+                self.minutes.text = "\(movieLength) minutes"
+            } else {
+                self.minutes.text = "Not Found"
+            }
+            
+            if let genre = model?.genres?.first?.name, let type = model?.type {
+                self.genre.text = "\(genre) | \(type)"
+            } else {
+                self.genre.text = "Not Found"
+            }
+            
+            if let pg = model?.ageRating {
+                self.pg.text = "PG - \(pg)"
+            }
+            if let rait = model?.rating?.kp {
+                raiting.text = String(format: "%.1f", rait)
+            }
+            
+            guard  let image = model?.poster?.url else {return}
+            imageView.sd_setImage(with: URL(string: image))
         
-        if let movieLength = model.movieLength {
-            self.minutes.text = "\(movieLength) minutes"
-        }
-        
-        if let genre = model.genres?.first?.name, let type = model.type {
-            self.genre.text = "\(genre) | \(type)"
-        }
-        
-        if let pg = model.ageRating {
-            self.pg.text = "PG - \(pg)"
-        }
-        if let rait = model.rating?.kp {
-            raiting.text = String(format: "%.1f", rait)
-        }
-        
-        guard  let image = model.poster?.url else {return}
-        imageView.sd_setImage(with: URL(string: image))
+       
+    }
+    
+    func configNil() {
+        print("cработал конфигнил")
+        self.title.text = "Not Found"
+        self.year.text = "Not Found"
+        self.minutes.text = "Not Found"
+        self.genre.text = "Not Found"
+        imageView.image = UIImage(named: "film")
+  
+
     }
     
     func configSearch(with model: Doc) {
