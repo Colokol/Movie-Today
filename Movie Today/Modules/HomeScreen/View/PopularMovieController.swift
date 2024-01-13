@@ -13,7 +13,7 @@ final class PopularMovieController: UIViewController {
     var presenter: PopularMoviePresenterProtocol!
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private let errorView = NotFoundView()
-
+    
     
     private let button: UIButton = {
         let button = UIButton()
@@ -139,7 +139,6 @@ extension PopularMovieController: PopularMovieView {
 //MARK: - CollectionViewDelegate
 extension PopularMovieController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
         guard let model = presenter.array?[indexPath.row] else { return }
         presenter.saveToCoreData(model: model)
         let vc = Builder.createDetailVC(model: model)

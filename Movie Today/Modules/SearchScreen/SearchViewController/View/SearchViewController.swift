@@ -241,7 +241,7 @@ class SearchViewController: UIViewController {
             return nil
         }
     }
-    
+    //MARK: - SnapShot
     private func applySnapshot() {
         var snapShot = NSDiffableDataSourceSnapshot<SectionsSearch, Item>()
         snapShot.appendSections([.categories, .compilation, .mostPopular])
@@ -258,7 +258,7 @@ class SearchViewController: UIViewController {
         dataSource?.apply(snapShot, animatingDifferences: true)
     }
 }
-
+//MARK: - SearchViewProtocol
 extension SearchViewController: SearchViewProtocol {
     func animate(_ bool: Bool) {
         DispatchQueue.main.async { [weak self] in
@@ -294,7 +294,7 @@ extension SearchViewController: SearchViewProtocol {
     }
 
 }
-
+//MARK: - SearchBatDelegate
 extension SearchViewController: UISearchBarDelegate {
  
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -320,7 +320,6 @@ extension SearchViewController: UISearchBarDelegate {
             searchResultController.presenter.reloadData()
             presenter.getFilms(with: searchText)
         case 1:
-            //MARK: - Добавить поиск актеров и фильмов по актерам
             searchResultController.presenter.movies?.removeAll()
             searchResultController.presenter.updateModels()
             searchResultController.presenter.reloadData()

@@ -103,6 +103,5 @@ final class TitleView: UIView {
         if let genre = model.genres?.first {
             genreLabel.text = genre.name
         }
-       // yearLabel.text = String(model.year)
     }
 }

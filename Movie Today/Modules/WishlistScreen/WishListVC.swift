@@ -47,18 +47,15 @@ class WishListVC: UIViewController {
 //MARK: Extensions CollectionView
 
 extension WishListVC: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return presenter.favoriteMovies.count
-    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return presenter.favoriteMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WishlistCell.identifier, for: indexPath) as! WishlistCell
         
-        let favoriteMovie = presenter.favoriteMovies[indexPath.section]
+        let favoriteMovie = presenter.favoriteMovies[indexPath.row]
         cell.configure(with: favoriteMovie)
         
         cell.likeButtonPressedHandler = { [weak self] in
@@ -87,9 +84,17 @@ extension WishListVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        print("WishList")
+        let id = Int(presenter.favoriteMovies[indexPath.row].id)
+        print(id)
+        presenter.getMovie(with: id) { movie in
+            guard let movie = movie else { return }
+            let vc = Builder.createDetailVC(model: movie)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
+
 
 // MARK: - WishListViewProtocol
 extension WishListVC: WishListViewProtocol {

@@ -100,7 +100,6 @@ final class FilmCell: UICollectionViewCell {
     private let secondStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .leading
-        //        stack.distribution = .equalSpacing
         stack.axis = .horizontal
         stack.spacing = 5
         return stack
@@ -116,7 +115,6 @@ final class FilmCell: UICollectionViewCell {
     private let fourStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .leading
-        //        stack.distribution = .equalSpacing
         stack.axis = .horizontal
         stack.spacing = 5
         return stack
@@ -124,7 +122,6 @@ final class FilmCell: UICollectionViewCell {
     private let fifthStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .leading
-        //        stack.distribution = .equalSpacing
         stack.axis = .vertical
         stack.spacing = 15
         return stack
@@ -133,7 +130,6 @@ final class FilmCell: UICollectionViewCell {
     private let startStack: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .center
-        //        stack.distribution = .fillEqually
         stack.axis = .horizontal
         stack.spacing = 5
         stack.backgroundColor = .background
@@ -232,9 +228,6 @@ final class FilmCell: UICollectionViewCell {
         if let movieLength = model.movieLength {
             minutes.text = "\(movieLength) minutes"
         }
-//        if let genre = model.genres?.first {
-//            genreLabel.text = genre.name
-//        }
         if let genre = model.genres?.first, let type = model.type {
             guard let name = genre.name else { return }
             self.genre.text = name + " | " + type

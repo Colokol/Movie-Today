@@ -86,7 +86,12 @@ struct NetworkManager {
     func getMovieFor(personId: Int, completion: @escaping (Result<MovieModel, Error>) -> Void ) {
         performRequest(for: .searchMovieFor(personID: personId), completion: completion)
     }
-    
+
+    // MARK: - Получение UpComing фильмов
+    func getUpComingMovie(genre: MovieGenres, completion: @escaping (Result<MovieModel, Error>) -> Void ){
+        performRequest(for: .upComingMovie(genre: genre.rawValue), completion: completion)
+    }
+
 
 }
 

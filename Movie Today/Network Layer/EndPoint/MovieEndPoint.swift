@@ -15,6 +15,7 @@ public enum MovieApi {
     case genresMovie(genres: String)
     case moviesFromCollection(collection: String, genre: String?)
     case collectionMovieList
+    case upComingMovie(genre: String)
     case searchMovie(searchText: String)
     case searchPerson(searchText: String)
     case searchMovieForID(_ id:Int)
@@ -22,12 +23,6 @@ public enum MovieApi {
 }
 
 extension MovieApi: EndpointType {
-
-    private static let defaultPage = 1
-    private static let defaultLimit = 10
-    private static let selectFields = ["persons","id","name","description","genres","videos","movieLength","poster","year", "type", "rating","ageRating"]
-
-    private static let notNilParameters = ["ageRating", "genres.name", "poster.url", "movieLength", "rating.kp", "type", "persons.name"]
 
     var environmentBaseURL : String {
         switch NetworkManager.environment {
@@ -51,11 +46,13 @@ extension MovieApi: EndpointType {
             case .searchMovie:
                 return "movie/search"
             case .searchPerson:
-               return "person/search"
+                return "person/search"
             case .searchMovieFor:
                 return "movie"
             case .searchMovieForID(let id):
                 return "movie/\(id)"
+            case .upComingMovie:
+                return "movie"
         }
     }
 
@@ -66,15 +63,15 @@ extension MovieApi: EndpointType {
     var task: HTTPTask {
         switch self {
             case .genresMovie(genres: let genre):
-                    return .requestParametersAndHeaders(
-                        bodyParameters: nil,
-                        urlParameters: ["genres.name": genre,
-                                        "limit": MovieApi.defaultLimit,
-                                        "page": MovieApi.defaultPage,
-                                        "notNullFields":MovieApi.notNilParameters,
-                                        "selectFields":MovieApi.selectFields ],
-                        additionalHeaders: headers
-                    )
+                return .requestParametersAndHeaders(
+                    bodyParameters: nil,
+                    urlParameters: ["genres.name": genre,
+                                    "limit": MovieApi.defaultLimit,
+                                    "page": MovieApi.defaultPage,
+                                    "notNullFields":MovieApi.notNilParameters,
+                                    "selectFields":MovieApi.selectFields ],
+                    additionalHeaders: headers
+                )
             case .moviesFromCollection(collection: let name, genre: let genre):
                 var urlParameters: [String: Any] = ["lists": name,
                                                     "limit": MovieApi.defaultLimit,
@@ -124,6 +121,17 @@ extension MovieApi: EndpointType {
                     urlParameters: nil,
                     additionalHeaders: headers
                 )
+            case .upComingMovie(genre: let genre):
+                return .requestParametersAndHeaders(bodyParameters: nil,
+                                                    urlParameters:["limit":MovieApi.defaultLimit,
+                                                                   "page":MovieApi.defaultPage,
+                                                                   "notNullFields":MovieApi.upComingNotNilParameters,
+                                                                   "type":"movie",
+                                                                   "status":"filming",
+                                                                   "year":"2024",
+                                                                   "votes.await":"2000-99999",
+                                                                   "genres.name": genre],
+                                                    additionalHeaders: headers)
         }
     }
 
@@ -131,4 +139,14 @@ extension MovieApi: EndpointType {
     var headers: HTTPHeaders? {
         return ["X-API-KEY":NetworkManager.movieAPIKey]
     }
+}
+
+
+// MARK: - Static urlParameters
+extension MovieApi {
+    private static let defaultPage = 1
+    private static let defaultLimit = 10
+    private static let selectFields = ["persons","id","name","description","genres","videos","movieLength","poster","year", "type", "rating","ageRating"]
+    private static let notNilParameters = ["ageRating", "genres.name", "poster.url", "movieLength", "rating.kp", "type", "persons.name"]
+    private static let upComingNotNilParameters = ["genres.name", "poster.url",  "type", "persons.name"]
 }
