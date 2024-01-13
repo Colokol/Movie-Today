@@ -24,9 +24,9 @@ final class Builder {
         return view
     }
 
-    static func createPopularMovieVC(slug: String?) -> UIViewController {
+    static func createPopularMovieVC(slug: String?, collectionName: String?) -> UIViewController {
         let view = PopularMovieController()
-        let presenter = PopularMoviePresenter(view: view, slug: slug)
+        let presenter = PopularMoviePresenter(view: view, slug: slug, collectionName: collectionName)
         view.presenter = presenter
         return view
     }
