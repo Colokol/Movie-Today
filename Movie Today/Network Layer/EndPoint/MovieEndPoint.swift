@@ -127,9 +127,8 @@ extension MovieApi: EndpointType {
                                                                    "page":MovieApi.defaultPage,
                                                                    "notNullFields":MovieApi.upComingNotNilParameters,
                                                                    "type":"movie",
-                                                                   "status":"filming",
+                                                                   "status":"completed",
                                                                    "year":"2024",
-                                                                   "votes.await":"0-99999",
                                                                    "genres.name": genre],
                                                     additionalHeaders: headers)
         }
