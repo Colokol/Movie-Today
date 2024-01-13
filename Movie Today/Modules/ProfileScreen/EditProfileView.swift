@@ -28,7 +28,6 @@ final class EditProfileView: UIView {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .montserratSemiBold(ofSize: 20)
-        label.text = "Tiffany"
         label.textColor = .white
         label.textAlignment = .center
         return label
@@ -36,7 +35,6 @@ final class EditProfileView: UIView {
     private lazy var userEmail: UILabel = {
         let label = UILabel()
         label.font = .montserratMedium(ofSize: 14)
-        label.text = "Tiffanyjearsey@gmail.com"
         label.textColor = .lightGray
         label.textAlignment = .center
         return label
@@ -125,7 +123,9 @@ final class EditProfileView: UIView {
                    let name = userData["name"] as? String ?? "No Name"
                    let email = userData["email"] as? String ?? "No Email"
                    self.nameLabel.text = name
+                   self.nameTextField.text = name
                    self.userEmail.text = email
+                   self.emailTextField.text = email
                }
            }
     }
