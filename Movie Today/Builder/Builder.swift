@@ -46,12 +46,26 @@ final class Builder {
         return view
     }
 
-    static func createTrailerVC(model: Doc, id: String) -> UIViewController {
+    static func createTrailerVC(model: Doc) -> UIViewController {
         let view = TrailerController()
-        let presenter = TrailerPresenter(view: view, model: model, text: id)
+        let presenter = TrailerPresenter(view: view, model: model)
         view.presenter = presenter
         return view
     }
+    static func createSearchResultController(person: [PersonModel]?, movie: [Doc]?) -> SearchResultController {
+        let view = SearchResultController()
+        let presenter = SearchResultPresenter(view: view, actors: person, movies: movie)
+        view.presenter = presenter
+        return view
+    }
+    
+    static func createHomeSearchResultVC(model: [Doc]?) -> SearchResult {
+        let view = SearchResult()
+        let presenter = ResultPresenter(view: view, model: model)
+        view.presenter = presenter
+        return view
+    }
+ 
 
     static func createWishListVC() -> UIViewController {
         let view = WishListVC()
@@ -59,5 +73,22 @@ final class Builder {
         view.presenter = presenter
         return view
     }
+    
+    static func createTabBarViewController() -> UIViewController {
+        return TabBarController()
+    }
 
+    static func createOnboardingViewController() -> UIViewController {
+        let vc = OnboardingViewController()
+        let presenter = OnboardingPresenter(view: vc)
+        vc.presenter = presenter
+        return vc
+    }
+
+    static func createRecentController() -> UIViewController {
+        let view = RecentMovieController()
+        let presenter = RecentMoviePresenter(view: view)
+        view.presenter = presenter
+        return view
+    }
 }

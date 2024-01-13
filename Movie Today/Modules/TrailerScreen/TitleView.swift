@@ -65,8 +65,6 @@ final class TitleView: UIView {
     private let stack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.distribution = .fill
-        stack.alignment = .fill
         stack.spacing = 5
         return stack
     }()
@@ -105,6 +103,5 @@ final class TitleView: UIView {
         if let genre = model.genres?.first {
             genreLabel.text = genre.name
         }
-       // yearLabel.text = String(model.year)
     }
 }

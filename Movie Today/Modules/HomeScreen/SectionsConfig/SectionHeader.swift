@@ -44,4 +44,8 @@ final class SectionHeader: UICollectionReusableView {
         button.isUserInteractionEnabled = true
         titleLabel.font = .montserratSemiBold(ofSize: 20)
     }
+    
+    func hideButton(_ hide: Bool) {
+        button.isHidden = hide
+    }
 }

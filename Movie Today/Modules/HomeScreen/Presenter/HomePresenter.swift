@@ -24,6 +24,7 @@ protocol HomePresenterProtocol: AnyObject {
     func updateController()
     func getFilms(with text: String)
     func didSelectItem(at indexPath: IndexPath)
+    func saveToCoreData(model: Doc)
     init(view: HomeScreenViewProtocol)
 }
 
@@ -31,6 +32,7 @@ final class HomePresenter: HomePresenterProtocol {
     
     weak var view: HomeScreenViewProtocol?
     let networkManager = NetworkManager()
+    let coreData = CoreDataManager.shared
     
     var movies: [Doc]?
     var collectionMovies: [Collection]?
@@ -57,7 +59,7 @@ final class HomePresenter: HomePresenterProtocol {
                         self.view?.update()
                         self.view?.reloadData()
                     }
-             }
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -107,10 +109,10 @@ final class HomePresenter: HomePresenterProtocol {
     }
     
     func didSelectItem(at indexPath: IndexPath) {
-            for i in 0..<categories.count {
-                categories[i].isSelected = false
-            }
-            categories[indexPath.row].isSelected = !categories[indexPath.row].isSelected
+        for i in 0..<categories.count {
+            categories[i].isSelected = false
+        }
+        categories[indexPath.row].isSelected = !categories[indexPath.row].isSelected
         self.movies = []
         self.view?.update()
         self.view?.animate(true)
@@ -137,14 +139,13 @@ final class HomePresenter: HomePresenterProtocol {
     }
     
     func getFilms(with text: String) {
-        print("запрос ушел с текстом \(text)")
         networkManager.searchMovie(searchText: text) { [weak self] result in
             switch result {
             case .success(let movie):
                 if self?.searchMovies == nil {
                     self?.searchMovies = [Doc]()
                 }
-                let filteredMovies = movie.docs.filter { 
+                let filteredMovies = movie.docs.filter {
                     $0.id != nil
                     && $0.ageRating != nil
                     && $0.genres != nil
@@ -161,6 +162,10 @@ final class HomePresenter: HomePresenterProtocol {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func saveToCoreData(model: Doc) {
+        coreData.saveToRecent(from: model)
     }
     
     init(view: HomeScreenViewProtocol) {

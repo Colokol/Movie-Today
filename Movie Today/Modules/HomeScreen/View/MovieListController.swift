@@ -43,9 +43,9 @@ final class MovieListController: UIViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-
+        
         appearance.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
-
+        
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
         
@@ -55,7 +55,7 @@ final class MovieListController: UIViewController {
     @objc func backButton() {
         navigationController?.popViewController(animated: true)
     }
-
+    
     //MARK: - Configure ActivityIndicator
     private func configureActivityIndicator() {
         view.addSubviews(activityIndicator)
@@ -80,7 +80,8 @@ final class MovieListController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
         ])
     }
     
@@ -101,8 +102,8 @@ final class MovieListController: UIViewController {
                 
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
-            
-
+                
+                
                 return section
                 
             case .popular:
@@ -114,7 +115,7 @@ final class MovieListController: UIViewController {
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
-
+                
                 return section
             }
         }
@@ -139,7 +140,7 @@ final class MovieListController: UIViewController {
         let mostPopular = MostPopularRegister()
         dataSource = UICollectionViewDiffableDataSource<MovieListSections, Item>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             switch MovieListSections(rawValue: indexPath.section)! {
-
+                
             case .categories:
                 return collectionView.dequeueConfiguredReusableCell(using: categories, for: indexPath, item: item.categories)
             case .popular:
@@ -152,6 +153,7 @@ final class MovieListController: UIViewController {
 }
 //MARK: - MovieViewProtocol
 extension MovieListController: MovieViewProtocol {
+    
     func animate(_ start: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -187,10 +189,10 @@ extension MovieListController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             presenter.didSelectItem(at: indexPath)
-
+            
         } else if indexPath.section == 1 {
-            //MARK: - ТУТ ПЕРЕХОД К DETAILCONTROLLER
             guard let model = presenter.movies?[indexPath.row] else { return }
+            presenter.saveToCoreData(model: model)
             let vc = Builder.createDetailVC(model: model)
             navigationController?.pushViewController(vc, animated: true)
         }
