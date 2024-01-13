@@ -20,7 +20,6 @@ protocol SearchPresentorProtocol: AnyObject {
     init(view: SearchViewProtocol)
     var searchMovies: [Doc]? { get set }
     var movies: [Doc]? { get set }
-    var moviesTwo: [Doc]? { get set }
     var categories: [Categories] { get set }
     var actors: [PersonModel]? { get set }
     var recentMovies: [RecentMovie] { get set }
@@ -43,9 +42,8 @@ final class SearchPresentor: SearchPresentorProtocol {
     let networkManager = NetworkManager()
     var searchMovies: [Doc]?
     var movies: [Doc]?
-    var moviesTwo: [Doc]?
     var recentMovies: [RecentMovie] = []
-    var categories = [Categories(name: "Ужасы", isSelected: true),
+    var categories = [Categories(name: "Ужасы", isSelected: false),
                       Categories(name: "Комедия", isSelected: false),
                       Categories(name: "Криминал", isSelected: false),
                       Categories(name: "Драма", isSelected: false),
@@ -72,7 +70,7 @@ final class SearchPresentor: SearchPresentorProtocol {
         networkManager.getMoviesFromCollection(collectionName: .popular) { result in
             switch result {
             case .success(let movie):
-                if self.movies == nil && self.moviesTwo == nil {
+                if self.movies == nil {
                     self.movies = [Doc]()
                 }
                 self.movies = movie.docs
@@ -90,11 +88,8 @@ final class SearchPresentor: SearchPresentorProtocol {
         networkManager.searchMovie(searchText: text) { [weak self] result in
             switch result {
             case .success(let movie):
-                if self?.moviesTwo == nil {
-                    self?.moviesTwo = [Doc]()
-                }
                 let filteredMovies = movie.docs.filter { $0.poster?.url?.isEmpty == false }
-                self?.moviesTwo = filteredMovies
+                
                 if filteredMovies.count == 0 {
                     self?.view?.updateSearchResults(filteredMovies, hideError: false)
                 } else {

@@ -92,10 +92,4 @@ final class Builder {
         return vc
     }
 
-    static func createRecentController() -> UIViewController {
-        let view = RecentMovieController()
-        let presenter = RecentMoviePresenter(view: view)
-        view.presenter = presenter
-        return view
-    }
 }
