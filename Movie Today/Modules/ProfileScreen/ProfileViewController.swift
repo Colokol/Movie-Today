@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 
 class ProfileViewController: UIViewController {
     
@@ -75,13 +76,38 @@ class ProfileViewController: UIViewController {
             return
         }
         let ref = Database.database().reference().child("users").child(id)
-        ref.observeSingleEvent(of: .value) { snapshot in
+        ref.observeSingleEvent(of: .value) { snapshot, _ in
             if let userData = snapshot.value as? [String: AnyObject] {
                 let name = userData["name"] as? String ?? "No name"
                 let email = userData["email"] as? String ?? "No email"
-                self.profileView.userView.nameLabel.text = name
-                self.profileView.userView.emailLabel.text = email
+                let userImage = userData["profileImageUrl"] as? URL
+                DispatchQueue.main.async {
+                    self.profileView.userView.nameLabel.text = name
+                    self.profileView.userView.emailLabel.text = email
+                }
+                self.fetchProfileImageUrl(for: id) { result in
+                    switch result {
+                    case .success(let success):
+                        let url = URL(string: success)
+                        DispatchQueue.main.async {
+                            self.profileView.userView.userImage.sd_setImage(with: url)
+                        }
+                    case .failure(let failure):
+                        print("fuck")
+                    }
+                }
             }
+        }
+    }
+    
+    func fetchProfileImageUrl(for userId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let userImageRef = Database.database().reference().child("users/\(userId)/profileImageUrl")
+        userImageRef.observeSingleEvent(of: .value) { snapshot in
+            guard let imageUrl = snapshot.value as? String else {
+                completion(.failure(NSError(domain: "FirebaseError", code: 0, userInfo: [NSLocalizedDescriptionKey: "URL изображения не найден"])))
+                return
+            }
+            completion(.success(imageUrl))
         }
     }
     
