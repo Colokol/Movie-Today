@@ -15,7 +15,7 @@ public enum MovieApi {
     case genresMovie(genres: String)
     case moviesFromCollection(collection: String, genre: String?)
     case collectionMovieList
-    case upComingMovie
+    case upComingMovie(genre: String)
     case searchMovie(searchText: String)
     case searchPerson(searchText: String)
     case searchMovieForID(_ id:Int)
@@ -121,7 +121,7 @@ extension MovieApi: EndpointType {
                     urlParameters: nil,
                     additionalHeaders: headers
                 )
-            case .upComingMovie:
+            case .upComingMovie(genre: let genre):
                 return .requestParametersAndHeaders(bodyParameters: nil,
                                                     urlParameters:["limit":MovieApi.defaultLimit,
                                                                    "page":MovieApi.defaultPage,
@@ -129,7 +129,8 @@ extension MovieApi: EndpointType {
                                                                    "type":"movie",
                                                                    "status":"filming",
                                                                    "year":"2024",
-                                                                   "votes.await":"2000-99999"],
+                                                                   "votes.await":"2000-99999",
+                                                                   "genres.name": genre],
                                                     additionalHeaders: headers)
         }
     }
