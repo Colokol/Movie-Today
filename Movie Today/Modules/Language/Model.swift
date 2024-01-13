@@ -20,7 +20,7 @@ enum Group {
 struct Source {
     static func languages() -> [Language] {
         [
-            .init(name: "English(UK)", group: .suggestedLanguages),
+            .init(name: "English (UK)", group: .suggestedLanguages),
             .init(name: "English", group: .suggestedLanguages),
             .init(name: "Bahasa Indonesia", group: .suggestedLanguages),
             .init(name: "Chineses", group: .otherLanguage),

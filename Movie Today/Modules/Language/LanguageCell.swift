@@ -19,6 +19,7 @@ class LanguageCell: UITableViewCell {
     private let languageLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
     

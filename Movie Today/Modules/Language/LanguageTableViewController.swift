@@ -18,6 +18,17 @@ class LanguageTableViewController: UIViewController {
     
     // MARK: - View Lifecycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = "Language"
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)
+        ]
+        navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -66,15 +77,7 @@ extension LanguageTableViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         2
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0: "Suggested Languages"
-        case 1: "Other Language"
-        default: nil
-        }
-    }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         languages[section].count
     }
@@ -97,11 +100,25 @@ extension LanguageTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = .customGray
-        header.textLabel?.font = UIFont.montserratSemiBold(ofSize: 14)
+        header.textLabel?.textColor = .darkGray
+        header.textLabel?.font = UIFont.montserratSemiBold(ofSize: 15)
+        header.textLabel?.text = header.textLabel?.text?.lowercased()
+        
+        if let text = header.textLabel?.text {
+                let words = text.components(separatedBy: " ")
+                let capitalizedWords = words.map { $0.prefix(1).capitalized + $0.dropFirst() }
+                let capitalizedText = capitalizedWords.joined(separator: " ")
+                header.textLabel?.text = capitalizedText
+            }
     }
     
-    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0: "Suggested Languages"
+        case 1: "Other Language"
+        default: nil
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -119,7 +136,7 @@ extension LanguageTableViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.layer.borderColor = UIColor.darkGray.cgColor
-        cell.layer.borderWidth = 1.0
+        cell.layer.borderColor = UIColor.soft.cgColor
+        cell.layer.borderWidth = 0.5
     }
 }
