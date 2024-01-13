@@ -10,7 +10,7 @@ protocol MovieViewProtocol: AnyObject {
     func update()
     func reloadData()
     func animate(_ start: Bool)
-
+    
 }
 
 protocol MovieListPresenterProtocol: AnyObject {
@@ -26,7 +26,7 @@ protocol MovieListPresenterProtocol: AnyObject {
 
 final class MovieListPresenter: MovieListPresenterProtocol {
     weak var view: MovieViewProtocol?
-
+    
     var movies: [Doc]?
     var categories = [Categories(name: "Ужасы", isSelected: true),
                       Categories(name: "Комедия", isSelected: false),
@@ -34,11 +34,11 @@ final class MovieListPresenter: MovieListPresenterProtocol {
                       Categories(name: "Драма", isSelected: false),
                       Categories(name: "Фантастика", isSelected: false),
                       Categories(name: "Мультфильм", isSelected: false),
-                      Categories(name: "Документальный", isSelected: false)]   
+                      Categories(name: "Документальный", isSelected: false)]
     
     let networkManager = NetworkManager()
     let coreData = CoreDataManager.shared
-
+    
     func updateController() {
         getGenre(genre: .horror)
         DispatchQueue.main.async {
@@ -53,13 +53,13 @@ final class MovieListPresenter: MovieListPresenterProtocol {
                 if self.movies == nil {
                     self.movies = [Doc]()
                 }
-                    self.movies = []
+                self.movies = []
                 self.movies?.append(contentsOf: movie.docs)
-                    DispatchQueue.main.async {
-                        self.view?.animate(false)
-                        self.view?.update()
-                        self.view?.reloadData()
-                    }
+                DispatchQueue.main.async {
+                    self.view?.animate(false)
+                    self.view?.update()
+                    self.view?.reloadData()
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -71,30 +71,30 @@ final class MovieListPresenter: MovieListPresenterProtocol {
             categories[i].isSelected = false
         }
         categories[indexPath.row].isSelected = !categories[indexPath.row].isSelected
-    self.movies = []
-    self.view?.update()
-    self.view?.animate(true)
-    
-    let selectedModel = categories[indexPath.row]
-    switch selectedModel.name {
-    case "Ужасы":
-        getGenre(genre: .horror)
-    case "Комедия":
-        getGenre(genre: .comedy)
-    case "Криминал":
-        getGenre(genre: .criminal)
-    case "Драма":
-        getGenre(genre: .drama)
-    case "Фантастика":
-        getGenre(genre: .fantasy)
-    case "Мультфильм":
-        getGenre(genre: .carton)
-    case "Документальный":
-        getGenre(genre: .documentary)
-    default:
-        break
+        self.movies = []
+        self.view?.update()
+        self.view?.animate(true)
+        
+        let selectedModel = categories[indexPath.row]
+        switch selectedModel.name {
+        case "Ужасы":
+            getGenre(genre: .horror)
+        case "Комедия":
+            getGenre(genre: .comedy)
+        case "Криминал":
+            getGenre(genre: .criminal)
+        case "Драма":
+            getGenre(genre: .drama)
+        case "Фантастика":
+            getGenre(genre: .fantasy)
+        case "Мультфильм":
+            getGenre(genre: .carton)
+        case "Документальный":
+            getGenre(genre: .documentary)
+        default:
+            break
+        }
     }
-}
     
     func saveToCoreData(model: Doc) {
         coreData.saveToRecent(from: model)

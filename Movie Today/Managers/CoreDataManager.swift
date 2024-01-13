@@ -54,6 +54,8 @@ final class CoreDataManager {
         movie.type = model.type
         movie.poster = model.poster?.url
         movie.rating = model.rating?.kp ?? 0
+        guard let id = model.id else { return }
+        movie.id = Int64(id)
         
         if let firstGenre = model.genres?.first {
             movie.genre = firstGenre.name
@@ -116,16 +118,6 @@ final class CoreDataManager {
         }
     }
     
-    func saveUser(username: String, email: String, password: String, image: Data?) {
-        let authorization = User(context: mainContext)
-        authorization.userimage = image
-        authorization.username = username
-        authorization.password = password
-        authorization.email = email
-        
-        saveContext()
-    }
-    
     //MARK: - RecentMovies
     
     func saveToRecent(from model: Doc) {
@@ -133,13 +125,23 @@ final class CoreDataManager {
         saveContext()
     }
     
+            
     private func configRecentMovie(with model: Doc) {
         guard let id = model.id else { return }
+
         let request: NSFetchRequest<RecentMovie> = RecentMovie.fetchRequest()
         request.predicate = NSPredicate(format: "id == %d", id)
+
         do {
             let existingMovies = try mainContext.fetch(request)
-            let movie = existingMovies.first ?? RecentMovie(context: mainContext)
+            if let existingMovie = existingMovies.first {
+                // Удаление существующего фильма
+                mainContext.delete(existingMovie)
+                saveContext()
+            }
+
+            // Создание нового фильма
+            let movie = RecentMovie(context: mainContext)
             movie.id = Int64(id)
             movie.name = model.name
             movie.genre = model.genres?.first?.name
@@ -154,11 +156,10 @@ final class CoreDataManager {
             guard let raiting = model.rating?.kp else { return }
             movie.raiting = raiting
             guard let url =  model.poster?.url else { return }
-            
             dataLoader.loadData(fromURL: url) { imageData in
                 if let imageData = imageData {
                     movie.image = imageData
-                    self.saveContext()
+                    self.saveContext() 
                 } else {
                     print("Failed to load image data for \(String(describing: model.name))")
                 }
@@ -166,9 +167,8 @@ final class CoreDataManager {
         } catch {
             print("Error fetching movie from Core Data: \(error)")
         }
-
-     
     }
+
     
     func loadRecentMovies(complition: (Result<[RecentMovie], Error>) -> Void) {
         let request: NSFetchRequest<RecentMovie> = RecentMovie.fetchRequest()
