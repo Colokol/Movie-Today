@@ -24,7 +24,7 @@ class SearchViewController: UIViewController {
         setupNavBar()
         setupSearchResult()
         configureCollectionView()
-        presenter.getUpcomingMovie()
+        presenter.getUpcomingMovie(with: .comedy)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -167,7 +167,12 @@ class SearchViewController: UIViewController {
     
     private func registerCellUpcomingMovie() -> UICollectionView.CellRegistration<FilmCell, Doc> {
         return UICollectionView.CellRegistration<FilmCell, Doc> { (cell, indexPath, item) in
-            cell.config(with: item)
+            if item.name == nil {
+                print("В ячейку пришел нил")
+                cell.configNil()
+            } else {
+                cell.config(with: item)
+            }
         }
     }
     
@@ -216,6 +221,7 @@ class SearchViewController: UIViewController {
             switch SectionsSearch(rawValue: indexPath.section)! {
 
             case .compilation:
+                print("данные попали в датасорс")
                 return collectionView.dequeueConfiguredReusableCell(using: upcomingMovie, for: indexPath, item: item.movieModel)
             case .mostPopular:
                 return collectionView.dequeueConfiguredReusableCell(using: recentMovies, for: indexPath, item: item.recent)
@@ -243,19 +249,24 @@ class SearchViewController: UIViewController {
     }
     //MARK: - SnapShot
     private func applySnapshot() {
-        var snapShot = NSDiffableDataSourceSnapshot<SectionsSearch, Item>()
-        snapShot.appendSections([.categories, .compilation, .mostPopular])
-        
+        var snapshot = NSDiffableDataSourceSnapshot<SectionsSearch, Item>()
+        snapshot.appendSections([.categories, .compilation, .mostPopular])
+
         let categories = presenter.categories.compactMap({ Item(categories: $0) })
-            snapShot.appendItems(categories, toSection: .categories)
-        
-        if let upcomingMovie = presenter.movies?.compactMap({ Item(movieModel: $0) }) {
-            snapShot.appendItems(upcomingMovie, toSection: .compilation)
+        snapshot.appendItems(categories, toSection: .categories)
+
+        if let upcomingMovies = presenter.movies, !upcomingMovies.isEmpty {
+            let movieItems = upcomingMovies.compactMap({ Item(movieModel: $0) })
+            snapshot.appendItems(movieItems, toSection: .compilation)
+        } else {
+            let placeholderItem = presenter.placeHolder.compactMap({ Item(movieModel: $0) })
+            snapshot.appendItems(placeholderItem, toSection: .compilation)
         }
-        let recentMovies = presenter.recentMovies.compactMap { Item(recent: $0)}
-        snapShot.appendItems(recentMovies, toSection: .mostPopular)
-        
-        dataSource?.apply(snapShot, animatingDifferences: true)
+
+        let recentMovies = presenter.recentMovies.compactMap({ Item(recent: $0) })
+        snapshot.appendItems(recentMovies, toSection: .mostPopular)
+
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }
 //MARK: - SearchViewProtocol
