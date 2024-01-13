@@ -8,8 +8,11 @@
 import UIKit
 
 class NotificationViewController: UIViewController {
-
     
+    //MARK: - Properties
+    
+    let notificationMananger = NotificationManager()
+
     //MARK: - UI Elements
     
     private let messagesNotificationsLabel: UILabel = {
@@ -88,6 +91,11 @@ class NotificationViewController: UIViewController {
     
     @objc private func switchValueChanged() {
         UserDefaults.standard.set(switcher.isOn, forKey: "switchState")
+        if switcher.isOn == true {
+            notificationMananger.sendNotification()
+        } else {
+            return
+        }
     }
     
     // MARK: - Set Constraints
@@ -102,5 +110,4 @@ class NotificationViewController: UIViewController {
             
         ])
     }
-    
 }

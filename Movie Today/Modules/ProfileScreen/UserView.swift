@@ -21,20 +21,18 @@ final class UserView: UIView {
         return image
     }()
     
-    private lazy var nameLabel: UILabel = {
+    var nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .white
-        label.text = "Tiffany"
-        label.font = .montserratSemiBold(ofSize: 20)
+        label.font = .montserratSemiBold(ofSize: 18)
         return label
     }()
-    private lazy var emailLabel: UILabel = {
+    var emailLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .lightGray
-        label.text = "Tiffanyjearsey@gmail.com"
-        label.font = .montserratMedium(ofSize: 15)
+        label.font = .montserratMedium(ofSize: 13)
         return label
     }()
     let editButton: UIButton = {
@@ -86,7 +84,7 @@ extension UserView {
             nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: Constans.tenPoints),
             nameLabel.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: Constans.twentyPoints),
             nameLabel.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
-            nameLabel.widthAnchor.constraint(equalToConstant: Constans.seventyPoints),
+            nameLabel.widthAnchor.constraint(equalToConstant: Constans.ninetyPoints),
             
             // Email label
             emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: Constans.tenPoints),
