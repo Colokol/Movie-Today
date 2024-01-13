@@ -11,7 +11,7 @@ class LanguageCell: UITableViewCell {
 
     override var isSelected: Bool {
         didSet {
-            selectedLanguageLabel.isHidden = !isSelected
+            checkMarkImage.isHidden = !isSelected
         }
     }
     // MARK: - UI Elements
@@ -23,12 +23,10 @@ class LanguageCell: UITableViewCell {
         return label
     }()
     
-    private let selectedLanguageLabel: UILabel = {
-        let label = UILabel()
-        label.text = "✓"
-        label.font = UIFont.systemFont(ofSize: 22)
-        label.textColor = .blueAccent
-        return label
+    private let checkMarkImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "checkMark"))
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
     // MARK: - View Lifecycle
@@ -50,7 +48,9 @@ class LanguageCell: UITableViewCell {
     
     private func setupCell() {
         self.backgroundColor = .background
-        [languageLabel, selectedLanguageLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false
+        languageLabel.addSubview(checkMarkImage)
+        
+        [languageLabel, checkMarkImage].forEach { $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
         
@@ -59,9 +59,12 @@ class LanguageCell: UITableViewCell {
             languageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30),
             languageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
             
-            selectedLanguageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            selectedLanguageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
-            selectedLanguageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            checkMarkImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            checkMarkImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            checkMarkImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+            
+            checkMarkImage.widthAnchor.constraint(equalToConstant: 20),
+            checkMarkImage.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
 }
