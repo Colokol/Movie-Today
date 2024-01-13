@@ -24,7 +24,7 @@ class LanguageTableViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)
         ]
         navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
@@ -137,6 +137,6 @@ extension LanguageTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.layer.borderColor = UIColor.soft.cgColor
-        cell.layer.borderWidth = 0.5
+        cell.layer.borderWidth = 1
     }
 }
