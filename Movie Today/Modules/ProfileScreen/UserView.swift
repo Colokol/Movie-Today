@@ -13,9 +13,7 @@ final class UserView: UIView {
     
     let userImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .white
         image.contentMode = .scaleToFill
-        image.image = UIImage(named: "tiff")
         image.layer.cornerRadius = 35
         image.clipsToBounds = true
         return image

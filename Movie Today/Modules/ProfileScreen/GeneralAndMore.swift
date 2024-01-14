@@ -15,7 +15,7 @@ final class GeneralAndMore: UIView {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .whiteGray
-        label.font = UIFont.montserratMedium(ofSize: 14)
+        label.font = UIFont.montserratSemiBold(ofSize: 18)
         return label
     }()
     private lazy var firstImage: UIImageView = {
@@ -25,8 +25,9 @@ final class GeneralAndMore: UIView {
     }()
     let firstButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.gray, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .montserratMedium(ofSize: 14)
+        button.titleLabel?.attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.kern: 0.12])
         return button
     }()
     private lazy var firstArrowImage: UIImageView = {
@@ -41,8 +42,9 @@ final class GeneralAndMore: UIView {
     }()
     let secondButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.gray, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .montserratMedium(ofSize: 14)
+        button.titleLabel?.attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.kern: 0.12])
         return button
     }()
     private lazy var secondImage: UIImageView = {

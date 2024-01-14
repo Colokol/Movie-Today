@@ -57,17 +57,17 @@ final class ProfileView: UIView {
         
         // Setup user view
         userView.layer.borderWidth = 1
-        userView.layer.borderColor = UIColor.whiteGray.cgColor
+        userView.layer.borderColor = UIColor.gray.cgColor
         userView.layer.cornerRadius = 15
         
         // Setup general view
         generalView.layer.borderWidth = 1
-        generalView.layer.borderColor = UIColor.whiteGray.cgColor
+        generalView.layer.borderColor = UIColor.gray.cgColor
         generalView.layer.cornerRadius = 15
         
         // Setup more view
         moreView.layer.borderWidth = 1
-        moreView.layer.borderColor = UIColor.whiteGray.cgColor
+        moreView.layer.borderColor = UIColor.gray.cgColor
         moreView.layer.cornerRadius = 15
         
         exitButton.addTarget(self, action: #selector(exitButtonAction), for: .touchUpInside)
