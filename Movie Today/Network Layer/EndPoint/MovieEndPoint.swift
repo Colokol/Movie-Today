@@ -129,6 +129,7 @@ extension MovieApi: EndpointType {
                                                                    "type":"movie",
                                                                    "status":"completed",
                                                                    "year":"2024",
+                                                                   "votes.await":"0-99999",
                                                                    "genres.name": genre],
                                                     additionalHeaders: headers)
         }
