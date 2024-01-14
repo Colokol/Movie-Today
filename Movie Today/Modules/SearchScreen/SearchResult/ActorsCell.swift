@@ -42,7 +42,7 @@ final class ActorsCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 7),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -7),
+
             imageView.heightAnchor.constraint(equalToConstant: 80),
             imageView.widthAnchor.constraint(equalToConstant: 80),
             
