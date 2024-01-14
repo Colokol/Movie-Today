@@ -99,7 +99,8 @@ class ProfileViewController: UIViewController {
     }
 
     @objc func languageButtonTapped() {
-        print("Language")
+        let languageVC = LanguageTableViewController()
+        navigationController?.show(languageVC, sender: self)
     }
     
     @objc func policiesButtonTapped() {
