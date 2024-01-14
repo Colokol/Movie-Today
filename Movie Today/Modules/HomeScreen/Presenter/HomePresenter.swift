@@ -24,6 +24,7 @@ protocol HomePresenterProtocol: AnyObject {
     func updateController()
     func getFilms(with text: String)
     func didSelectItem(at indexPath: IndexPath)
+    func fetchPhoto(completion: @escaping (_ image: URL) -> Void)
     func saveToCoreData(model: Doc)
     init(view: HomeScreenViewProtocol)
 }
@@ -33,6 +34,7 @@ final class HomePresenter: HomePresenterProtocol {
     weak var view: HomeScreenViewProtocol?
     let networkManager = NetworkManager()
     let coreData = CoreDataManager.shared
+    let fireBase = FirebaseManager.shared
     
     var movies: [Doc]?
     var collectionMovies: [Collection]?
@@ -66,6 +68,18 @@ final class HomePresenter: HomePresenterProtocol {
         }
     }
     
+    func fetchPhoto(completion: @escaping (_ image: URL) -> Void) {
+        guard let id = fireBase.id else { return }
+        fireBase.fetchProfileImageUrl(for: id) { result in
+            switch result {
+            case .success(let image):
+                guard let url = URL(string: image) else { return }
+                completion(url)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
     func getCollectionMovie() {
         networkManager.getCollectionMovie { result in
             switch result {
