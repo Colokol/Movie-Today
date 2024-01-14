@@ -6,14 +6,13 @@
 //
 
 import UIKit
-import Firebase
 
 class ProfileViewController: UIViewController {
     
     //MARK: - User interface elements
     
     let profileView = ProfileView()
-    let firebase = Firestore.firestore()
+    let firebase = FirebaseManager.shared
 
     //MARK: - Life cycle
     
@@ -47,41 +46,18 @@ class ProfileViewController: UIViewController {
     
     private func exitAction() {
         profileView.exitAction = {
-            do {
-                try Auth.auth().signOut()
-                let vc = AuthViewController()
-               // набор всех сцен, которые в данный момент подключены к приложению
-                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                   //забираем первое окно из массива
-                    let window = windowScene.windows.first {
-                    //делаем его корневым и видимым
-                    window.rootViewController = vc
-                    window.makeKeyAndVisible()
-                    //переход к окну
-                    UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
-                }
-                print("Exit-----------------")
-            } catch {
-                print("Error exit")
-            }
+            self.firebase.exitMethod()
         }
     }
     
     //MARK: - Methods
     
     func fetchUserInfo() {
-        guard let id = Auth.auth().currentUser?.uid else {
-            print("User not logged in")
-            return
-        }
-        let ref = Database.database().reference().child("users").child(id)
-        ref.observeSingleEvent(of: .value) { snapshot in
-            if let userData = snapshot.value as? [String: AnyObject] {
-                let name = userData["name"] as? String ?? "No name"
-                let email = userData["email"] as? String ?? "No email"
-                self.profileView.userView.nameLabel.text = name
-                self.profileView.userView.emailLabel.text = email
-            }
+        firebase.fetchUserInfo { name, email in
+            guard let name = name else { return }
+            guard let email = email else { return }
+            self.profileView.userView.nameLabel.text = name
+            self.profileView.userView.emailLabel.text = email
         }
     }
     
