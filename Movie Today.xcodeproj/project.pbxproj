@@ -151,6 +151,7 @@
 		FACC8A4D2B4EC8A6005689F4 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FACC8A4C2B4EC8A6005689F4 /* FirebaseAnalyticsSwift */; };
 		FACC8A4F2B4EC8A6005689F4 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = FACC8A4E2B4EC8A6005689F4 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		FACC8A512B4EC8A6005689F4 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = FACC8A502B4EC8A6005689F4 /* FirebaseAppCheck */; };
+		FACF8F5B2B53C4460025E7C7 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACF8F5A2B53C4460025E7C7 /* FirebaseManager.swift */; };
 		FADEFD1A2B4D9F3C00103BB3 /* RecentMovieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADEFD192B4D9F3C00103BB3 /* RecentMovieController.swift */; };
 		FADEFD1E2B4DA10200103BB3 /* RecentMoviePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADEFD1D2B4DA10200103BB3 /* RecentMoviePresenter.swift */; };
 		FAE057B52B3AD85D008BC8DE /* MovieListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE057B42B3AD85D008BC8DE /* MovieListController.swift */; };
@@ -245,6 +246,7 @@
 		FAA9CF472B4C8AEA00E7507B /* SearchResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultDelegate.swift; sourceTree = "<group>"; };
 		FAAB771F2B3B3A8700166219 /* CollectionMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionMovieCell.swift; sourceTree = "<group>"; };
 		FAB7C7622B4C131D00DB98A7 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
+		FACF8F5A2B53C4460025E7C7 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		FADEFD192B4D9F3C00103BB3 /* RecentMovieController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMovieController.swift; sourceTree = "<group>"; };
 		FADEFD1D2B4DA10200103BB3 /* RecentMoviePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMoviePresenter.swift; sourceTree = "<group>"; };
 		FAE057B42B3AD85D008BC8DE /* MovieListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListController.swift; sourceTree = "<group>"; };
@@ -475,6 +477,7 @@
 			children = (
 				CED4D2262B387BFA005138A9 /* DataLoader.swift */,
 				792A568C2B472E9600617440 /* CoreDataManager.swift */,
+				FACF8F5A2B53C4460025E7C7 /* FirebaseManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1015,6 +1018,7 @@
 				FAF81D1F2B3AF496000E31A4 /* PopularMovieController.swift in Sources */,
 				FAF822AC2B3DB560007E1177 /* SearchResult.swift in Sources */,
 				FAA71AFA2B49ECE9001F361A /* NotFoundView.swift in Sources */,
+				FACF8F5B2B53C4460025E7C7 /* FirebaseManager.swift in Sources */,
 				92F1E5D02B4FFF2000499851 /* LanguageTableViewController.swift in Sources */,
 				CED4D2092B373B9F005138A9 /* AppDelegate.swift in Sources */,
 				CED4D20B2B373B9F005138A9 /* SceneDelegate.swift in Sources */,
