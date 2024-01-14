@@ -2,19 +2,16 @@
 //  AboutUsViewController.swift
 //  Movie Today
 //
-//  Created by Nikita on 14.01.2024.
-//
-//
-// Uladzislau Yatskevich - https://github.com/Colokol
-// Anna Zaitsava - https://github.com/AnnaZaitsava
-// Nikita Yakovenko - https://github.com/Nikita06122002
-// Yuri Krasnov - https://github.com/KrasnovYuri
-// Timofey Spodeneyko - https://github.com/TSpodeneyko
-// Nikita Semennikov - https://github.com/SemennikovNA
-//
-//
+// Над проектом работали
+/* Uladzislau Yatskevich - https://github.com/Colokol
+    Anna Zaitsava - https://github.com/AnnaZaitsava
+    Nikita Yakovenko - https://github.com/Nikita06122002
+    Yuri Krasnov - https://github.com/KrasnovYuri
+    Timofey Spodeneyko - https://github.com/TSpodeneyko
+    Nikita Semennikov - https://github.com/SemennikovNA */
 
 import UIKit
+import SafariServices
 
 final class AboutUsViewController: UIViewController {
 
@@ -23,7 +20,7 @@ final class AboutUsViewController: UIViewController {
     // Label's
     private lazy var titleLabel = UILabel(text: "About the team", font: .montserratSemiBold(ofSize: 20), textColor: .whiteGray, textAlignment: .center, numberOfLines: 0)
     private lazy var teamLeaderLabel = UILabel(text: "Team leader", font: .montserratSemiBold(ofSize: 20), textColor: .whiteGray, textAlignment: .left, numberOfLines: 0)
-    private lazy var uladzislauLabel = UILabel(text: "Uladzislau Yatskevich", font: .montserratMedium(ofSize: 16), textColor: .white, textAlignment: .left, numberOfLines: 0)
+    private lazy var uladzislauY = UILabel(text: "Uladzislau Yatskevich", font: .montserratMedium(ofSize: 16), textColor: .white, textAlignment: .left, numberOfLines: 0)
     private lazy var teamLabel = UILabel(text: "Team", font: .montserratSemiBold(ofSize: 20), textColor: .whiteGray, textAlignment: .left, numberOfLines: 0)
     private lazy var annaZ = UILabel(text: "Anna Zaitsava", font: .montserratMedium(ofSize: 16), textColor: .white, textAlignment: .left, numberOfLines: 0)
     private lazy var nikitaY = UILabel(text: "Nikita Yakovenko", font: .montserratMedium(ofSize: 16), textColor: .white, textAlignment: .left, numberOfLines: 0)
@@ -32,7 +29,42 @@ final class AboutUsViewController: UIViewController {
     private lazy var nikitaS = UILabel(text: "Nikita Semennikov", font: .montserratMedium(ofSize: 16), textColor: .white, textAlignment: .left, numberOfLines: 0)
     
     // Button's
-    
+    private lazy var uladzislauButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "git"), for: .normal)
+        button.backgroundColor = .whiteGray
+        return button
+    }()
+    private lazy var annaButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "git"), for: .normal)
+        button.backgroundColor = .whiteGray
+        return button
+    }()
+    private lazy var nikitaYButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "git"), for: .normal)
+        button.backgroundColor = .whiteGray
+        return button
+    }()
+    private lazy var yuriButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "git"), for: .normal)
+        button.backgroundColor = .whiteGray
+        return button
+    }()
+    private lazy var timofeyButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "git"), for: .normal)
+        button.backgroundColor = .whiteGray
+        return button
+    }()
+    private lazy var nikitaSButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "git"), for: .normal)
+        button.backgroundColor = .whiteGray
+        return button
+    }()
     
     //MARK: - Life cycle
     
@@ -48,9 +80,65 @@ final class AboutUsViewController: UIViewController {
     
     private func setupView() {
         // Setup view
+        navigationItem.title = "About the team"
+        navigationController?.navigationBar.tintColor = .whiteGray
         view.backgroundColor = .background
-        view.addSubviews(titleLabel, teamLeaderLabel, uladzislauLabel, teamLabel, annaZ, nikitaY, yuriK, timofeyS, nikitaS)
+        view.addSubviews(titleLabel, teamLeaderLabel, uladzislauY, teamLabel, annaZ, nikitaY, yuriK, timofeyS, nikitaS)
+        view.addSubviews(uladzislauButton, annaButton, nikitaYButton, yuriButton, timofeyButton, nikitaSButton)
         
+        // Setup button's
+        uladzislauButton.layer.cornerRadius = 10
+        annaButton.layer.cornerRadius = 10
+        nikitaYButton.layer.cornerRadius = 10
+        yuriButton.layer.cornerRadius = 10
+        timofeyButton.layer.cornerRadius = 10
+        nikitaSButton.layer.cornerRadius = 10
+        
+        // Button's target
+        uladzislauButton.addTarget(self, action: #selector(uladzislauPresentGit), for: .touchUpInside)
+        annaButton.addTarget(self, action: #selector(annaPresentGit), for: .touchUpInside)
+        nikitaYButton.addTarget(self, action: #selector(nikitaYPresentGit), for: .touchUpInside)
+        yuriButton.addTarget(self, action: #selector(yuriPresentGit), for: .touchUpInside)
+        timofeyButton.addTarget(self, action: #selector(timofeyPresentGit), for: .touchUpInside)
+        nikitaSButton.addTarget(self, action: #selector(nikitaSPresentGit), for: .touchUpInside)
+    }
+    
+    //MARK: - @objc methods
+    
+    @objc func uladzislauPresentGit() {
+        guard let url = URL(string: "https://github.com/Colokol") else { return }
+        let svc = SFSafariViewController(url: url)
+        present(svc, animated: true)
+    }
+    
+    @objc func annaPresentGit() {
+        guard let url = URL(string: "https://github.com/AnnaZaitsava") else { return }
+        let svc = SFSafariViewController(url: url)
+        present(svc, animated: true)
+    }
+    
+    @objc func nikitaYPresentGit() {
+        guard let url = URL(string: "https://github.com/Nikita06122002") else { return }
+        let svc = SFSafariViewController(url: url)
+        present(svc, animated: true)
+    }
+    
+    @objc func yuriPresentGit() {
+        guard let url = URL(string: "https://github.com/KrasnovYuri") else { return }
+        let svc = SFSafariViewController(url: url)
+        present(svc, animated: true)
+    }
+    
+    @objc func timofeyPresentGit() {
+        guard let url = URL(string: "https://github.com/TSpodeneyko") else { return }
+        let svc = SFSafariViewController(url: url)
+        present(svc, animated: true)
+    }
+    
+    @objc func nikitaSPresentGit() {
+        guard let url = URL(string: "https://github.com/SemennikovNA") else { return }
+        let svc = SFSafariViewController(url: url)
+        present(svc, animated: true)
     }
 }
 
@@ -61,6 +149,8 @@ private extension AboutUsViewController {
         static let twentyPoints: CGFloat = 20
         static let thirtyPoints: CGFloat = 30
         static let sixtyPoints: CGFloat = 60
+        static let buttonHeight: CGFloat = 30
+        static let buttonWidth: CGFloat = 30
         static let titleLabelHeight: CGFloat = 50
         static let titleLabwlWidth: CGFloat = 200
         static let teamLeaderLabelHeight: CGFloat = 30
@@ -81,7 +171,7 @@ private extension AboutUsViewController {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            
+            // Label's constraints
             // Title label
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.twentyPoints),
@@ -95,12 +185,13 @@ private extension AboutUsViewController {
             teamLeaderLabel.widthAnchor.constraint(equalToConstant: Constants.teamLeaderLabelWidth),
             
             // Uladzislau Yatskevich label
-            uladzislauLabel.topAnchor.constraint(equalTo: teamLeaderLabel.bottomAnchor, constant: Constants.tenPoints),
-            uladzislauLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.twentyPoints),
-            uladzislauLabel.heightAnchor.constraint(equalToConstant: Constants.teamLeaderLabelHeight),
+            uladzislauY.topAnchor.constraint(equalTo: teamLeaderLabel.bottomAnchor, constant: Constants.tenPoints),
+            uladzislauY.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.twentyPoints),
+            uladzislauY.heightAnchor.constraint(equalToConstant: Constants.teamLeaderLabelHeight),
+        
             
             // Team label
-            teamLabel.topAnchor.constraint(equalTo: uladzislauLabel.bottomAnchor, constant: Constants.thirtyPoints),
+            teamLabel.topAnchor.constraint(equalTo: uladzislauY.bottomAnchor, constant: Constants.thirtyPoints),
             teamLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.twentyPoints),
             teamLabel.heightAnchor.constraint(equalToConstant: Constants.teamLeaderLabelHeight),
             teamLabel.widthAnchor.constraint(equalToConstant: Constants.teamLeaderLabelWidth),
@@ -134,10 +225,43 @@ private extension AboutUsViewController {
             nikitaS.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.twentyPoints),
             nikitaS.heightAnchor.constraint(equalToConstant: Constants.nikitaSLabelHeight),
             nikitaS.widthAnchor.constraint(equalToConstant: Constants.nikitaYLabelWidth),
+            
+            // Button's constraints
+            // Uladzislau Yatskevich button
+            uladzislauButton.topAnchor.constraint(equalTo: teamLeaderLabel.bottomAnchor, constant: Constants.tenPoints),
+            uladzislauButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.twentyPoints),
+            uladzislauButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
+            uladzislauButton.widthAnchor.constraint(equalToConstant: Constants.buttonWidth),
+            
+            // Anna Zaitsava button
+            annaButton.topAnchor.constraint(equalTo: teamLabel.bottomAnchor, constant: Constants.tenPoints),
+            annaButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.twentyPoints),
+            annaButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
+            annaButton.widthAnchor.constraint(equalToConstant: Constants.buttonWidth),
+            
+            // Nikita Yakovenko button
+            nikitaYButton.topAnchor.constraint(equalTo: annaButton.bottomAnchor, constant: Constants.tenPoints),
+            nikitaYButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.twentyPoints),
+            nikitaYButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
+            nikitaYButton.widthAnchor.constraint(equalToConstant: Constants.buttonWidth),
+            
+            // Yuri Krasnov button
+            yuriButton.topAnchor.constraint(equalTo: nikitaYButton.bottomAnchor, constant: Constants.tenPoints),
+            yuriButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.twentyPoints),
+            yuriButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
+            yuriButton.widthAnchor.constraint(equalToConstant: Constants.buttonWidth),
+            
+            // Timofey Spodeneyko button
+            timofeyButton.topAnchor.constraint(equalTo: yuriButton.bottomAnchor, constant: Constants.tenPoints),
+            timofeyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.twentyPoints),
+            timofeyButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
+            timofeyButton.widthAnchor.constraint(equalToConstant: Constants.buttonWidth),
+            
+            // Nikita Semennikov button
+            nikitaSButton.topAnchor.constraint(equalTo: timofeyButton.bottomAnchor, constant: Constants.tenPoints),
+            nikitaSButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.twentyPoints),
+            nikitaSButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
+            nikitaSButton.widthAnchor.constraint(equalToConstant: Constants.buttonWidth),
         ])
     }
-}
-
-#Preview() {
-    AboutUsViewController()
 }

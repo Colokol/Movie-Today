@@ -121,6 +121,7 @@ class ProfileViewController: UIViewController {
     
     @objc func notificationButtonTapped() {
         let notificationVC = NotificationViewController()
+        notificationVC.modalPresentationStyle = .fullScreen
         navigationController?.show(notificationVC, sender: self)
     }
 
@@ -135,7 +136,9 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func aboutButtonTapped() {
-        print("About")
+        let aboutUsVC = AboutUsViewController()
+        aboutUsVC.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(aboutUsVC, animated: true)
     }
 }
 
