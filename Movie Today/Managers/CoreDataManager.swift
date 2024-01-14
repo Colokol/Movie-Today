@@ -13,7 +13,7 @@ final class CoreDataManager {
     static let shared = CoreDataManager()
     
     let dataLoader = DataLoader.shared
-    
+
     private let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "FavoriteMovies")
         container.loadPersistentStores { (storeDescription, error) in
@@ -67,7 +67,7 @@ final class CoreDataManager {
                 movie.image = imageData
                 self.saveContext()
             } else {
-                print("Failed to load image data for \(model.name)")
+                print("Failed to load image data for \(model.name ?? "model")")
             }
         }
     }
@@ -180,5 +180,10 @@ final class CoreDataManager {
             complition(.failure(error))
         }
     }
+    
+    //MARK: UserProfileImage
+    
+    
 
 }
+
