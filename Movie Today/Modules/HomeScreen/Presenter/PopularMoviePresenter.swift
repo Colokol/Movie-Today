@@ -17,11 +17,12 @@ protocol PopularMovieView: AnyObject {
 protocol PopularMoviePresenterProtocol: AnyObject {
     var array: [Doc]? { get set }
     var slug: String? { get set }
+    var collectionName: String? { get set }
     func getMovie(with indexPath: IndexPath)
     func getPopular()
     func checkSlug()
     func saveToCoreData(model: Doc)
-    init(view: PopularMovieView, slug: String?)
+    init(view: PopularMovieView, slug: String?, collectionName: String?)
 }
 
 final class PopularMoviePresenter: PopularMoviePresenterProtocol {
@@ -30,6 +31,7 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
     let networkManager = NetworkManager()
     let coreData = CoreDataManager.shared
     var array: [Doc]?
+    var collectionName: String?
     
     func getMovie(with indexPath: IndexPath) {
         
@@ -95,9 +97,10 @@ final class PopularMoviePresenter: PopularMoviePresenterProtocol {
         coreData.saveToRecent(from: model)
     }
     
-    init(view: PopularMovieView, slug: String?) {
+    init(view: PopularMovieView, slug: String?, collectionName: String?) {
         self.view = view
         self.slug = slug
+        self.collectionName = collectionName
         self.view?.animate(true)
     }
 }
