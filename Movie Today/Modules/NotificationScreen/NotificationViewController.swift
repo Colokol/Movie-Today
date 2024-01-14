@@ -16,17 +16,17 @@ class NotificationViewController: UIViewController {
     //MARK: - UI Elements
     
     private let messagesNotificationsLabel: UILabel = {
-        UILabel(text: "Messages Notifications", font: .systemFont(ofSize: 14), textColor: .gray) }()
+        UILabel(text: "Messages Notifications", font: .montserratMedium(ofSize: 15), textColor: .gray) }()
     
     private let showNotificationsLabel: UILabel = {
-        UILabel(text: "Show Notifications", font: .systemFont(ofSize: 20), textColor: .white)
+        UILabel(text: "Show Notifications", font: .montserratMedium(ofSize: 20), textColor: .white)
     }()
     
     private let exceptionsButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Exceptions", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.titleLabel?.font = UIFont.montserratMedium(ofSize: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -47,6 +47,16 @@ class NotificationViewController: UIViewController {
     }()
     
     //MARK: - Life Cycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = "Notification"
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.montserratMedium(ofSize: 20) ?? 20
+        ]
+        navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

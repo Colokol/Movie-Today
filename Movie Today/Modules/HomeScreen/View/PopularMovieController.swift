@@ -50,7 +50,7 @@ final class PopularMovieController: UIViewController {
     }
     //MARK: - NavBarSetup
     private func setupNavBar() {
-        title = "Popular Movie"
+        title = presenter.collectionName
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()

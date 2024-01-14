@@ -218,7 +218,7 @@ final class HomeViewController: UIViewController {
             vc.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(vc, animated: true)
         case 2:
-            let vc = Builder.createPopularMovieVC(slug: nil)
+            let vc = Builder.createPopularMovieVC(slug: nil, collectionName: nil)
             vc.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(vc, animated: true)
         default:
@@ -311,7 +311,8 @@ extension HomeViewController: UICollectionViewDelegate {
             presenter.didSelectItem(at: indexPath)
         } else if indexPath.section == 0 {
             guard let collectionName = presenter.collectionMovies?[indexPath.row].slug else { return }
-            let vc = Builder.createPopularMovieVC(slug: collectionName)
+            guard let name = presenter.collectionMovies?[indexPath.row].name else { return }
+            let vc = Builder.createPopularMovieVC(slug: collectionName, collectionName: name)
             navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 2 {
             guard let movies = presenter.movies else {return}
