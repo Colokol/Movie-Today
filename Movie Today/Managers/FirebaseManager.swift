@@ -60,7 +60,7 @@ final class FirebaseManager {
                 print("Не удалось получить данные из изображения")
                 return
             }
-            let storageRef = Storage.storage().reference().child("userimages/(userId)/profile.jpg")
+            let storageRef = Storage.storage().reference().child("userimages/\(userId)/profile.jpg")
             storageRef.putData(imageData, metadata: nil) { metadata, error in
                 guard metadata != nil else {
                     print(error?.localizedDescription)
@@ -132,7 +132,7 @@ final class FirebaseManager {
     }
     //MARK: - Fetch imageURL
     func fetchProfileImageUrl(for userId: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let userImageRef = Database.database().reference().child("users/(userId)/profileImageUrl")
+        let userImageRef = Database.database().reference().child("users/\(userId)/profileImageUrl")
         userImageRef.observeSingleEvent(of: .value) { snapshot in
             guard let imageUrl = snapshot.value as? String else {
                 completion(.failure(NSError(domain: "FirebaseError", code: 0, userInfo: [NSLocalizedDescriptionKey: "URL изображения не найден"])))

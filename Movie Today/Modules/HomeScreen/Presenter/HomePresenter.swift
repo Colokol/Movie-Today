@@ -25,6 +25,7 @@ protocol HomePresenterProtocol: AnyObject {
     func getFilms(with text: String)
     func didSelectItem(at indexPath: IndexPath)
     func fetchPhoto(completion: @escaping (_ image: URL) -> Void)
+    func fetchName(completion: @escaping(_ name: String) -> Void)
     func saveToCoreData(model: Doc)
     init(view: HomeScreenViewProtocol)
 }
@@ -68,6 +69,13 @@ final class HomePresenter: HomePresenterProtocol {
         }
     }
     
+    func fetchName(completion: @escaping(_ name: String) -> Void) {
+        guard let id = fireBase.id else { return }
+        fireBase.fetchUserInfo { name, _ in
+            guard let name = name else { return }
+            completion(name)
+        }
+    }
     func fetchPhoto(completion: @escaping (_ image: URL) -> Void) {
         guard let id = fireBase.id else { return }
         fireBase.fetchProfileImageUrl(for: id) { result in

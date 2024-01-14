@@ -35,6 +35,12 @@ final class HomeViewController: UIViewController {
         presenter.fetchPhoto { image in
             self.userButton.sd_setImage(with: image, for: .normal)
         }
+        presenter.fetchName { name in
+            DispatchQueue.main.async {
+                self.navigationItem.title = name
+            }
+
+        }
         setupNavBar()
         setupSearchResult()
         configureCollectionView()
@@ -72,7 +78,6 @@ final class HomeViewController: UIViewController {
     private func setupNavBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: userButton)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: likeButton)
-        navigationItem.title = "Hello smith!"
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         appearance.configureWithTransparentBackground()
