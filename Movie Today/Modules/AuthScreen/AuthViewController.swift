@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Firebase
 
 final class AuthViewController: UIViewController {
     
@@ -114,6 +113,8 @@ final class AuthViewController: UIViewController {
         stack.spacing = 15
         return stack
     }()
+    
+    private let firebase = FirebaseManager.shared
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .background
@@ -190,33 +191,12 @@ extension AuthViewController: UITextFieldDelegate {
                 showAlert("Please enter your name")
                 return
             }
-            registerUser(name: name, email: email, password: password)
+            firebase.registerUser(name: name, email: email, password: password)
         } else {
-            loginUser(email: email, password: password)
+            firebase.loginUser(email: email, password: password)
         }
     }
     
-    private func registerUser(name: String, email: String, password: String) {
-        Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
-            guard let self = self, let result = result, error == nil else {
-                self?.showAlert("Registration failed: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            let ref = Database.database().reference().child("users")
-            ref.child(result.user.uid).updateChildValues(["name" : name, "email" : email])
-            NotificationCenter.default.post(name: NSNotification.Name("UserDidAuthenticate"), object: nil)
-        }
-    }
-    
-    private func loginUser(email: String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
-            if let error = error {
-                self?.showAlert("Login failed: \(error.localizedDescription)")
-            } else {
-                NotificationCenter.default.post(name: NSNotification.Name("UserDidAuthenticate"), object: nil)
-            }
-        }
-    }
     
     private func showAlert(_ text: String) {
         let alert = UIAlertController(title: "Error", message: text, preferredStyle: .alert)
