@@ -146,22 +146,28 @@ final class CoreDataManager {
             movie.name = model.name
             movie.genre = model.genres?.first?.name
             movie.poster = model.poster?.url
-            guard let lenght = model.movieLength else { return }
-            movie.lenght = Int64(lenght)
-            guard let rait = model.ageRating else { return }
-            movie.raitPG = Int64(rait)
-            movie.type = model.type
-            guard let year = model.year else { return }
-            movie.year = Int64(year)
-            guard let raiting = model.rating?.kp else { return }
-            movie.raiting = raiting
-            guard let url =  model.poster?.url else { return }
-            dataLoader.loadData(fromURL: url) { imageData in
-                if let imageData = imageData {
-                    movie.image = imageData
-                    self.saveContext() 
-                } else {
-                    print("Failed to load image data for \(String(describing: model.name))")
+
+            if let lenght = model.movieLength {
+                movie.lenght = Int64(lenght)
+            }
+            if let rait = model.ageRating {
+                movie.raitPG = Int64(rait)
+                movie.type = model.type
+            }
+            if let year = model.year {
+                movie.year = Int64(year)
+            }
+            if let raiting = model.rating?.kp {
+                movie.raiting = raiting
+            }
+            if let url =  model.poster?.url {
+                dataLoader.loadData(fromURL: url) { imageData in
+                    if let imageData = imageData {
+                        movie.image = imageData
+                        self.saveContext()
+                    } else {
+                        print("Failed to load image data for \(String(describing: model.name))")
+                    }
                 }
             }
         } catch {

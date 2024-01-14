@@ -20,12 +20,23 @@ class WishListVC: UIViewController {
         collectionView.backgroundColor = .clear
         return collectionView
     }()
-    
+
+    private let backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = .soft
+        button.frame = .init(x: 0, y: 0, width: 24, height: 24)
+        button.layer.cornerRadius = button.bounds.size.width / 2
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
         title = "Wishlist"
         setupUI()
+        setupNavBar()
     }
     
     private func setupUI() {
@@ -40,6 +51,15 @@ class WishListVC: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -offset),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+    }
+
+    private func setupNavBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+    }
+
+    @objc private func backAction() {
+        navigationController?.popViewController(animated: true)
     }
 
 }
