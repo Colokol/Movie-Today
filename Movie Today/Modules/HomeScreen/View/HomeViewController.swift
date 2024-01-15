@@ -32,6 +32,10 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
+        presenter.fetchPhoto { image in
+            self.userButton.sd_setImage(with: image, for: .normal)
+        }
+        hideKeyboard()
         setupNavBar()
         setupSearchResult()
         configureCollectionView()
@@ -40,9 +44,9 @@ final class HomeViewController: UIViewController {
         presenter.getCollectionMovie()
         presenter.getMoviesFromCollection()
         userButton.translatesAutoresizingMaskIntoConstraints = false
-
+        
     }
- 
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter.fetchPhoto { image in
@@ -50,14 +54,14 @@ final class HomeViewController: UIViewController {
             self.userButton.layer.cornerRadius = 20
             self.userButton.clipsToBounds = true
         }
-
+        
         presenter.fetchName { name in
             DispatchQueue.main.async {
                 self.navigationItem.title = "Hello \(name)"
             }
         }
     }
-
+    
     //MARK: - Configure ActivityIndicator
     private func configureActivityIndicator() {
         view.addSubviews(activityIndicator)
@@ -230,7 +234,17 @@ final class HomeViewController: UIViewController {
             header.button.addTarget(self, action: #selector(self.seeMoreAction(_:)), for: .touchUpInside)
         }
     }
+    //MARK: - HideKeyboard
     
+    private func hideKeyboard() {
+        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.singleTap(sender:)))
+        singleTapGestureRecognizer.numberOfTapsRequired = 1
+        singleTapGestureRecognizer.isEnabled = true
+        singleTapGestureRecognizer.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(singleTapGestureRecognizer)
+    }
+    
+    //MARK: - @OBJC
     @objc func seeMoreAction(_ sender: UIButton) {
         switch sender.tag {
         case 1:
@@ -244,6 +258,12 @@ final class HomeViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    
+    @objc func singleTap(sender: UITapGestureRecognizer) {
+        self.searchController.searchBar.resignFirstResponder()
+        self.searchController.isActive = false
     }
     
     //MARK: - DataSource
@@ -341,8 +361,8 @@ extension HomeViewController: UICollectionViewDelegate {
             navigationController?.hidesBottomBarWhenPushed = false
             navigationController?.pushViewController(vc, animated: true)
         }
-        
     }
+    
 }
 //MARK: - SearchBarDelegate
 extension HomeViewController: UISearchBarDelegate {
@@ -351,6 +371,7 @@ extension HomeViewController: UISearchBarDelegate {
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
         presenter.getFilms(with: searchText)
     }
+    
 }
 
 extension HomeViewController: UISearchControllerDelegate {

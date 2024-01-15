@@ -19,7 +19,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Call function's
+        hideKeyboard()
         configureActivityIndicator()
         setupNavBar()
         setupSearchResult()
@@ -99,6 +99,17 @@ class SearchViewController: UIViewController {
             tabBarController?.tabBar.scrollEdgeAppearance = tabBarAppearance
         }
     }
+    
+    //MARK: - HideKeyboard
+    
+    private func hideKeyboard() {
+        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.singleTap(sender:)))
+        singleTapGestureRecognizer.numberOfTapsRequired = 1
+        singleTapGestureRecognizer.isEnabled = true
+        singleTapGestureRecognizer.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(singleTapGestureRecognizer)
+    }
+    
     //MARK: - Layout
     private func createLayout() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in
@@ -382,12 +393,18 @@ extension SearchViewController: UICollectionViewDelegate {
             presenter.didSelectItem(at: indexPath)
         } else if indexPath.section == 1 {
             guard let model = presenter.movies else { return }
-            presenter.saveToCoreData(model: model[indexPath.row])
-            presenter.loadRecenMovie()
-            applySnapshot()
-            collectionView.reloadData()
-            let vc = Builder.createDetailVC(model: model[indexPath.row])
-            navigationController?.pushViewController(vc, animated: true)
+            guard let id = model[indexPath.row].id else { return }
+            presenter.getFilm(with: id) { movie in
+                guard let movie = movie else { return }
+                DispatchQueue.main.async {
+                    self.presenter.saveToCoreData(model: movie)
+                    self.presenter.loadRecenMovie()
+                    self.presenter.updateData()
+                    self.presenter.reloadData()
+                    let vc = Builder.createDetailVC(model: movie)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
         } else if indexPath.section == 2 {
             let id = Int(presenter.recentMovies[indexPath.row].id)
             presenter.getFilm(with: id) { [weak self] result in
@@ -412,5 +429,10 @@ extension SearchViewController {
     @objc private func seeAllAction() {
         let vc = Builder.createRecentController()
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func singleTap(sender: UITapGestureRecognizer) {
+        self.searchController.searchBar.resignFirstResponder()
+        self.searchController.isActive = false
     }
 }
