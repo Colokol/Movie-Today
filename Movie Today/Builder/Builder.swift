@@ -91,5 +91,13 @@ final class Builder {
         vc.presenter = presenter
         return vc
     }
+    
+    static func createTreeController() -> UIViewController {
+        let vc = TreeViewController()
+        let presenter = TreePresenter(view: vc)
+        vc.presenter = presenter
+        return vc
+    }
+
 
 }

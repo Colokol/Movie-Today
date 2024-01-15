@@ -15,6 +15,10 @@ extension UIColor {
         return UIColor(red: 0.145, green: 0.157, blue: 0.212, alpha: 1)
     }
     
+    static var recomendBackground: UIColor {
+        return UIColor(red: 60/255, green: 7/255, blue: 83/255, alpha: 1.0)
+    }
+    
     static var whiteGray: UIColor {
             return UIColor(red: 235/255, green: 235/255, blue: 239/255, alpha: 1.0)
         }
