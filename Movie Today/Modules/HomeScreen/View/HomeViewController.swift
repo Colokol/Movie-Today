@@ -42,8 +42,25 @@ final class HomeViewController: UIViewController {
         configureActivityIndicator()
         presenter.getCollectionMovie()
         presenter.getMoviesFromCollection()
+        userButton.translatesAutoresizingMaskIntoConstraints = false
+
     }
-    
+ 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.fetchPhoto { image in
+            self.userButton.sd_setImage(with: image, for: .normal)
+            self.userButton.layer.cornerRadius = 20
+            self.userButton.clipsToBounds = true
+        }
+
+        presenter.fetchName { name in
+            DispatchQueue.main.async {
+                self.navigationItem.title = "Hello \(name)"
+            }
+        }
+    }
+
     //MARK: - Configure ActivityIndicator
     private func configureActivityIndicator() {
         view.addSubviews(activityIndicator)
@@ -66,13 +83,14 @@ final class HomeViewController: UIViewController {
         searchController.searchBar.placeholder = "Search a title"
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.searchBar.searchTextField.textColor = .white
     }
     
     //MARK: - NavBarSetup
     private func setupNavBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: userButton)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: likeButton)
-        navigationItem.title = "Hello smith!"
+        navigationItem.title = ""
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         appearance.configureWithTransparentBackground()
@@ -107,7 +125,8 @@ final class HomeViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            userButton.widthAnchor.constraint(equalToConstant: 46)
         ])
     }
     //MARK: - Layout collectionView

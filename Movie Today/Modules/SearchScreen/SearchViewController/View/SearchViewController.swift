@@ -80,6 +80,8 @@ class SearchViewController: UIViewController {
         searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.blueAccent], for: .selected)
         searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
         searchController.searchBar.showsScopeBar = false
+        searchController.searchBar.searchTextField.textColor = .white
+
     }
     //MARK: - NavBar
     private func setupNavBar() {

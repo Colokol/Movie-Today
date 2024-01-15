@@ -24,8 +24,9 @@ protocol HomePresenterProtocol: AnyObject {
     func updateController()
     func getFilms(with text: String)
     func didSelectItem(at indexPath: IndexPath)
-    func fetchPhoto(completion: @escaping (_ image: URL) -> Void)
     func saveToCoreData(model: Doc)
+    func fetchPhoto(completion: @escaping (_ image: URL) -> Void)
+    func fetchName(completion: @escaping(_ name: String) -> Void)
     init(view: HomeScreenViewProtocol)
 }
 
@@ -35,7 +36,7 @@ final class HomePresenter: HomePresenterProtocol {
     let networkManager = NetworkManager()
     let coreData = CoreDataManager.shared
     let fireBase = FirebaseManager.shared
-    
+
     var movies: [Doc]?
     var collectionMovies: [Collection]?
     var searchMovies: [Doc]?
@@ -67,19 +68,20 @@ final class HomePresenter: HomePresenterProtocol {
             }
         }
     }
-    
+
     func fetchPhoto(completion: @escaping (_ image: URL) -> Void) {
         guard let id = fireBase.id else { return }
         fireBase.fetchProfileImageUrl(for: id) { result in
             switch result {
-            case .success(let image):
-                guard let url = URL(string: image) else { return }
-                completion(url)
-            case .failure(let error):
-                print(error.localizedDescription)
+                case .success(let image):
+                    guard let url = URL(string: image) else { return }
+                    completion(url)
+                case .failure(let error):
+                    print(error.localizedDescription)
             }
         }
     }
+
     func getCollectionMovie() {
         networkManager.getCollectionMovie { result in
             switch result {
@@ -118,6 +120,14 @@ final class HomePresenter: HomePresenterProtocol {
         }
     }
     
+    func fetchName(completion: @escaping(_ name: String) -> Void) {
+        guard let id = fireBase.id else { return }
+        fireBase.fetchUserInfo { name, _ in
+            guard let name = name else { return }
+            completion(name)
+        }
+    }
+
     func updateController() {
         self.view?.update()
     }

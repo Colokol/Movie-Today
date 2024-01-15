@@ -18,21 +18,21 @@ final class EditProfileView: UIView {
         image.contentMode = .scaleAspectFill
         return image
     }()
-    private lazy var editUserImage: UIButton = {
+    var editUserImage: UIButton = {
         let button = UIButton()
         button.backgroundColor = .background
         button.tintColor = .cyan
         button.setImage(UIImage(systemName: "pencil"), for: .normal)
         return button
     }()
-    private lazy var nameLabel: UILabel = {
+     var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .montserratSemiBold(ofSize: 20)
         label.textColor = .white
         label.textAlignment = .center
         return label
     }()
-    private lazy var userEmail: UILabel = {
+    var userEmail: UILabel = {
         let label = UILabel()
         label.font = .montserratMedium(ofSize: 14)
         label.textColor = .lightGray
@@ -40,7 +40,7 @@ final class EditProfileView: UIView {
         return label
     }()
     
-    private lazy var nameLabelTextField: UILabel = {
+     var nameLabelTextField: UILabel = {
         let label = UILabel()
         label.text = "Full name"
         label.backgroundColor = .background
@@ -49,25 +49,24 @@ final class EditProfileView: UIView {
         label.textColor = .white
         return label
     }()
-    private lazy var nameTextField: UITextField = {
+     var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.text = self.nameLabel.text
         textField.font = .montserratMedium(ofSize: 18)
         textField.textColor = .white
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.whiteGray.cgColor
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: nameLabelTextField.frame.size.height))
+         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textField.frame.size.height))
         textField.leftViewMode = .always
         return textField
     }()
-    private lazy var mistakeLabel: UILabel = {
+    var mistakeLabel: UILabel = {
         let label = UILabel()
         label.text = "* Name already exist"
         label.textColor = .red
         label.font = .montserratMedium(ofSize: 13)
         return label
     }()
-    private lazy var emailLabelTextField: UILabel = {
+    var emailLabelTextField: UILabel = {
         let label = UILabel()
         label.text = "Email"
         label.backgroundColor = .background
@@ -76,14 +75,13 @@ final class EditProfileView: UIView {
         label.textColor = .white
         return label
     }()
-    private lazy var emailTextField: UITextField = {
+    var emailTextField: UITextField = {
         let textField = UITextField()
-        textField.text = self.userEmail.text
         textField.font = .montserratMedium(ofSize: 18)
         textField.textColor = .white
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.white.cgColor
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: nameLabelTextField.frame.size.height))
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textField.frame.size.height))
         textField.leftViewMode = .always
         return textField
     }()
@@ -103,7 +101,6 @@ final class EditProfileView: UIView {
         // Call function's
         setupView()
         setupConstraints()
-        fetchUserData()
     }
     
     required init?(coder: NSCoder) {
@@ -112,24 +109,6 @@ final class EditProfileView: UIView {
     
     //MARK: - Methods
     
-    func fetchUserData() {
-        guard let id = Auth.auth().currentUser?.uid else {
-            print("User not logged in")
-            return
-        }
-        let ref = Database.database().reference().child("users").child(id)
-           ref.observeSingleEvent(of: .value) { snapshot in
-               if let userData = snapshot.value as? [String: AnyObject] {
-                   let name = userData["name"] as? String ?? "No Name"
-                   let email = userData["email"] as? String ?? "No Email"
-                   self.nameLabel.text = name
-                   self.nameTextField.text = name
-                   self.userEmail.text = email
-                   self.emailTextField.text = email
-               }
-           }
-    }
-    
     func signatureTextFieldDelegate() {
         nameTextField.delegate = self
         emailTextField.delegate = self
@@ -137,6 +116,10 @@ final class EditProfileView: UIView {
     
     func addTargetFofEditButton(target: Any, selector: Selector) {
         editUserImage.addTarget(target, action: selector, for: .touchUpInside)
+    }
+    
+    func addTargetsForSaveChengesButton(target: Any, selector: Selector) {
+        saveChangesButton.addTarget(target, action: selector, for: .touchUpInside)
     }
     
     //MARK: - Private methods

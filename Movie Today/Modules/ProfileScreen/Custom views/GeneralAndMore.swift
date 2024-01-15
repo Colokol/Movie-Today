@@ -15,7 +15,7 @@ final class GeneralAndMore: UIView {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .whiteGray
-        label.font = UIFont.montserratMedium(ofSize: 14)
+        label.font = UIFont.montserratSemiBold(ofSize: 18)
         return label
     }()
     private lazy var firstImage: UIImageView = {
@@ -25,8 +25,10 @@ final class GeneralAndMore: UIView {
     }()
     let firstButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.gray, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .montserratMedium(ofSize: 14)
+        button.titleLabel?.attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.kern: 0.12])
+        button.contentHorizontalAlignment = .left
         return button
     }()
     private lazy var firstArrowImage: UIImageView = {
@@ -41,8 +43,10 @@ final class GeneralAndMore: UIView {
     }()
     let secondButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.gray, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .montserratMedium(ofSize: 14)
+        button.titleLabel?.attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.kern: 0.12])
+        button.contentHorizontalAlignment = .left
         return button
     }()
     private lazy var secondImage: UIImageView = {
@@ -105,7 +109,7 @@ private extension GeneralAndMore {
             
             // First button
             firstButton.topAnchor.constraint(equalTo: viewLabel.bottomAnchor, constant: Constans.twentyPoints),
-            firstButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sixtyPoints),
+            firstButton.leadingAnchor.constraint(equalTo: firstImage.trailingAnchor, constant: Constans.tenPoints),
             firstButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.fiftyFivePoints),
             firstButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints),
             
@@ -129,7 +133,7 @@ private extension GeneralAndMore {
             
             // Second button
             secondButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: Constans.tenPoints),
-            secondButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constans.sixtyPoints),
+            secondButton.leadingAnchor.constraint(equalTo: firstButton.leadingAnchor),
             secondButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constans.fiftyFivePoints),
             secondButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints),
             
