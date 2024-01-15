@@ -57,6 +57,12 @@
 		CED4D2512B3B0B59005138A9 /* ParametersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4D2502B3B0B59005138A9 /* ParametersRequest.swift */; };
 		FA1603D42B46C89900655762 /* ActorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1603D32B46C89900655762 /* ActorCell.swift */; };
 		FA24C3622B4EF0E0005EC68C /* ResultPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24C3612B4EF0E0005EC68C /* ResultPresenter.swift */; };
+		FA2820592B5596BE0071301D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = FA2820582B5596BE0071301D /* Lottie */; };
+		FA28205C2B5597640071301D /* TreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA28205B2B5597640071301D /* TreeViewController.swift */; };
+		FA28205E2B55978E0071301D /* tree.json in Resources */ = {isa = PBXBuildFile; fileRef = FA28205D2B55978E0071301D /* tree.json */; };
+		FA2820602B559C220071301D /* firework.json in Resources */ = {isa = PBXBuildFile; fileRef = FA28205F2B559C220071301D /* firework.json */; };
+		FA2820622B55A56F0071301D /* RecomendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2820612B55A56E0071301D /* RecomendView.swift */; };
+		FA2820642B55B1C00071301D /* TreePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2820632B55B1C00071301D /* TreePresenter.swift */; };
 		FA290FC92B3C5B52007970F2 /* MovieListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA290FC82B3C5B52007970F2 /* MovieListCell.swift */; };
 		FA3A52D12B55316200E73473 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A52D02B55316200E73473 /* AboutUsViewController.swift */; };
 		FA3A52D42B55318400E73473 /* GeneralAndMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A52D32B55318400E73473 /* GeneralAndMore.swift */; };
@@ -218,6 +224,11 @@
 		CED4D2502B3B0B59005138A9 /* ParametersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersRequest.swift; sourceTree = "<group>"; };
 		FA1603D32B46C89900655762 /* ActorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorCell.swift; sourceTree = "<group>"; };
 		FA24C3612B4EF0E0005EC68C /* ResultPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPresenter.swift; sourceTree = "<group>"; };
+		FA28205B2B5597640071301D /* TreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeViewController.swift; sourceTree = "<group>"; };
+		FA28205D2B55978E0071301D /* tree.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tree.json; sourceTree = "<group>"; };
+		FA28205F2B559C220071301D /* firework.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = firework.json; sourceTree = "<group>"; };
+		FA2820612B55A56E0071301D /* RecomendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomendView.swift; sourceTree = "<group>"; };
+		FA2820632B55B1C00071301D /* TreePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreePresenter.swift; sourceTree = "<group>"; };
 		FA290FC82B3C5B52007970F2 /* MovieListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCell.swift; sourceTree = "<group>"; };
 		FA3A52D02B55316200E73473 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		FA3A52D32B55318400E73473 /* GeneralAndMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralAndMore.swift; sourceTree = "<group>"; };
@@ -283,6 +294,7 @@
 				FA45D6DB2B4F13D1003FBCD8 /* FirebaseDatabase in Frameworks */,
 				FACC8A4D2B4EC8A6005689F4 /* FirebaseAnalyticsSwift in Frameworks */,
 				FA45D6F52B4F13D1003FBCD8 /* FirebasePerformance in Frameworks */,
+				FA2820592B5596BE0071301D /* Lottie in Frameworks */,
 				FA45D6E92B4F13D1003FBCD8 /* FirebaseFunctionsCombine-Community in Frameworks */,
 				FA55137D2B527F7D009FC1DA /* FirebaseAnalyticsSwift in Frameworks */,
 				FACC8A4F2B4EC8A6005689F4 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -473,6 +485,7 @@
 		CED4D21F2B373C4B005138A9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FA28205A2B5597510071301D /* TreeScreen */,
 				FA3A52CE2B55312600E73473 /* ProfileScreen */,
 				FAA4B3C92B4E96B9004CE7AB /* AuthScreen */,
 				FA41B3F22B42B36A00DE620F /* TrailerScreen */,
@@ -613,6 +626,18 @@
 				FA1603D32B46C89900655762 /* ActorCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		FA28205A2B5597510071301D /* TreeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FA28205F2B559C220071301D /* firework.json */,
+				FA28205D2B55978E0071301D /* tree.json */,
+				FA28205B2B5597640071301D /* TreeViewController.swift */,
+				FA2820612B55A56E0071301D /* RecomendView.swift */,
+				FA2820632B55B1C00071301D /* TreePresenter.swift */,
+			);
+			path = TreeScreen;
 			sourceTree = "<group>";
 		};
 		FA3A52CE2B55312600E73473 /* ProfileScreen */ = {
@@ -926,6 +951,7 @@
 				FA55137C2B527F7D009FC1DA /* FirebaseAnalyticsSwift */,
 				FA55137E2B527F7D009FC1DA /* FirebaseAnalyticsWithoutAdIdSupport */,
 				FA5513802B527F7D009FC1DA /* FirebaseAppCheck */,
+				FA2820582B5596BE0071301D /* Lottie */,
 			);
 			productName = "Movie Today";
 			productReference = CED4D2052B373B9F005138A9 /* Movie Today.app */;
@@ -958,6 +984,7 @@
 			packageReferences = (
 				FAAB77212B3B3E7900166219 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				FAA4B3CE2B4E9E49004CE7AB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				FA2820572B5596BE0071301D /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = CED4D2062B373B9F005138A9 /* Products */;
 			projectDirPath = "";
@@ -975,8 +1002,10 @@
 			files = (
 				792A56882B3CFA4E00617440 /* Montserrat-Regular.ttf in Resources */,
 				CED4D2152B373BA1005138A9 /* LaunchScreen.storyboard in Resources */,
+				FA2820602B559C220071301D /* firework.json in Resources */,
 				FAA4B3CD2B4E9DB5004CE7AB /* GoogleService-Info.plist in Resources */,
 				792A56872B3CFA4E00617440 /* Montserrat-Medium.ttf in Resources */,
+				FA28205E2B55978E0071301D /* tree.json in Resources */,
 				FA3A52E52B5537BF00E73473 /* Assets.xcassets in Resources */,
 				792A56892B3CFA4E00617440 /* Montserrat-SemiBold.ttf in Resources */,
 			);
@@ -1035,12 +1064,14 @@
 				796E254C2B4873CB00D6D28B /* FavoriteMovies.xcdatamodeld in Sources */,
 				FA3A52D12B55316200E73473 /* AboutUsViewController.swift in Sources */,
 				FAAB77202B3B3A8700166219 /* CollectionMovieCell.swift in Sources */,
+				FA2820622B55A56F0071301D /* RecomendView.swift in Sources */,
 				FAB7C7632B4C131D00DB98A7 /* ShareView.swift in Sources */,
 				CED4D22C2B387C34005138A9 /* UILabel + Extension.swift in Sources */,
 				FA41B3F62B42B5BA00DE620F /* TitleView.swift in Sources */,
 				FAE057B72B3AE3A4008BC8DE /* MovieListPresenter.swift in Sources */,
 				FAA71AF42B49ECB4001F361A /* SearchResultPresenter.swift in Sources */,
 				CE48A8EE2B3C92EA00244CCF /* OnboardingView.swift in Sources */,
+				FA28205C2B5597640071301D /* TreeViewController.swift in Sources */,
 				FAF734DB2B38AA8A00AE7750 /* SectionHeader.swift in Sources */,
 				FAA71AF22B49ECA4001F361A /* SearchResultController.swift in Sources */,
 				CE5C854A2B452A240083A97C /* FilmPersonnelModel.swift in Sources */,
@@ -1073,6 +1104,7 @@
 				FA3A52D42B55318400E73473 /* GeneralAndMore.swift in Sources */,
 				CED4D23B2B3A0381005138A9 /* EndPointType.swift in Sources */,
 				CED4D2352B38AD25005138A9 /* UIColor + Extension.swift in Sources */,
+				FA2820642B55B1C00071301D /* TreePresenter.swift in Sources */,
 				FAA71AF72B49ECCE001F361A /* SearchSections.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1299,6 +1331,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FA2820572B5596BE0071301D /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.4;
+			};
+		};
 		FAA4B3CE2B4E9E49004CE7AB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1318,6 +1358,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FA2820582B5596BE0071301D /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA2820572B5596BE0071301D /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
 		FA45D6C82B4F13D1003FBCD8 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FAA4B3CE2B4E9E49004CE7AB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
