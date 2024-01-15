@@ -32,6 +32,9 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
+        presenter.fetchPhoto { image in
+            self.userButton.sd_setImage(with: image, for: .normal)
+        }
         setupNavBar()
         setupSearchResult()
         configureCollectionView()
