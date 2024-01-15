@@ -13,10 +13,9 @@ final class FirebaseManager {
     
     static let shared = FirebaseManager()
     private init() {}
-    
+
     let id = Auth.auth().currentUser?.uid
     let firestore = Firestore.firestore()
-    let id = Auth.auth().currentUser?.uid
 
 
     //MARK: - Register

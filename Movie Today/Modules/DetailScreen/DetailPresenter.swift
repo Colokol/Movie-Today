@@ -49,7 +49,7 @@ final class DetailPresenter: DetailPresenterProtocol {
             filmPersons = [Person]()
         }
         guard let persons = movie.persons else { return }
-        for i in 0..<15 {
+        for i in 0..<5 {
             self.filmPersons?.append(persons[i])
         }
     }
