@@ -16,7 +16,6 @@ final class FirebaseManager {
     
     let id = Auth.auth().currentUser?.uid
     let firestore = Firestore.firestore()
-    let id = Auth.auth().currentUser?.uid
 
 
     //MARK: - Register
