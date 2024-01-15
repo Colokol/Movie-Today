@@ -28,6 +28,7 @@
 		CE48A8ED2B3C92EA00244CCF /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EB2B3C92EA00244CCF /* OnboardingViewController.swift */; };
 		CE48A8EE2B3C92EA00244CCF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EC2B3C92EA00244CCF /* OnboardingView.swift */; };
 		CE48A8F02B3D564900244CCF /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48A8EF2B3D564900244CCF /* UIFont + Extension.swift */; };
+		CE5770BA2B55B78A00670B8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE5770B92B55B78A00670B8A /* Assets.xcassets */; };
 		CE5C854A2B452A240083A97C /* FilmPersonnelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5C85492B452A240083A97C /* FilmPersonnelModel.swift */; };
 		CE621C122B3F612400F75743 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE621C102B3F612400F75743 /* SearchViewController.swift */; };
 		CE621C132B3F612400F75743 /* SearchViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE621C112B3F612400F75743 /* SearchViewProtocol.swift */; };
@@ -187,6 +188,7 @@
 		CE48A8EB2B3C92EA00244CCF /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		CE48A8EC2B3C92EA00244CCF /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		CE48A8EF2B3D564900244CCF /* UIFont + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
+		CE5770B92B55B78A00670B8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE5C85492B452A240083A97C /* FilmPersonnelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmPersonnelModel.swift; sourceTree = "<group>"; };
 		CE621C102B3F612400F75743 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		CE621C112B3F612400F75743 /* SearchViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewProtocol.swift; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 			isa = PBXGroup;
 			children = (
 				FA3A52E42B5537BF00E73473 /* Assets.xcassets */,
+				CE5770B92B55B78A00670B8A /* Assets.xcassets */,
 				792A56832B3CFA0E00617440 /* Font */,
 				FAA4B3CC2B4E9DB5004CE7AB /* GoogleService-Info.plist */,
 				CED4D2162B373BA1005138A9 /* Info.plist */,
@@ -977,6 +980,7 @@
 				CED4D2152B373BA1005138A9 /* LaunchScreen.storyboard in Resources */,
 				FAA4B3CD2B4E9DB5004CE7AB /* GoogleService-Info.plist in Resources */,
 				792A56872B3CFA4E00617440 /* Montserrat-Medium.ttf in Resources */,
+				CE5770BA2B55B78A00670B8A /* Assets.xcassets in Resources */,
 				FA3A52E52B5537BF00E73473 /* Assets.xcassets in Resources */,
 				792A56892B3CFA4E00617440 /* Montserrat-SemiBold.ttf in Resources */,
 			);
