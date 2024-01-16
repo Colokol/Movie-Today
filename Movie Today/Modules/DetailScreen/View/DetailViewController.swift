@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import WebKit
 
 class DetailViewController: UIViewController {
     var presenter: DetailPresenterProtocol!
@@ -38,6 +39,7 @@ class DetailViewController: UIViewController {
     private let descriptionTextView = UITextView()
     private let castTitle = UILabel()
     private lazy var actorsCollectionView = UICollectionView()
+    private let webView = WKWebView()
     
     private let shareView = ShareView()
     private var blur: UIVisualEffectView?
@@ -52,6 +54,8 @@ class DetailViewController: UIViewController {
         setupShareView()
         presenter.configureScreen()
         presenter.getActors()
+        preloadTrailerWebView()
+        setupTapGesture()
     }
     
     override func viewDidLayoutSubviews() {
@@ -282,7 +286,41 @@ class DetailViewController: UIViewController {
         ])
     }
     
+    private func preloadTrailerWebView() {
+        if let model = presenter?.movie {
+            guard let trailer = model.videos?.trailers, !trailer.isEmpty else { return }
+            guard let urlString = trailer[0].url, let url = URL(string: urlString) else { return }
+            let request = URLRequest(url: url)
+            webView.load(request)
+            webView.isHidden = true // Скрыть webView, пока он не нужен
+            self.view.addSubviews(webView)
+            NSLayoutConstraint.activate([
+                self.webView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.webView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+                self.webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                self.webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                self.webView.heightAnchor.constraint(equalToConstant: 250)
+                
+            ])
+        }
+    }
+    private func setupTapGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(screenTapped))
+        view.addGestureRecognizer(tap)
+    }
+    
     // MARK: - Actions
+    
+    @objc func screenTapped() {
+        self.blur?.isHidden = true
+        self.blur = nil
+        UIView.animate(withDuration: 0.5, animations: {
+            self.webView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        }, completion: { _ in
+            self.webView.isHidden = true
+        })
+  
+    }
     func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
@@ -297,10 +335,17 @@ class DetailViewController: UIViewController {
     }
 
     func trailerButtonTapped() {
-        if let model = presenter?.movie {
-            let vc = Builder.createTrailerVC(model: model)
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        let blurEffect = UIBlurEffect(style: .regular)
+        blur = UIVisualEffectView(effect: blurEffect)
+        blur?.frame = self.view.bounds
+        blur?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view.addSubview(blur!)
+        self.view.bringSubviewToFront(webView)
+        webView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+            webView.isHidden = false
+        UIView.animate(withDuration: 0.5, animations: {
+              self.webView.transform = CGAffineTransform.identity
+          })
     }
     
     func shareButtonTapped() {

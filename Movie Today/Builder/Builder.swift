@@ -46,12 +46,6 @@ final class Builder {
         return view
     }
 
-    static func createTrailerVC(model: Doc) -> UIViewController {
-        let view = TrailerController()
-        let presenter = TrailerPresenter(view: view, model: model)
-        view.presenter = presenter
-        return view
-    }
     static func createSearchResultController(person: [PersonModel]?, movie: [Doc]?) -> SearchResultController {
         let view = SearchResultController()
         let presenter = SearchResultPresenter(view: view, actors: person, movies: movie)
