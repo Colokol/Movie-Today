@@ -99,5 +99,11 @@ final class Builder {
         return vc
     }
 
+    static func crateProfileController() -> UIViewController {
+        let vc = ProfileViewController()
+        let presenter = ProfilePresenter(view: vc)
+        vc.presenter = presenter
+        return vc
+    }
 
 }

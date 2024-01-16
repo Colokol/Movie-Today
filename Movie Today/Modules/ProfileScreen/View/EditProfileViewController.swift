@@ -9,11 +9,89 @@ import UIKit
 import Firebase
 import FirebaseStorage
 
-class EditProfileViewController: UIViewController {
+final class EditProfileViewController: UIViewController {
 
     //MARK: - User interface elements
     
-    let editProfileView = EditProfileView()
+    let userImage: UIImageView = {
+        let image = UIImageView()
+        image.clipsToBounds = true
+        image.contentMode = .scaleAspectFill
+        return image
+    }()
+    var editUserImage: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .background
+        button.tintColor = .cyan
+        button.setImage(UIImage(systemName: "pencil"), for: .normal)
+        return button
+    }()
+     var nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .montserratSemiBold(ofSize: 20)
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
+    }()
+    var userEmail: UILabel = {
+        let label = UILabel()
+        label.font = .montserratMedium(ofSize: 14)
+        label.textColor = .lightGray
+        label.textAlignment = .center
+        return label
+    }()
+    
+     var nameLabelTextField: UILabel = {
+        let label = UILabel()
+        label.text = "Full name"
+        label.backgroundColor = .background
+        label.textAlignment = .center
+        label.font = .montserratMedium(ofSize: 15)
+        label.textColor = .white
+        return label
+    }()
+     var nameTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = .montserratMedium(ofSize: 18)
+        textField.textColor = .white
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.whiteGray.cgColor
+         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textField.frame.size.height))
+        textField.leftViewMode = .always
+        return textField
+    }()
+    var mistakeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "* Name already exist"
+        label.textColor = .red
+        label.font = .montserratMedium(ofSize: 13)
+        return label
+    }()
+    var emailLabelTextField: UILabel = {
+        let label = UILabel()
+        label.text = "Email"
+        label.backgroundColor = .background
+        label.textAlignment = .center
+        label.font = .montserratMedium(ofSize: 15)
+        label.textColor = .white
+        return label
+    }()
+    var emailTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = .montserratMedium(ofSize: 18)
+        textField.textColor = .white
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.white.cgColor
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textField.frame.size.height))
+        textField.leftViewMode = .always
+        return textField
+    }()
+    private lazy var saveChangesButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Save Changes", for: .normal)
+        button.backgroundColor = .cyan
+        return button
+    }()
     
     // MARK: - Life cycle
     
@@ -66,8 +144,8 @@ class EditProfileViewController: UIViewController {
                         DispatchQueue.main.async {
                             self.editProfileView.userImage.sd_setImage(with: url)
                         }
-                    case .failure(let failure):
-                        print("")
+                    case .failure(let error):
+                        print(String(describing: error))
                     }
                 }
             }
@@ -115,15 +193,10 @@ class EditProfileViewController: UIViewController {
     }
     
     @objc func saveChangesTapped() {
-        print("click")
         guard let id = Auth.auth().currentUser?.uid else { return }
-        print("click")
         guard let savedImage = editProfileView.userImage.image else { return }
-        print("click")
         uploadImageToFirebaseStorage(savedImage, for: id)
-        print("click")
-//        navigationController?.popViewController(animated: true)
-//        print("click")
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -164,14 +237,14 @@ extension EditProfileViewController {
         // Загрузка изображения
         storageRef.putData(imageData, metadata: nil) { metadata, error in
             guard metadata != nil else {
-                print("\(error?.localizedDescription) Привет")
+                print("\(String(describing: error?.localizedDescription)) Привет")
                 return
             }
             
             // Получение URL изображения после успешной загрузки
             storageRef.downloadURL { url, error in
                 guard let downloadURL = url else {
-                    print("\(error?.localizedDescription) пока")
+                    print("\(String(describing: error?.localizedDescription)) пока")
                     return
                 }
                 

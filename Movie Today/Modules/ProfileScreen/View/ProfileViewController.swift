@@ -1,5 +1,5 @@
 //
-//  ProfileView.swift
+//  ProfileViewController.swift
 //  Movie Today
 //
 //  Created by Nikita on 27.12.2023.
@@ -7,7 +7,11 @@
 
 import UIKit
 
-final class ProfileView: UIView {
+final class ProfileViewController: UIViewController {
+    
+    //MARK: - Properties
+    
+    var presenter: ProfilePresenterProtocol!
     
     //MARK: - User interface element
     
@@ -15,7 +19,6 @@ final class ProfileView: UIView {
         let scroll = UIScrollView()
         scroll.alwaysBounceVertical = true
         scroll.showsVerticalScrollIndicator = false
-        scroll.frame = self.bounds
         return scroll
     }()
     private let exitButton: UIButton = {
@@ -26,32 +29,30 @@ final class ProfileView: UIView {
         button.layer.cornerRadius = 15
         return button
     }()
-    var exitAction: (() -> Void)?
     let contentView = UIView()
     let userView = UserView()
     let generalView = GeneralAndMore(labelText: "General", firstButtonTitle: "Notification", firstImage: "notif", secondButtonTitle: "Language", secondImage: "lang")
     let moreView = GeneralAndMore(labelText: "More", firstButtonTitle: "Legal and Policies", firstImage: "legal", secondButtonTitle: "About Us", secondImage: "about")
+
+    //MARK: - Life cycle
     
-    //MARK: - Initialize
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        navigationController?.navigationBar.barTintColor = .background
+        tabBarController?.tabBar.barTintColor = .background
+
         // Call function's
         setupView()
         setupConstraints()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
- 
     //MARK: - Private methods
     
     private func setupView() {
         // Setup view
-        self.backgroundColor = .background
-        self.addSubviews(scrollView)
+        view.backgroundColor = .background
+        view.addSubviews(scrollView)
         scrollView.addSubviews(contentView)
         contentView.addSubviews(userView, generalView, moreView, exitButton)
         
@@ -70,16 +71,56 @@ final class ProfileView: UIView {
         moreView.layer.borderColor = UIColor.gray.cgColor
         moreView.layer.cornerRadius = 15
         
+        // Added target for button
+        userView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        generalView.firstButton.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
+        generalView.secondButton.addTarget(self, action: #selector(languageButtonTapped), for: .touchUpInside)
+        moreView.firstButton.addTarget(self, action: #selector(policiesButtonTapped), for: .touchUpInside)
+        moreView.secondButton.addTarget(self, action: #selector(aboutButtonTapped), for: .touchUpInside)
         exitButton.addTarget(self, action: #selector(exitButtonAction), for: .touchUpInside)
     }
+
+    //MARK: - Objective-C methods
     
     @objc private func exitButtonAction() {
-        exitAction?()
+        presenter.exitActionTapped()
+    }
+    
+    @objc func editButtonTapped() {
+        let editProfileVC = EditProfileViewController()
+        editProfileVC.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(editProfileVC, animated: true)
+    }
+    
+    @objc func notificationButtonTapped() {
+        let notificationVC = NotificationViewController()
+        notificationVC.modalPresentationStyle = .fullScreen
+        navigationController?.show(notificationVC, sender: self)
+    }
+
+    @objc func languageButtonTapped() {
+        let languageVC = LanguageTableViewController()
+        languageVC.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(languageVC, animated: true)
+    }
+
+    @objc func policiesButtonTapped() {
+        let policiesVC = PrivacyViewController()
+        policiesVC.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(policiesVC, animated: true)
+    }
+    
+    @objc func aboutButtonTapped() {
+        let aboutUsVC = AboutUsViewController()
+        aboutUsVC.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(aboutUsVC, animated: true)
     }
 }
 
-private extension ProfileView {
-    
+//MARK: - Extension
+
+private extension ProfileViewController {
+
     enum Constans {
         static let fivePoints: CGFloat = 5
         static let tenPoints: CGFloat = 10
@@ -95,19 +136,20 @@ private extension ProfileView {
     }
     
     func setupConstraints() {
+        
         NSLayoutConstraint.activate([
             // Scroll view
-            scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             // Content view
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: view.widthAnchor),
             
             // User view
             userView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: Constans.tenPoints),
@@ -132,5 +174,13 @@ private extension ProfileView {
             exitButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constans.sideMargin),
             exitButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints)
         ])
+    }
+}
+
+extension ProfileViewController: ProfileScreenViewPresenter {
+   
+    func updateViewData(name: String?, email: String?, image: URL?) {
+        print("Hello")
+        userView.configureView(name: name, email: email, image: image)
     }
 }
