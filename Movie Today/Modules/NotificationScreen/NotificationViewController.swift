@@ -12,7 +12,7 @@ class NotificationViewController: UIViewController {
     //MARK: - Properties
     
     let notificationMananger = NotificationManager()
-
+    
     //MARK: - UI Elements
     
     private let messagesNotificationsLabel: UILabel = {
@@ -40,21 +40,18 @@ class NotificationViewController: UIViewController {
     
     private let timeIntervalLabel: UILabel = {
         let label = UILabel()
-        label.text = "Time Interval: 0 sec"
+        label.text = "Time Interval"
         label.textColor = .white
         label.font = UIFont.montserratMedium(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
-    private let timeIntervalStepper: UIStepper = {
-        let stepper = UIStepper()
-        stepper.wraps = false
-        stepper.autorepeat = true
-        stepper.stepValue = 60
-        stepper.maximumValue = 3600
-        stepper.translatesAutoresizingMaskIntoConstraints = false
-        return stepper
+    
+    private let datePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.datePickerMode = .time
+        picker.locale = Locale(identifier: "en_GB")
+        return picker
     }()
     
     private lazy var showNotificationsStack: UIStackView = {
@@ -66,10 +63,10 @@ class NotificationViewController: UIViewController {
     }()
     
     private lazy var horizontalStack: UIStackView = {
-        createStack(arrangedSubviews: [timeIntervalLabel, timeIntervalStepper], axis: .horizontal)
+        createStack(arrangedSubviews: [timeIntervalLabel, datePicker], axis: .horizontal)
     }()
     
-
+    
     
     //MARK: - Life Cycle
     override func viewWillAppear(_ animated: Bool) {
@@ -87,18 +84,16 @@ class NotificationViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupSwitcher()
-        setupStepper()
+        setupDatePicker()
+        getDateToPicker()
         setConstraints()
-        addStepperTarget()
     }
     
-
+    
     
     //MARK: - Private Methods
     
-    private func addStepperTarget() {
-        timeIntervalStepper.addTarget(self, action: #selector(stepperAction), for: .touchUpInside)
-    }
+
     private func createStack(arrangedSubviews views: [UIView], axis: NSLayoutConstraint.Axis) -> UIStackView {
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = axis
@@ -106,7 +101,7 @@ class NotificationViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }
-
+    
     private func setupViews() {
         view.backgroundColor = UIColor.background
         view.addSubview(verticalStack)
@@ -117,27 +112,31 @@ class NotificationViewController: UIViewController {
         switcher.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
     }
     
-    private func setupStepper() {
-        let savedInterval = UserDefaults.standard.integer(forKey: "selectedTimeInterval")
-        if savedInterval > 0 {
-            timeIntervalStepper.value = Double(savedInterval)
-            timeIntervalLabel.text = "Time Interval: \(savedInterval) sec"
+    private func setupDatePicker() {
+        datePicker.addTarget(self, action: #selector(datePickerChanged), for: .valueChanged)
+    }
+    
+    private func getDateToPicker() {
+        if let dateData = UserDefaults.standard.data(forKey: "selectedDate"),
+           let date = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSDate.self, from: dateData) as Date? {
+            datePicker.date = date
         }
     }
     
     //MARK: - Actions
     
-    @objc private func stepperAction() {
-        let interval = Int(timeIntervalStepper.value)
-        timeIntervalLabel.text = "Time Interval: \(interval) sec"
-        UserDefaults.standard.set(interval, forKey: "selectedTimeInterval")
+    @objc private func datePickerChanged() {
         if switcher.isOn {
-            notificationMananger.sendNotification(after: interval)
+            let selectedDate = datePicker.date
+            let dateData = try? NSKeyedArchiver.archivedData(withRootObject: selectedDate, requiringSecureCoding: false)
+            UserDefaults.standard.set(dateData, forKey: "selectedDate")
+            notificationMananger.sendNotification(at: selectedDate)
         }
     }
+    
     @objc private func switchValueChanged() {
         UserDefaults.standard.set(switcher.isOn, forKey: "switchState")
-
+        
     }
     
     // MARK: - Set Constraints

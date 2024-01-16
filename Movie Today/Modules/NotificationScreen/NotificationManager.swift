@@ -25,18 +25,22 @@ class NotificationManager {
         }
     }
     
-    func sendNotification(after seconds: Int) {
-        let identifier = "notif"
-        let notifTitle = "Все фильмы тут!"
-        let notifBody = "Выберите что посмотреть этим вечером"
-        
+    func sendNotification(at date: Date) {
+        print("ПОПАЛИ СЮДА")
         let content = UNMutableNotificationContent()
-        content.title = notifTitle
-        content.body = notifBody
+        content.title = "Напоминание"
+        content.body = "Пора смотреть фильмы!"
         content.sound = .default
         
-        let notifTrigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(seconds), repeats: true)
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: notifTrigger)
-        notificationCenter.add(request)
-    }
+        let calendar = Calendar.current
+        let dateComponents = calendar.dateComponents([.hour, .minute], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error notif")
+            }
+        }
+     }
 }
