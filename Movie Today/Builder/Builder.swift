@@ -105,5 +105,11 @@ final class Builder {
         vc.presenter = presenter
         return vc
     }
-
+        
+    static func createEditProfileViewController() -> UIViewController {
+        let vc = EditProfileViewController()
+        let presenter = EditProfilePresenter(view: vc)
+        vc.presenter = presenter as? EditScreenViewPresenter
+        return vc
+    }
 }

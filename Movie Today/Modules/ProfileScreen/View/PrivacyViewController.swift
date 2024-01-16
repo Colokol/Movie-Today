@@ -66,6 +66,9 @@ class PrivacyViewController: UIViewController {
     //MARK: - Private methods
     
     private func setupView() {
+        // Setup navigation controller
+        navigationItem.title = "Legal and Policies"
+        navigationController?.navigationBar.tintColor = .white
         
         // Setup view
         view.backgroundColor = .background

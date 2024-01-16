@@ -10,38 +10,41 @@ import Firebase
 import FirebaseStorage
 
 final class EditProfileViewController: UIViewController {
-
+    
+    //MARK: - Properties
+    
+    var presenter: EditScreenViewPresenter?
+    
     //MARK: - User interface elements
     
-    let userImage: UIImageView = {
+    private lazy var userImage: UIImageView = {
         let image = UIImageView()
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill
         return image
     }()
-    var editUserImage: UIButton = {
+    private lazy var editUserImage: UIButton = {
         let button = UIButton()
         button.backgroundColor = .background
         button.tintColor = .cyan
         button.setImage(UIImage(systemName: "pencil"), for: .normal)
         return button
     }()
-     var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .montserratSemiBold(ofSize: 20)
         label.textColor = .white
         label.textAlignment = .center
         return label
     }()
-    var userEmail: UILabel = {
+    private lazy var userEmail: UILabel = {
         let label = UILabel()
         label.font = .montserratMedium(ofSize: 14)
         label.textColor = .lightGray
         label.textAlignment = .center
         return label
     }()
-    
-     var nameLabelTextField: UILabel = {
+    private lazy var nameLabelTextField: UILabel = {
         let label = UILabel()
         label.text = "Full name"
         label.backgroundColor = .background
@@ -50,24 +53,24 @@ final class EditProfileViewController: UIViewController {
         label.textColor = .white
         return label
     }()
-     var nameTextField: UITextField = {
+    private lazy var nameTextField: UITextField = {
         let textField = UITextField()
         textField.font = .montserratMedium(ofSize: 18)
         textField.textColor = .white
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.whiteGray.cgColor
-         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textField.frame.size.height))
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: textField.frame.size.height))
         textField.leftViewMode = .always
         return textField
     }()
-    var mistakeLabel: UILabel = {
+    private lazy var mistakeLabel: UILabel = {
         let label = UILabel()
         label.text = "* Name already exist"
         label.textColor = .red
         label.font = .montserratMedium(ofSize: 13)
         return label
     }()
-    var emailLabelTextField: UILabel = {
+    private lazy var emailLabelTextField: UILabel = {
         let label = UILabel()
         label.text = "Email"
         label.backgroundColor = .background
@@ -76,7 +79,7 @@ final class EditProfileViewController: UIViewController {
         label.textColor = .white
         return label
     }()
-    var emailTextField: UITextField = {
+    private lazy var emailTextField: UITextField = {
         let textField = UITextField()
         textField.font = .montserratMedium(ofSize: 18)
         textField.textColor = .white
@@ -90,6 +93,7 @@ final class EditProfileViewController: UIViewController {
         let button = UIButton()
         button.setTitle("Save Changes", for: .normal)
         button.backgroundColor = .cyan
+        button.setTitleColor(.background, for: .normal)
         return button
     }()
     
@@ -97,71 +101,50 @@ final class EditProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Call function's
         setupView()
         signatureDelegate()
         setupConstaints()
-        fetchUserInfo()
     }
-
+    
     //MARK: - Private methods
     
     private func setupView() {
         
         // Setup view
-        view.addSubviews(editProfileView)
+        view.backgroundColor = .background
+        view.addSubviews(userImage,
+                         editUserImage,
+                         nameLabel,
+                         userEmail,
+                         nameTextField,
+                         nameLabelTextField,
+                         mistakeLabel,
+                         emailTextField,
+                         emailLabelTextField,
+                         saveChangesButton
+        )
         
         // Add target's
-        editProfileView.addTargetFofEditButton(target: self, selector: #selector(changeImage))
-        editProfileView.addTargetsForSaveChengesButton(target: self, selector: #selector(saveChangesTapped))
+        editUserImage.addTarget(target, action: #selector(changeImage), for: .touchUpInside)
+        saveChangesButton.addTarget(target, action: #selector(saveChangesTapped), for: .touchUpInside)
+        
+        // Setup user image
+        userImage.layer.cornerRadius = 50
+        
+        // Setup button's
+        editUserImage.layer.cornerRadius = 15
+        saveChangesButton.layer.cornerRadius = 25
+        
+        // Setup text field's
+        nameTextField.layer.cornerRadius = 20
+        emailTextField.layer.cornerRadius = 20
     }
-
+    
     private func signatureDelegate() {
-        editProfileView.signatureTextFieldDelegate()
-    }
-    
-    func fetchUserInfo() {
-        guard let id = Auth.auth().currentUser?.uid else {
-            print("User not logged in")
-            return
-        }
-        let ref = Database.database().reference().child("users").child(id)
-        ref.observeSingleEvent(of: .value) { snapshot, _ in
-            if let userData = snapshot.value as? [String: AnyObject] {
-                let name = userData["name"] as? String ?? "No name"
-                let email = userData["email"] as? String ?? "No email"
-                DispatchQueue.main.async {
-                    self.editProfileView.nameLabel.text = name
-                    self.editProfileView.nameTextField.text = name
-                    self.editProfileView.userEmail.text = email
-                    self.editProfileView.emailTextField.text = email
-                }
-                self.fetchProfileImageUrl(for: id) { result in
-                    switch result {
-                    case .success(let success):
-                        let url = URL(string: success)
-                        DispatchQueue.main.async {
-                            self.editProfileView.userImage.sd_setImage(with: url)
-                        }
-                    case .failure(let error):
-                        print(String(describing: error))
-                    }
-                }
-            }
-        }
-    }
-
-    
-    func fetchProfileImageUrl(for userId: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let userImageRef = Database.database().reference().child("users/\(userId)/profileImageUrl")
-        userImageRef.observeSingleEvent(of: .value) { snapshot in
-            guard let imageUrl = snapshot.value as? String else {
-                completion(.failure(NSError(domain: "FirebaseError", code: 0, userInfo: [NSLocalizedDescriptionKey: "URL изображения не найден"])))
-                return
-            }
-            completion(.success(imageUrl))
-        }
+        nameTextField.delegate = self
+        emailTextField.delegate = self
     }
     
     //MARK: - @objc methods
@@ -194,14 +177,23 @@ final class EditProfileViewController: UIViewController {
     
     @objc func saveChangesTapped() {
         guard let id = Auth.auth().currentUser?.uid else { return }
-        guard let savedImage = editProfileView.userImage.image else { return }
+        guard let savedImage = userImage.image else { return }
         uploadImageToFirebaseStorage(savedImage, for: id)
         navigationController?.popViewController(animated: true)
     }
 }
 
 //MARK: - Extension
+//MARK: UITextFieldDelegate methods
+extension EditProfileViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
+    }
+}
 
+//MARK: UIImagePickerControllerDelegate methods
 extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func choiseImagePicker(_ sourse: UIImagePickerController.SourceType) {
@@ -215,13 +207,14 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        editProfileView.userImage.image = info[.editedImage] as? UIImage
-        editProfileView.userImage.contentMode = .scaleAspectFit
-        editProfileView.userImage.clipsToBounds = true
+        userImage.image = info[.editedImage] as? UIImage
+        userImage.contentMode = .scaleAspectFit
+        userImage.clipsToBounds = true
         dismiss(animated: true)
     }
 }
 
+//MARK: Firebase methods
 extension EditProfileViewController {
     
     func uploadImageToFirebaseStorage(_ image: UIImage, for userId: String) {
@@ -266,15 +259,97 @@ extension EditProfileViewController {
     }
 }
 
+//MARK: EditScreenViewPresenter methods
+extension EditProfileViewController: EditScreenViewPresenter {
+    func updateData(_ name: String?, email: String?, image: URL?) {
+        guard let name, let email, let image else { return }
+        self.nameLabel.text = name
+        self.nameTextField.text = name
+        self.userEmail.text = email
+        self.emailTextField.text = email
+        self.userImage.sd_setImage(with: image)
+    }
+}
 
+//MARK: Constraints
 private extension EditProfileViewController {
+    
+    enum Constans {
+        static let fivePoints: CGFloat = 5
+        static let tenPoints: CGFloat = 10
+        static let twentyPoints: CGFloat = 20
+        static let sideMargin: CGFloat = 24
+        static let thiryPoints: CGFloat = 30
+        static let fiftyPoints: CGFloat = 50
+        static let fiftyFivePoints: CGFloat = 55
+        static let seventyPoints: CGFloat = 70
+        static let ninetyPoints: CGFloat = 90
+        static let oneHundredPoints: CGFloat = 100
+        static let twoHundredPoints: CGFloat = 200
+    }
+    
     
     func setupConstaints() {
         NSLayoutConstraint.activate([
-            editProfileView.topAnchor.constraint(equalTo: view.topAnchor),
-            editProfileView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            editProfileView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            editProfileView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            // User image
+            userImage.topAnchor.constraint(equalTo: view.topAnchor, constant: Constans.oneHundredPoints),
+            userImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            userImage.heightAnchor.constraint(equalToConstant: Constans.oneHundredPoints),
+            userImage.widthAnchor.constraint(equalToConstant: Constans.oneHundredPoints),
+            
+            // Edit user image button
+            editUserImage.trailingAnchor.constraint(equalTo: userImage.trailingAnchor),
+            editUserImage.bottomAnchor.constraint(equalTo: userImage.bottomAnchor),
+            editUserImage.heightAnchor.constraint(equalToConstant: Constans.thiryPoints),
+            editUserImage.widthAnchor.constraint(equalToConstant: Constans.thiryPoints),
+            
+            // Name label
+            nameLabel.topAnchor.constraint(equalTo: editUserImage.bottomAnchor, constant: Constans.twentyPoints),
+            nameLabel.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
+            nameLabel.widthAnchor.constraint(equalToConstant: Constans.seventyPoints),
+            nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            // User email
+            userEmail.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: Constans.tenPoints),
+            userEmail.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
+            userEmail.widthAnchor.constraint(equalToConstant: Constans.twoHundredPoints),
+            userEmail.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            // Name text field
+            nameTextField.topAnchor.constraint(equalTo: userEmail.bottomAnchor, constant: Constans.seventyPoints),
+            nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.sideMargin),
+            nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constans.sideMargin),
+            nameTextField.heightAnchor.constraint(equalToConstant: Constans.fiftyPoints),
+            
+            // Name text field label
+            nameLabelTextField.bottomAnchor.constraint(equalTo: nameTextField.topAnchor, constant: Constans.tenPoints),
+            nameLabelTextField.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor, constant: Constans.twentyPoints),
+            nameLabelTextField.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
+            nameLabelTextField.widthAnchor.constraint(equalToConstant: Constans.ninetyPoints),
+            
+            // Mistake label
+            mistakeLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: Constans.fivePoints),
+            mistakeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.sideMargin),
+            mistakeLabel.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
+            mistakeLabel.widthAnchor.constraint(equalToConstant: Constans.twoHundredPoints),
+            
+            // Email text field
+            emailTextField.topAnchor.constraint(equalTo: mistakeLabel.bottomAnchor, constant: Constans.twentyPoints),
+            emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.sideMargin),
+            emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constans.sideMargin),
+            emailTextField.heightAnchor.constraint(equalToConstant: Constans.fiftyPoints),
+            
+            // Email text field
+            emailLabelTextField.bottomAnchor.constraint(equalTo: emailTextField.topAnchor, constant: Constans.tenPoints),
+            emailLabelTextField.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor, constant: Constans.twentyPoints),
+            emailLabelTextField.heightAnchor.constraint(equalToConstant: Constans.twentyPoints),
+            emailLabelTextField.widthAnchor.constraint(equalToConstant: Constans.fiftyPoints),
+            
+            saveChangesButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Constans.seventyPoints),
+            saveChangesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constans.sideMargin),
+            saveChangesButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constans.sideMargin),
+            saveChangesButton.heightAnchor.constraint(equalToConstant: Constans.fiftyFivePoints),
         ])
     }
 }

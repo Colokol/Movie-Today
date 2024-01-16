@@ -21,7 +21,7 @@ final class ProfileViewController: UIViewController {
         scroll.showsVerticalScrollIndicator = false
         return scroll
     }()
-    private let exitButton: UIButton = {
+    private lazy var exitButton: UIButton = {
         let button = UIButton()
         button.setTitle("Exit", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -29,10 +29,10 @@ final class ProfileViewController: UIViewController {
         button.layer.cornerRadius = 15
         return button
     }()
-    let contentView = UIView()
-    let userView = UserView()
-    let generalView = GeneralAndMore(labelText: "General", firstButtonTitle: "Notification", firstImage: "notif", secondButtonTitle: "Language", secondImage: "lang")
-    let moreView = GeneralAndMore(labelText: "More", firstButtonTitle: "Legal and Policies", firstImage: "legal", secondButtonTitle: "About Us", secondImage: "about")
+    private lazy var contentView = UIView()
+    private lazy var userView = UserView()
+    private lazy var generalView = GeneralAndMore(labelText: "General", firstButtonTitle: "Notification", firstImage: "notif", secondButtonTitle: "Language", secondImage: "lang")
+    private lazy var moreView = GeneralAndMore(labelText: "More", firstButtonTitle: "Legal and Policies", firstImage: "legal", secondButtonTitle: "About Us", secondImage: "about")
 
     //MARK: - Life cycle
     
@@ -50,6 +50,9 @@ final class ProfileViewController: UIViewController {
     //MARK: - Private methods
     
     private func setupView() {
+        // Setup navigation controller
+        setupNavigationController()
+        
         // Setup view
         view.backgroundColor = .background
         view.addSubviews(scrollView)
@@ -79,6 +82,15 @@ final class ProfileViewController: UIViewController {
         moreView.secondButton.addTarget(self, action: #selector(aboutButtonTapped), for: .touchUpInside)
         exitButton.addTarget(self, action: #selector(exitButtonAction), for: .touchUpInside)
     }
+    
+    private func setupNavigationController() {
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.configureWithTransparentBackground()
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
 
     //MARK: - Objective-C methods
     
@@ -87,7 +99,7 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc func editButtonTapped() {
-        let editProfileVC = EditProfileViewController()
+        let editProfileVC = Builder.createEditProfileViewController()
         editProfileVC.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(editProfileVC, animated: true)
     }
@@ -180,7 +192,6 @@ private extension ProfileViewController {
 extension ProfileViewController: ProfileScreenViewPresenter {
    
     func updateViewData(name: String?, email: String?, image: URL?) {
-        print("Hello")
         userView.configureView(name: name, email: email, image: image)
     }
 }

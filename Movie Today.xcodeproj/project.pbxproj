@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1E1269662B52E8B000750029 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1269652B52E8B000750029 /* NotificationManager.swift */; };
 		1E3517B72B56E307004CBCDA /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3517B62B56E307004CBCDA /* ProfilePresenter.swift */; };
+		1E3517B92B5703AB004CBCDA /* EditProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3517B82B5703AB004CBCDA /* EditProfilePresenter.swift */; };
 		792A56802B3CF96000617440 /* WishlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A567F2B3CF96000617440 /* WishlistCell.swift */; };
 		792A56822B3CF98200617440 /* WishListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A56812B3CF98200617440 /* WishListVC.swift */; };
 		792A56872B3CFA4E00617440 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 792A56842B3CFA4E00617440 /* Montserrat-Medium.ttf */; };
@@ -62,7 +63,6 @@
 		FA3A52D12B55316200E73473 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A52D02B55316200E73473 /* AboutUsViewController.swift */; };
 		FA3A52D42B55318400E73473 /* GeneralAndMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A52D32B55318400E73473 /* GeneralAndMore.swift */; };
 		FA3A52D62B55319200E73473 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A52D52B55319200E73473 /* UserView.swift */; };
-		FA3A52D92B5531AE00E73473 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A52D82B5531AE00E73473 /* EditProfileView.swift */; };
 		FA3A52DB2B5531BC00E73473 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A52DA2B5531BC00E73473 /* EditProfileViewController.swift */; };
 		FA3A52DE2B5531E300E73473 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A52DD2B5531E300E73473 /* PrivacyViewController.swift */; };
 		FA3A52E32B55321100E73473 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A52E22B55321100E73473 /* ProfileViewController.swift */; };
@@ -174,6 +174,7 @@
 /* Begin PBXFileReference section */
 		1E1269652B52E8B000750029 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		1E3517B62B56E307004CBCDA /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
+		1E3517B82B5703AB004CBCDA /* EditProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfilePresenter.swift; sourceTree = "<group>"; };
 		792A567F2B3CF96000617440 /* WishlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistCell.swift; sourceTree = "<group>"; };
 		792A56812B3CF98200617440 /* WishListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListVC.swift; sourceTree = "<group>"; };
 		792A56842B3CFA4E00617440 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
@@ -229,7 +230,6 @@
 		FA3A52D02B55316200E73473 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		FA3A52D32B55318400E73473 /* GeneralAndMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralAndMore.swift; sourceTree = "<group>"; };
 		FA3A52D52B55319200E73473 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
-		FA3A52D82B5531AE00E73473 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		FA3A52DA2B5531BC00E73473 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		FA3A52DD2B5531E300E73473 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
 		FA3A52E22B55321100E73473 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -353,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				1E3517B62B56E307004CBCDA /* ProfilePresenter.swift */,
+				1E3517B82B5703AB004CBCDA /* EditProfilePresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -362,7 +363,6 @@
 			children = (
 				FA3A52E22B55321100E73473 /* ProfileViewController.swift */,
 				FA3A52DD2B5531E300E73473 /* PrivacyViewController.swift */,
-				FA3A52D82B5531AE00E73473 /* EditProfileView.swift */,
 				FA3A52DA2B5531BC00E73473 /* EditProfileViewController.swift */,
 				FA3A52D02B55316200E73473 /* AboutUsViewController.swift */,
 				FA3A52D52B55319200E73473 /* UserView.swift */,
@@ -1004,7 +1004,6 @@
 				FA3A52E32B55321100E73473 /* ProfileViewController.swift in Sources */,
 				FA290FC92B3C5B52007970F2 /* MovieListCell.swift in Sources */,
 				7B4864F82B4DB3D50008039A /* ActorsCollectionViewCell.swift in Sources */,
-				FA3A52D92B5531AE00E73473 /* EditProfileView.swift in Sources */,
 				CE96EB872B49758E001184C4 /* WishListPresenter.swift in Sources */,
 				92AA60EF2B4AF762004CC79A /* OnboardingTexts.swift in Sources */,
 				FA9CE7982B3A037D00996564 /* Builder.swift in Sources */,
@@ -1023,6 +1022,7 @@
 				792A56822B3CF98200617440 /* WishListVC.swift in Sources */,
 				CED4D2412B3A056A005138A9 /* ParameterEncoding.swift in Sources */,
 				FAA9CF482B4C8AEA00E7507B /* SearchResultDelegate.swift in Sources */,
+				1E3517B92B5703AB004CBCDA /* EditProfilePresenter.swift in Sources */,
 				CED4D23D2B3A043F005138A9 /* HTTPTask.swift in Sources */,
 				792A568D2B472E9600617440 /* CoreDataManager.swift in Sources */,
 				796E25502B4DE3F800D6D28B /* EmptyWishlistCell.swift in Sources */,

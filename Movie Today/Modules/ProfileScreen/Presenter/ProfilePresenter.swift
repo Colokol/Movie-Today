@@ -24,7 +24,6 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     
     weak var view: ProfileScreenViewPresenter?
     let firebaseManager = FirebaseManager.shared
-    var exitAction: (() -> Void)?
     
     //MARK: - Methods
     
