@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 final class FilmCell: UICollectionViewCell {
     
@@ -227,8 +226,9 @@ final class FilmCell: UICollectionViewCell {
                 raiting.text = String(format: "%.1f", rait)
             }
             
-            guard  let image = model?.poster?.url else {return}
-            imageView.sd_setImage(with: URL(string: image))
+            guard let image = model?.poster?.url else { return }
+        guard let url = URL(string: image) else { return }
+        SDWebImageManager.shared.setImageFromUrl(image: imageView, url: url)
         
        
     }
@@ -264,9 +264,9 @@ final class FilmCell: UICollectionViewCell {
         if let rait = model.rating {
             raiting.text = String(format: "%.1f", rait.kp ?? 0)
         }
-        if let image = model.poster?.url {
-            imageView.sd_setImage(with: URL(string: image))
-        }
+        guard let image = model.poster?.url else { return }
+        guard let url = URL(string: image) else { return }
+        SDWebImageManager.shared.setImageFromUrl(image: imageView, url: url)
     }
     
     func configRecent(with model: RecentMovie) {

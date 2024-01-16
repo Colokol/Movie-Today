@@ -25,25 +25,17 @@ class NotificationManager {
         }
     }
     
-    func sendNotification() {
+    func sendNotification(after seconds: Int) {
         let identifier = "notif"
         let notifTitle = "Все фильмы тут!"
         let notifBody = "Выберите что посмотреть этим вечером"
-        let hour = 22
-        let minute = 34
-        let isDaily = true
         
         let content = UNMutableNotificationContent()
         content.title = notifTitle
         content.body = notifBody
         content.sound = .default
         
-        let calendar = Calendar.current
-        var dateComponents = DateComponents(calendar: calendar, timeZone: TimeZone.current)
-        dateComponents.hour = hour
-        dateComponents.minute = minute
-        
-        let notifTrigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: isDaily)
+        let notifTrigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(seconds), repeats: true)
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: notifTrigger)
         notificationCenter.add(request)
     }

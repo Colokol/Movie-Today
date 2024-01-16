@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 final class MovieListCell: UICollectionViewCell {
     
@@ -52,8 +51,9 @@ final class MovieListCell: UICollectionViewCell {
     }
     
     func config(with model: Doc) {
-        guard let image = model.poster?.url else {return}
-            imageView.sd_setImage(with: URL(string: image))
+        guard let image = model.poster?.url else { return }
+        guard let url = URL(string: image) else { return }
+        SDWebImageManager.shared.setImageFromUrl(image: imageView, url: url)
         
         title.text = model.name
     }

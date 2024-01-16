@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 import WebKit
 
 class DetailViewController: UIViewController {
@@ -413,9 +412,11 @@ extension DetailViewController: DetailScreenViewProtocol {
         descriptionTextView.text = model.description
         let rait = model.rating?.kp
         ratingLabel.text = String(format: "%.1f", rait ?? "нет информации")
-        guard let url = model.poster?.url else {return}
-        movieBackgroundView.sd_setImage(with: URL(string: url))
-        movieImageView.sd_setImage(with: URL(string: url))
+        guard let photo = model.poster?.url else {return}
+        guard let url = URL(string: photo) else { return }
+        SDWebImageManager.shared.setImageFromUrl(image: movieBackgroundView, url: url)
+        SDWebImageManager.shared.setImageFromUrl(image: movieImageView, url: url)
+
     }
 
     func updateActors() {

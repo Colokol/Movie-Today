@@ -139,8 +139,8 @@ final class TreeViewController: UIViewController {
     
     @objc private func buttonAction() {
         print("tap")
+        presenter.update()
         if blur == nil {
-            self.presenter.getFilm()
             fireWorkView.play()
             showRecomend()
         } else {

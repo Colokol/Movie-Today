@@ -38,13 +38,38 @@ class NotificationViewController: UIViewController {
         return switcher
     }()
     
+    private let timeIntervalLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Time Interval: 0 sec"
+        label.textColor = .white
+        label.font = UIFont.montserratMedium(ofSize: 15)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let timeIntervalStepper: UIStepper = {
+        let stepper = UIStepper()
+        stepper.wraps = false
+        stepper.autorepeat = true
+        stepper.stepValue = 60
+        stepper.maximumValue = 3600
+        stepper.translatesAutoresizingMaskIntoConstraints = false
+        return stepper
+    }()
+    
     private lazy var showNotificationsStack: UIStackView = {
         createStack(arrangedSubviews: [showNotificationsLabel, switcher], axis: .horizontal)
     }()
     
     private lazy var verticalStack: UIStackView = {
-        createStack(arrangedSubviews: [messagesNotificationsLabel, showNotificationsStack, exceptionsButton], axis: .vertical)
+        createStack(arrangedSubviews: [messagesNotificationsLabel, showNotificationsStack, exceptionsButton, horizontalStack], axis: .vertical)
     }()
+    
+    private lazy var horizontalStack: UIStackView = {
+        createStack(arrangedSubviews: [timeIntervalLabel, timeIntervalStepper], axis: .horizontal)
+    }()
+    
+
     
     //MARK: - Life Cycle
     override func viewWillAppear(_ animated: Bool) {
@@ -62,13 +87,18 @@ class NotificationViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupSwitcher()
+        setupStepper()
         setConstraints()
+        addStepperTarget()
     }
     
 
     
     //MARK: - Private Methods
     
+    private func addStepperTarget() {
+        timeIntervalStepper.addTarget(self, action: #selector(stepperAction), for: .touchUpInside)
+    }
     private func createStack(arrangedSubviews views: [UIView], axis: NSLayoutConstraint.Axis) -> UIStackView {
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = axis
@@ -87,15 +117,27 @@ class NotificationViewController: UIViewController {
         switcher.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
     }
     
+    private func setupStepper() {
+        let savedInterval = UserDefaults.standard.integer(forKey: "selectedTimeInterval")
+        if savedInterval > 0 {
+            timeIntervalStepper.value = Double(savedInterval)
+            timeIntervalLabel.text = "Time Interval: \(savedInterval) sec"
+        }
+    }
+    
     //MARK: - Actions
     
+    @objc private func stepperAction() {
+        let interval = Int(timeIntervalStepper.value)
+        timeIntervalLabel.text = "Time Interval: \(interval) sec"
+        UserDefaults.standard.set(interval, forKey: "selectedTimeInterval")
+        if switcher.isOn {
+            notificationMananger.sendNotification(after: interval)
+        }
+    }
     @objc private func switchValueChanged() {
         UserDefaults.standard.set(switcher.isOn, forKey: "switchState")
-        if switcher.isOn == true {
-            notificationMananger.sendNotification()
-        } else {
-            return
-        }
+
     }
     
     // MARK: - Set Constraints

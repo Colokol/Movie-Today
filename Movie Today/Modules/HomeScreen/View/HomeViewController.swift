@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 final class HomeViewController: UIViewController {
     
@@ -33,7 +32,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .background
         presenter.fetchPhoto { image in
-            self.userButton.sd_setImage(with: image, for: .normal)
+            SDWebImageManager.shared.setImageForButton(with: image, for: self.userButton)
         }
         hideKeyboard()
         setupNavBar()
