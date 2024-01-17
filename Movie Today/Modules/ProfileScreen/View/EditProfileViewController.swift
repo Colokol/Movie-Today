@@ -13,6 +13,7 @@ final class EditProfileViewController: UIViewController {
     
     //MARK: - Properties
     
+    var wbImage = SDWebImageManager.shared
     var presenter: EditScreenViewPresenter?
     
     //MARK: - User interface elements
@@ -267,7 +268,7 @@ extension EditProfileViewController: EditScreenViewPresenter {
         self.nameTextField.text = name
         self.userEmail.text = email
         self.emailTextField.text = email
-        self.userImage.sd_setImage(with: image)
+        self.wbImage.setImageFromUrl(image: userImage, url: image)
     }
 }
 
