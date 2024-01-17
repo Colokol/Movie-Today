@@ -18,7 +18,6 @@ final class AboutUsViewController: UIViewController {
     //MARK: - User interface elements
     
     // Label's
-    private lazy var titleLabel = UILabel(text: "About the team", font: .montserratSemiBold(ofSize: 20), textColor: .whiteGray, textAlignment: .center, numberOfLines: 0)
     private lazy var teamLeaderLabel = UILabel(text: "Team leader", font: .montserratSemiBold(ofSize: 20), textColor: .whiteGray, textAlignment: .left, numberOfLines: 0)
     private lazy var uladzislauY = UILabel(text: "Uladzislau Yatskevich", font: .montserratMedium(ofSize: 16), textColor: .white, textAlignment: .left, numberOfLines: 0)
     private lazy var teamLabel = UILabel(text: "Team", font: .montserratSemiBold(ofSize: 20), textColor: .whiteGray, textAlignment: .left, numberOfLines: 0)
@@ -73,7 +72,6 @@ final class AboutUsViewController: UIViewController {
         // Call method's
         setupView()
         setupConstraints()
-        title = ""
     }
     
     //MARK: - Private methods
@@ -81,9 +79,11 @@ final class AboutUsViewController: UIViewController {
     private func setupView() {
         // Setup view
         navigationItem.title = "About the team"
-        navigationController?.navigationBar.tintColor = .whiteGray
+        navigationController?.navigationBar.tintColor = .white
+        
+        // Setup view
         view.backgroundColor = .background
-        view.addSubviews(titleLabel, teamLeaderLabel, uladzislauY, teamLabel, annaZ, nikitaY, yuriK, timofeyS, nikitaS)
+        view.addSubviews(teamLeaderLabel, uladzislauY, teamLabel, annaZ, nikitaY, yuriK, timofeyS, nikitaS)
         view.addSubviews(uladzislauButton, annaButton, nikitaYButton, yuriButton, timofeyButton, nikitaSButton)
         
         // Setup button's
@@ -172,14 +172,8 @@ private extension AboutUsViewController {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             // Label's constraints
-            // Title label
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.twentyPoints),
-            titleLabel.heightAnchor.constraint(equalToConstant: Constants.titleLabelHeight),
-            titleLabel.widthAnchor.constraint(equalToConstant: Constants.titleLabwlWidth),
-            
             // Team leader label
-            teamLeaderLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Constants.sixtyPoints),
+            teamLeaderLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.thirtyPoints),
             teamLeaderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.twentyPoints),
             teamLeaderLabel.heightAnchor.constraint(equalToConstant: Constants.teamLeaderLabelHeight),
             teamLeaderLabel.widthAnchor.constraint(equalToConstant: Constants.teamLeaderLabelWidth),

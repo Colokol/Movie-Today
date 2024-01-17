@@ -19,8 +19,6 @@ class PrivacyViewController: UIViewController {
     
     //MARK: - User interface elements
     
-    private let tabBar = TabBarController()
-    
     private lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.alwaysBounceVertical = true
@@ -68,6 +66,9 @@ class PrivacyViewController: UIViewController {
     //MARK: - Private methods
     
     private func setupView() {
+        // Setup navigation controller
+        navigationItem.title = "Legal and Policies"
+        navigationController?.navigationBar.tintColor = .white
         
         // Setup view
         view.backgroundColor = .background

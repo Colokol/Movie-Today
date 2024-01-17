@@ -29,7 +29,7 @@ final class TabBarController: UITabBarController {
         let vc1 = UINavigationController(rootViewController: Builder.createHomeVC())
         let vc2 = UINavigationController(rootViewController: Builder.createSearchViewController())
         let vc3 = UINavigationController(rootViewController: Builder.createTreeController())
-        let vc4 = UINavigationController(rootViewController: ProfileViewController())
+        let vc4 = UINavigationController(rootViewController: Builder.crateProfileController())
 
         vc1.tabBarItem.image = UIImage(named: "Home")
         vc2.tabBarItem.image = UIImage(named: "Search")

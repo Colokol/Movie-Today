@@ -93,5 +93,17 @@ final class Builder {
         return vc
     }
 
-
+    static func crateProfileController() -> UIViewController {
+        let vc = ProfileViewController()
+        let presenter = ProfilePresenter(view: vc)
+        vc.presenter = presenter
+        return vc
+    }
+        
+    static func createEditProfileViewController() -> UIViewController {
+        let vc = EditProfileViewController()
+        let presenter = EditProfilePresenter(view: vc)
+        vc.presenter = presenter as? EditScreenViewPresenter
+        return vc
+    }
 }

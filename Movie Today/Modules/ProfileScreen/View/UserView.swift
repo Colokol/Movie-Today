@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class UserView: UIView {
     
@@ -56,6 +57,15 @@ final class UserView: UIView {
     
     private func setupView() {
         self.addSubviews(userImage, nameLabel, emailLabel, editButton)
+    }
+    
+    //MARK: - Methods
+    
+    func configureView(name: String?, email: String?, image: URL?) {
+        guard let name, let email, let image else { return }
+        nameLabel.text = name
+        emailLabel.text = email
+        userImage.sd_setImage(with: image)
     }
 }
 
