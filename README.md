@@ -1,4 +1,6 @@
-# Podcast App
+
+# MovieToday
+
 <img src="https://github.com/Colokol/Movie-Today/assets/122364066/5a75ef86-4670-4f85-8ea5-e8883ef0592f" width="1000">
 
 ### Development Team: 
