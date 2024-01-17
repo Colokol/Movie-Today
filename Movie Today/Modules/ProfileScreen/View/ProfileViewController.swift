@@ -10,7 +10,6 @@ import UIKit
 final class ProfileViewController: UIViewController {
     
     //MARK: - Properties
-    
     var presenter: ProfilePresenterProtocol!
     
     //MARK: - User interface element

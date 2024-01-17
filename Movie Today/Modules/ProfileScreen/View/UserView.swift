@@ -6,9 +6,12 @@
 //
 
 import UIKit
-import SDWebImage
 
 final class UserView: UIView {
+    
+    //MARK: - Properties
+    
+    var wbImage = SDWebImageManager.shared
     
     //MARK: - User interface element
     
@@ -65,7 +68,7 @@ final class UserView: UIView {
         guard let name, let email, let image else { return }
         nameLabel.text = name
         emailLabel.text = email
-        userImage.sd_setImage(with: image)
+        wbImage.setImageFromUrl(image: userImage, url: image)
     }
 }
 
