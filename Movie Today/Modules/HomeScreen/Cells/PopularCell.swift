@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 final class PopularCell: UICollectionViewCell {
     static let identifier = "Popular"
@@ -108,8 +107,9 @@ final class PopularCell: UICollectionViewCell {
         let rait =  model.rating?.kp
         raiting.text = String(format: "%.1f", rait ?? "нет информации")
 
-        guard let image = model.poster?.url else {return}
-        imageView.sd_setImage(with: URL(string: image))
+        guard let image = model.poster?.url else { return }
+        guard let url = URL(string: image) else { return }
+        SDWebImageManager.shared.setImageFromUrl(image: imageView, url: url)
     }
     
     func configRecent(with model: RecentMovie) {

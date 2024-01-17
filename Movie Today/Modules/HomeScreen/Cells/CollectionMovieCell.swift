@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 final class CollectionMovieCell: UICollectionViewCell {
     static let identifier = "MovieCell"
@@ -62,8 +61,8 @@ final class CollectionMovieCell: UICollectionViewCell {
     
     func config(with model: Collection) {
         if let imageString = model.cover?.url {
-           
-            imageView.sd_setImage(with: URL(string: imageString))
+            guard let url = URL(string: imageString) else { return }
+            SDWebImageManager.shared.setImageFromUrl(image: imageView, url: url)
 
         } else {
             print("картинки нет")

@@ -12,22 +12,28 @@ protocol TreeViewProtocol: AnyObject {
 }
 
 protocol TreePresenterProtocol: AnyObject {
-    var movie: Doc? { get set }
+    var movie: [Doc]? { get set }
     func getFilm()
+    func update()
     init(view: TreeViewProtocol)
 }
 
 final class TreePresenter: TreePresenterProtocol {
     weak var view: TreeViewProtocol?
     let networkManager = NetworkManager()
-    var movie: Doc?
+    var movie: [Doc]?
+    
+    func update() {
+        guard let movie = movie?.randomElement() else { return }
+        self.view?.update(with: movie)
+    }
     
     func getFilm() {
         networkManager.getMoviesFromCollection(collectionName: .popular) { result in
             switch result {
             case .success(let movie):
+                self.movie = movie.docs
                 guard let movie = movie.docs.randomElement() else { return }
-                self.movie = movie
                 DispatchQueue.main.async {
                     self.view?.update(with: movie)
                 }
@@ -39,6 +45,7 @@ final class TreePresenter: TreePresenterProtocol {
     
     init(view: TreeViewProtocol) {
         self.view = view
+        getFilm()
     }
     
     

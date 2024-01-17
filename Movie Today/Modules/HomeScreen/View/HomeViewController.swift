@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 final class HomeViewController: UIViewController {
     
@@ -33,7 +32,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .background
         presenter.fetchPhoto { image in
-            self.userButton.sd_setImage(with: image, for: .normal)
+            SDWebImageManager.shared.setImageForButton(with: image, for: self.userButton)
         }
         hideKeyboard()
         setupNavBar()
@@ -148,6 +147,22 @@ final class HomeViewController: UIViewController {
                 
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPagingCentered
+                       section.interGroupSpacing = 12
+                       section.visibleItemsInvalidationHandler = {
+                           (items, offset, environment) in
+                           
+                           items.forEach { item in
+                               guard item.representedElementKind == nil else {
+                                   return
+                               }
+                               
+                               let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2)
+                               let minScale: CGFloat = 0.9
+                               let maxScale: CGFloat = 1
+                               let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width) * 0.2, minScale)
+                               item.transform = CGAffineTransform(scaleX: 1, y: scale)
+                           }
+                       }
                 return section
             case .categories:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.1))

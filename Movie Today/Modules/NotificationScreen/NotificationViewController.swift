@@ -12,7 +12,7 @@ class NotificationViewController: UIViewController {
     //MARK: - Properties
     
     let notificationMananger = NotificationManager()
-
+    
     //MARK: - UI Elements
     
     private let messagesNotificationsLabel: UILabel = {
@@ -38,13 +38,35 @@ class NotificationViewController: UIViewController {
         return switcher
     }()
     
+    private let timeIntervalLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Time Interval"
+        label.textColor = .white
+        label.font = UIFont.montserratMedium(ofSize: 15)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let datePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.datePickerMode = .time
+        picker.locale = Locale(identifier: "en_GB")
+        return picker
+    }()
+    
     private lazy var showNotificationsStack: UIStackView = {
         createStack(arrangedSubviews: [showNotificationsLabel, switcher], axis: .horizontal)
     }()
     
     private lazy var verticalStack: UIStackView = {
-        createStack(arrangedSubviews: [messagesNotificationsLabel, showNotificationsStack, exceptionsButton], axis: .vertical)
+        createStack(arrangedSubviews: [messagesNotificationsLabel, showNotificationsStack, exceptionsButton, horizontalStack], axis: .vertical)
     }()
+    
+    private lazy var horizontalStack: UIStackView = {
+        createStack(arrangedSubviews: [timeIntervalLabel, datePicker], axis: .horizontal)
+    }()
+    
+    
     
     //MARK: - Life Cycle
     override func viewWillAppear(_ animated: Bool) {
@@ -62,13 +84,16 @@ class NotificationViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupSwitcher()
+        setupDatePicker()
+        getDateToPicker()
         setConstraints()
     }
     
-
+    
     
     //MARK: - Private Methods
     
+
     private func createStack(arrangedSubviews views: [UIView], axis: NSLayoutConstraint.Axis) -> UIStackView {
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = axis
@@ -76,7 +101,7 @@ class NotificationViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }
-
+    
     private func setupViews() {
         view.backgroundColor = UIColor.background
         view.addSubview(verticalStack)
@@ -87,15 +112,31 @@ class NotificationViewController: UIViewController {
         switcher.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
     }
     
+    private func setupDatePicker() {
+        datePicker.addTarget(self, action: #selector(datePickerChanged), for: .valueChanged)
+    }
+    
+    private func getDateToPicker() {
+        if let dateData = UserDefaults.standard.data(forKey: "selectedDate"),
+           let date = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSDate.self, from: dateData) as Date? {
+            datePicker.date = date
+        }
+    }
+    
     //MARK: - Actions
+    
+    @objc private func datePickerChanged() {
+        if switcher.isOn {
+            let selectedDate = datePicker.date
+            let dateData = try? NSKeyedArchiver.archivedData(withRootObject: selectedDate, requiringSecureCoding: false)
+            UserDefaults.standard.set(dateData, forKey: "selectedDate")
+            notificationMananger.sendNotification(at: selectedDate)
+        }
+    }
     
     @objc private func switchValueChanged() {
         UserDefaults.standard.set(switcher.isOn, forKey: "switchState")
-        if switcher.isOn == true {
-            notificationMananger.sendNotification()
-        } else {
-            return
-        }
+        
     }
     
     // MARK: - Set Constraints

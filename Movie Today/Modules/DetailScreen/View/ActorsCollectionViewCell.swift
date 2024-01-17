@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 final class ActorsCollectionViewCell: UICollectionViewCell {
     static let identifier = "cell"
@@ -76,7 +75,8 @@ final class ActorsCollectionViewCell: UICollectionViewCell {
     
     func config(with actor: Person) {
         if let photo = actor.photo, let text = actor.name, let description = actor.profession {
-            personImage.sd_setImage(with: URL(string: photo))
+            guard let url = URL(string: photo) else { return }
+            SDWebImageManager.shared.setImageFromUrl(image: personImage, url: url)
             personName.text = text
             descriptionLabel.text = description
         }

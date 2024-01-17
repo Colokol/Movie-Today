@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 final class RecomendView: UIView {
     
@@ -148,7 +147,7 @@ final class RecomendView: UIView {
     }()
     
     var closeButtonAction: (() -> Void)?
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .recomendBackground
@@ -192,7 +191,7 @@ final class RecomendView: UIView {
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 115),
-    
+            
             fifthStack.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             fifthStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
             fifthStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
@@ -220,34 +219,35 @@ final class RecomendView: UIView {
         } else {
             self.title.text = "Not Found"
         }
-            if let year = model?.year {
-                self.year.text = String(year)
-            } else {
-                self.year.text = "Not Found"
-            }
-            
-            if let movieLength = model?.movieLength {
-                self.minutes.text = "\(movieLength) minutes"
-            } else {
-                self.minutes.text = "Not Found"
-            }
-            
-            if let genre = model?.genres?.first?.name, let type = model?.type {
-                self.genre.text = "\(genre) | \(type)"
-            } else {
-                self.genre.text = "Not Found"
-            }
-            
-            if let pg = model?.ageRating {
-                self.pg.text = "PG - \(pg)"
-            }
-            if let rait = model?.rating?.kp {
-                raiting.text = String(format: "%.1f", rait)
-            }
-            
-            guard  let image = model?.poster?.url else {return}
-            imageView.sd_setImage(with: URL(string: image))
-       
+        if let year = model?.year {
+            self.year.text = String(year)
+        } else {
+            self.year.text = "Not Found"
+        }
+        
+        if let movieLength = model?.movieLength {
+            self.minutes.text = "\(movieLength) minutes"
+        } else {
+            self.minutes.text = "Not Found"
+        }
+        
+        if let genre = model?.genres?.first?.name, let type = model?.type {
+            self.genre.text = "\(genre) | \(type)"
+        } else {
+            self.genre.text = "Not Found"
+        }
+        
+        if let pg = model?.ageRating {
+            self.pg.text = "PG - \(pg)"
+        }
+        if let rait = model?.rating?.kp {
+            raiting.text = String(format: "%.1f", rait)
+        }
+        
+        guard  let image = model?.poster?.url else {return}
+        guard let url = URL(string: image) else { return }
+        SDWebImageManager.shared.setImageFromUrl(image: imageView, url: url)
+        
     }
     
     func clearView() {

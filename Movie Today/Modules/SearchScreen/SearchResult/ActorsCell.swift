@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 final class ActorsCell: UICollectionViewCell {
     private let imageView: UIImageView = {
@@ -54,10 +53,12 @@ final class ActorsCell: UICollectionViewCell {
     }
     
     func config(with actor: PersonModel) {
-        if let photo = actor.photo, let name = actor.enName {
-            imageView.sd_setImage(with: URL(string: photo))
+        if let name = actor.enName {
             label.text = name
         }
+        guard let photo = actor.photo else { return }
+        guard let url = URL(string: photo) else { return }
+        SDWebImageManager.shared.setImageFromUrl(image: imageView, url: url)
         imageView.layer.cornerRadius = 40
     }
 }
