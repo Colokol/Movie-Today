@@ -138,66 +138,59 @@ final class HomeViewController: UIViewController {
             switch sectionKind {
                 
             case .compilation:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(295), heightDimension: .absolute(155))
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-                
-                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(300), heightDimension: .estimated(205))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                
+                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.78), heightDimension: .fractionalWidth(0.41)), subitems: [item])
                 section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = .init(top: 16, leading: 0, bottom: 16, trailing: 0)
                 section.orthogonalScrollingBehavior = .groupPagingCentered
-                       section.interGroupSpacing = 12
-                       section.visibleItemsInvalidationHandler = {
-                           (items, offset, environment) in
-                           
-                           items.forEach { item in
-                               guard item.representedElementKind == nil else {
-                                   return
-                               }
-                               
-                               let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2)
-                               let minScale: CGFloat = 0.9
-                               let maxScale: CGFloat = 1
-                               let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width) * 0.2, minScale)
-                               item.transform = CGAffineTransform(scaleX: 1, y: scale)
-                           }
-                       }
+                section.interGroupSpacing = 12
+                
+                section.visibleItemsInvalidationHandler = {
+                    (items, offset, environment) in
+                    
+                    items.forEach { item in
+                        guard item.representedElementKind == nil else {
+                            return
+                        }
+                        
+                        let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2)
+                        let minScale: CGFloat = 0.9
+                        let maxScale: CGFloat = 1
+                        let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width) * 0.2, minScale)
+                        item.transform = CGAffineTransform(scaleX: 1, y: scale)
+                    }
+                }
                 return section
+                
             case .categories:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.1))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
                 
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33), heightDimension: .absolute(50))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
+                section.contentInsets = .init(top: 16, leading: 0, bottom: 16, trailing: 16)
                 
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
-                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-                header.pinToVisibleBounds = false
-                header.zIndex = 2
-                section.boundarySupplementaryItems = [header]
+                section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(52)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)]
                 return section
                 
             case .mostPopular:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(260))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(231))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(160), heightDimension: .estimated(260))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(231))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
+                section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 16)
+                section.interGroupSpacing = 12
                 
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
-                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-                header.pinToVisibleBounds = false
-                header.zIndex = 2
-                section.boundarySupplementaryItems = [header]
+                section.boundarySupplementaryItems = [.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(52)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)]
+                
                 
                 
                 return section

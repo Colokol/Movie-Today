@@ -169,6 +169,10 @@ final class AuthViewController: UIViewController {
     @objc private func authButtonAction() {
         signUpCheck()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 extension AuthViewController: UITextFieldDelegate {
