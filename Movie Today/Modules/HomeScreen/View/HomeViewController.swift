@@ -138,11 +138,10 @@ final class HomeViewController: UIViewController {
             switch sectionKind {
                 
             case .compilation:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(295), heightDimension: .absolute(155))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(300), heightDimension: .estimated(205))
+                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.79), heightDimension: .fractionalWidth(0.41))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
@@ -187,7 +186,7 @@ final class HomeViewController: UIViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(160), heightDimension: .estimated(260))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(260))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
